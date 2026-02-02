@@ -4,61 +4,76 @@ using UnityEngine;
 using TMPro;
 using Object = UnityEngine.Object;
 
-    [RequireComponent(typeof(TMP_Text))]
-    public class TypewriterEffect : MonoBehaviour
+[RequireComponent(typeof(TMP_Text))]
+public class TypewriterEffect : MonoBehaviour
+{
+    [SerializeField] private float _typingSpeed = 0.05f;
+    private TMP_Text _textComponent;
+    private string _fullText;
+    [HideInInspector] public bool _isTyping;
+
+    private void Awake()
     {
-        [SerializeField] private float _typingSpeed = 0.05f;
-        private TMP_Text _textComponent;
-        private string _fullText;
-        [HideInInspector] public bool _isTyping;
+        _textComponent = GetComponent<TMP_Text>();
+        _fullText = _textComponent.text;
+        _textComponent.text = string.Empty;
+    }
 
-        private void Awake()
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) && _isTyping)
         {
-            _textComponent = GetComponent<TMP_Text>();
-            _fullText = _textComponent.text;
-            _textComponent.text = string.Empty;
+            StopAllCoroutines();
+            _textComponent.text = _fullText;
+            _isTyping = false;
         }
 
-        private void Update()
+        if (Input.GetMouseButtonDown(1) && _isTyping)
         {
-            if (Input.GetKeyDown(KeyCode.Space) && _isTyping)
-            {
-                StopAllCoroutines();
-                _textComponent.text = _fullText;
-                _isTyping = false;
-            }
-
-            if(Input.GetMouseButtonDown(1) && _isTyping)
-            {
-                _typingSpeed = 0.01f;
-            }
-            else if (Input.GetMouseButtonUp(1) && _isTyping)
-            {
-                _typingSpeed = 0.05f;
-            }
+            _typingSpeed = 0.01f;
         }
-
-        private IEnumerator TypeText()
+        else if (Input.GetMouseButtonUp(1) && _isTyping)
         {
-            _textComponent.text = string.Empty;
+            _typingSpeed = 0.05f;
+        }
+    }
 
-            _isTyping = true;
-            foreach (char letter in _fullText)
+    private IEnumerator TypeText()
+    {
+        _textComponent.text = string.Empty;
+
+        _isTyping = true;
+        bool insideTag = false;
+
+        for (int i = 0; i < _fullText.Length; i++)
+        {
+            char letter = _fullText[i];
+
+            if (letter == '<') insideTag = true;
+            if (!insideTag)
             {
                 _textComponent.text += letter;
                 yield return new WaitForSeconds(_typingSpeed);
             }
-            _isTyping = false;
+            else
+            {
+                _textComponent.text += letter; // Add the tag characters immediately
+            }
+
+            if (letter == '>') insideTag = false;
         }
 
-        public void SetTypingSpeed(float newSpeed)
-        {
-            _typingSpeed = newSpeed;
-        }
-
-        public void SetFullText(string newText)
-        {
-            _fullText = newText;
-            StartCoroutine(TypeText());
-        }
+        _isTyping = false;
     }
+
+    public void SetTypingSpeed(float newSpeed)
+    {
+        _typingSpeed = newSpeed;
+    }
+
+    public void SetFullText(string newText)
+    {
+        _fullText = newText;
+        StartCoroutine(TypeText());
+    }
+}

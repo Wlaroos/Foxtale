@@ -44,6 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5295014077c7663418f519932ba1bd4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minigameText: CLICK the JESTERS!
-  _collectiblePrefab: {fileID: 1004055619882273414, guid: 9c5e6797b5d405d4cad7f1cf59ea4a94, type: 3}
+  minigameText: CLICK the BUTTONS!
+  _collectiblePrefab: {fileID: 1004055619882273414, guid: db1ff633874ef8441be44b79d7b06852, type: 3}
   _totalCollectibles: 5
+  _pressedSprite: {fileID: -7871266545849764089, guid: b2917cd210059684f93303ce67c8d544, type: 3}
+  _clickedEffect: {fileID: 1703984352912723621, guid: ab7afba42e07bc24db60445a4d976d11, type: 3}

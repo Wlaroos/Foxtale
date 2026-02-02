@@ -74,6 +74,13 @@ public class CharacterSelection : MonoBehaviour
             {
                 GameObject hitObject = hit.collider.gameObject;
 
+                if(hitObject != _merlinPodium.gameObject &&
+                   hitObject != _walmPodium.gameObject &&
+                   hitObject != _runicPodium.gameObject)
+                {
+                    return; // Clicked on something else
+                }
+
                 _merlinPodium.color = _defaultColor;
                 _walmPodium.color = _defaultColor;
                 _runicPodium.color = _defaultColor;

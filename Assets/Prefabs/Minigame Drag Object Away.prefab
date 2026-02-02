@@ -44,8 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28a73bd3ca595ed489bf0354d59e8eb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minigameText: DRAG the JESTER to the EDGE
+  minigameText: DRAG the PLUSH to the EDGE
   _draggablePrefab: {fileID: 1004055619882273414, guid: 9c5e6797b5d405d4cad7f1cf59ea4a94, type: 3}
-  _obstaclePrefab: {fileID: 6314614879012021924, guid: ae72b3dab192f3c49bb47a5a1e1a0468, type: 3}
+  _obstaclePrefab: {fileID: 1004055619882273414, guid: 1c24a64d30ad72e4da9988c6199694b1, type: 3}
   _obstacleSpeed: 3
   _minSpawnDistance: 4

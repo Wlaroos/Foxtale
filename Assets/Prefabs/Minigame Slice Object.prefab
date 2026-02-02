@@ -48,3 +48,5 @@ MonoBehaviour:
   _sliceablePrefab: {fileID: 6314614879012021924, guid: ae72b3dab192f3c49bb47a5a1e1a0468, type: 3}
   _objectsToSlice: 1
   _bloodEffect: {fileID: 7767934770358533092, guid: 3adee23244c9a4f43a84fd19fb96c8c3, type: 3}
+  _heartHalfPrefab01: {fileID: 605407506420396166, guid: 4018bcb31e27ebf4bb6d1ebcbdbfff5b, type: 3}
+  _heartHalfPrefab02: {fileID: 2275393037936296670, guid: 6febb797c8e282e46b227b32b37363c8, type: 3}

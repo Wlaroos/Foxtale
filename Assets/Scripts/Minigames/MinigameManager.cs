@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class MinigameManager : MonoBehaviour
 {
+    public static MinigameManager Instance;
     [SerializeField] private float _gameTimer = 5f;
     [SerializeField] private float _timeBetweenMinigames = 1f;
     [SerializeField] private Slider _timerSlider;
@@ -14,15 +15,27 @@ public class MinigameManager : MonoBehaviour
     [SerializeField] private Vector2 _boundsCenter = Vector2.zero;
     [SerializeField] private Vector2 _boundsSize = new Vector2(7.5f, 7.5f);
     private BaseMinigame _currentMinigame; // Reference to the currently active minigame
+    private SpriteRenderer _sr;
     private int _wins = 0;
     private int _fails = 0;
     private float _currentTimer;
     private int _money = 0;
 
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
     void Start()
     {
+        _sr = GetComponent<SpriteRenderer>();
         _moneyText.text = _money.ToString();
-        StartRandomMinigame();
     }
 
     void Update()
@@ -40,7 +53,7 @@ public class MinigameManager : MonoBehaviour
         }
     }
 
-    void StartRandomMinigame()
+    public void StartRandomMinigame()
     {
         StartCoroutine(StartMinigameWithDelay());
     }
@@ -80,6 +93,7 @@ public class MinigameManager : MonoBehaviour
         _money += 10; // Increment money after each win
         _moneyText.text = _money.ToString();
         _minigameText.text = "You won!";
+        StartCoroutine(ColorToFade(Color.green, 0.75f));
         StartRandomMinigame();
     }
 
@@ -87,7 +101,25 @@ public class MinigameManager : MonoBehaviour
     {
         _fails++;
         _minigameText.text = "You failed!";
+        StartCoroutine(ColorToFade(Color.red, 0.75f));
+        ScreenShake.ShakeOnce(1, 5);
         StartRandomMinigame();
+    }
+
+    private IEnumerator ColorToFade(Color color, float duration)
+    {
+        Color originalColor = color;
+        Color targetColor = Color.white;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            _sr.color = Color.Lerp(originalColor, targetColor, elapsed / duration);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        _sr.color = targetColor;
     }
 
         private void OnDrawGizmos()

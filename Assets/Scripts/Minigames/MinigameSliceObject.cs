@@ -60,6 +60,11 @@ public class MinigameSliceObject : BaseMinigame
                 {
                     Instantiate(_bloodEffect, hit.transform.position, Quaternion.Euler(0, 0, Mathf.Atan2(sliceDirection.y, sliceDirection.x) * Mathf.Rad2Deg));
 
+                    hit.gameObject.transform.GetChild(2).gameObject.SetActive(true);
+                    hit.gameObject.transform.GetChild(2).parent = null;
+                    hit.gameObject.transform.GetChild(1).gameObject.SetActive(true);
+                    hit.gameObject.transform.GetChild(1).parent = null;
+
                     Destroy(hit.gameObject);
 
                     _objectsToSlice--;

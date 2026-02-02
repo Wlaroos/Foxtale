@@ -4,7 +4,10 @@ public class MinigameCollectItems : BaseMinigame
 {
     [SerializeField] private GameObject _collectiblePrefab;
     [SerializeField] private int _totalCollectibles = 5;
+    [SerializeField] private Sprite _pressedSprite;
+    [SerializeField] private ParticleSystem _clickedEffect;
     private GameObject _collectiblesParent;
+    private int _collectedCount = 0;
 
     protected override void StartMinigame()
     {
@@ -29,9 +32,15 @@ public class MinigameCollectItems : BaseMinigame
 
             if (hit.collider != null && hit.collider.transform.parent == _collectiblesParent.transform)
             {
-                Destroy(hit.collider.gameObject);
+                hit.collider.gameObject.GetComponent<SpriteRenderer>().sprite = _pressedSprite;
+                
+                Instantiate(_clickedEffect, hit.transform.position, Quaternion.identity);
 
-                if (_collectiblesParent.transform.childCount <= 1)
+                _collectedCount++;
+
+                hit.collider.enabled = false;
+
+                if (_collectedCount >= _totalCollectibles)
                 {
                     WinGame();
                 }
