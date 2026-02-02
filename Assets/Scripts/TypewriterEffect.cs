@@ -7,10 +7,10 @@ using Object = UnityEngine.Object;
     [RequireComponent(typeof(TMP_Text))]
     public class TypewriterEffect : MonoBehaviour
     {
-        [SerializeField] private float typingSpeed = 0.05f;
+        [SerializeField] private float _typingSpeed = 0.05f;
         private TMP_Text _textComponent;
         private string _fullText;
-        private Coroutine _typingCoroutine;
+        [HideInInspector] public bool _isTyping;
 
         private void Awake()
         {
@@ -19,38 +19,46 @@ using Object = UnityEngine.Object;
             _textComponent.text = string.Empty;
         }
 
-        private void OnEnable()
+        private void Update()
         {
-            StartTyping();
-        }
-
-        public void StartTyping()
-        {
-            if (_typingCoroutine != null)
+            if (Input.GetKeyDown(KeyCode.Space) && _isTyping)
             {
-                StopCoroutine(_typingCoroutine);
+                StopAllCoroutines();
+                _textComponent.text = _fullText;
+                _isTyping = false;
             }
-            _typingCoroutine = StartCoroutine(TypeText());
+
+            if(Input.GetMouseButtonDown(1) && _isTyping)
+            {
+                _typingSpeed = 0.01f;
+            }
+            else if (Input.GetMouseButtonUp(1) && _isTyping)
+            {
+                _typingSpeed = 0.05f;
+            }
         }
 
         private IEnumerator TypeText()
         {
             _textComponent.text = string.Empty;
+
+            _isTyping = true;
             foreach (char letter in _fullText)
             {
                 _textComponent.text += letter;
-                yield return new WaitForSeconds(typingSpeed);
+                yield return new WaitForSeconds(_typingSpeed);
             }
+            _isTyping = false;
         }
 
         public void SetTypingSpeed(float newSpeed)
         {
-            typingSpeed = newSpeed;
+            _typingSpeed = newSpeed;
         }
 
         public void SetFullText(string newText)
         {
             _fullText = newText;
-            StartTyping();
+            StartCoroutine(TypeText());
         }
     }
