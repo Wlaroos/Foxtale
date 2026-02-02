@@ -2,7 +2,8 @@ using UnityEngine;
 
 public abstract class BaseMinigame : MonoBehaviour
 {
-    protected BoxCollider2D bounds;
+    protected Vector2 boundsCenter;
+    protected Vector2 boundsSize;
     protected float gameTimer;
     protected bool gameActive;
 
@@ -25,9 +26,10 @@ public abstract class BaseMinigame : MonoBehaviour
         protected set => _minigameLayerMask = value;
     }
 
-    public void Initialize(BoxCollider2D gameBounds, float timer)
+    public void Initialize(Vector2 center, Vector2 size, float timer)
     {
-        bounds = gameBounds;
+        boundsCenter = center;
+        boundsSize = size;
         gameTimer = timer;
         gameActive = true;
         _minigameLayerMask = LayerMask.GetMask("Minigame");
@@ -65,4 +67,5 @@ public abstract class BaseMinigame : MonoBehaviour
 
     protected abstract void StartMinigame();
     protected abstract void UpdateMinigame();
+
 }

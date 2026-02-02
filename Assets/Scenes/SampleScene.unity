@@ -2516,7 +2516,6 @@ GameObject:
   m_Component:
   - component: {fileID: 886215083}
   - component: {fileID: 886215082}
-  - component: {fileID: 886215084}
   - component: {fileID: 886215086}
   m_Layer: 0
   m_Name: MinigameBG_1
@@ -2589,58 +2588,12 @@ Transform:
   m_GameObject: {fileID: 886215081}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2, y: -2.3129714, z: 0}
+  m_LocalPosition: {x: 2, y: -2.312971, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &886215084
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 886215081}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 8.375, y: 8.375}
-    newSize: {x: 8.375, y: 8.375}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 8, y: 8}
-  m_EdgeRadius: 0
 --- !u!114 &886215086
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2664,6 +2617,8 @@ MonoBehaviour:
   - {fileID: 433938022202228363, guid: 1d89f79599b4cac478ad11efffef0eec, type: 3}
   - {fileID: 8630785041037080022, guid: 0e27164e2369cb146a0358acba84f048, type: 3}
   - {fileID: 8345376898027414497, guid: b1923977e5e162941889580f7ed10ea0, type: 3}
+  _boundsCenter: {x: 2, y: -2.312971}
+  _boundsSize: {x: 7.5, y: 7.5}
 --- !u!1 &888576301
 GameObject:
   m_ObjectHideFlags: 0

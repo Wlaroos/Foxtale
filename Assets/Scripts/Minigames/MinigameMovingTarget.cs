@@ -26,11 +26,11 @@ public class MinigameMovingTarget : BaseMinigame
 
         // Check if the target hits the bounds and bounce
         Vector2 position = _movingTarget.transform.position;
-        if (position.x <= bounds.bounds.min.x || position.x >= bounds.bounds.max.x)
+        if (position.x <= boundsCenter.x - boundsSize.x / 2 || position.x >= boundsCenter.x + boundsSize.x / 2)
         {
             _currentDirection.x = -_currentDirection.x; // Reverse X direction
         }
-        if (position.y <= bounds.bounds.min.y || position.y >= bounds.bounds.max.y)
+        if (position.y <= boundsCenter.y - boundsSize.y / 2 || position.y >= boundsCenter.y + boundsSize.y / 2)
         {
             _currentDirection.y = -_currentDirection.y; // Reverse Y direction
         }
@@ -51,8 +51,8 @@ public class MinigameMovingTarget : BaseMinigame
 
     private Vector2 GetRandomPositionInBounds()
     {
-        Vector2 min = bounds.bounds.min;
-        Vector2 max = bounds.bounds.max;
+        Vector2 min = boundsCenter - boundsSize / 2;
+        Vector2 max = boundsCenter + boundsSize / 2;
 
         return new Vector2(
             Random.Range(min.x, max.x),

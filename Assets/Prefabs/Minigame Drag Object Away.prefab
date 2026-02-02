@@ -45,9 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minigameText: DRAG the JESTER to the EDGE
-  _minigameLayerMask:
-    serializedVersion: 2
-    m_Bits: 1
   _draggablePrefab: {fileID: 1004055619882273414, guid: 9c5e6797b5d405d4cad7f1cf59ea4a94, type: 3}
   _obstaclePrefab: {fileID: 6314614879012021924, guid: ae72b3dab192f3c49bb47a5a1e1a0468, type: 3}
   _obstacleSpeed: 3
+  _minSpawnDistance: 4

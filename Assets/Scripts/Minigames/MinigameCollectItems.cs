@@ -31,7 +31,7 @@ public class MinigameCollectItems : BaseMinigame
             {
                 Destroy(hit.collider.gameObject);
 
-                if (_collectiblesParent.transform.childCount == 0)
+                if (_collectiblesParent.transform.childCount <= 1)
                 {
                     WinGame();
                 }
@@ -41,8 +41,8 @@ public class MinigameCollectItems : BaseMinigame
 
     private Vector2 GetRandomPositionInBounds()
     {
-        Vector2 min = bounds.bounds.min;
-        Vector2 max = bounds.bounds.max;
+        Vector2 min = boundsCenter - boundsSize / 2;
+        Vector2 max = boundsCenter + boundsSize / 2;
 
         return new Vector2(
             Random.Range(min.x, max.x),

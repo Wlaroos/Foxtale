@@ -46,4 +46,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minigameText: CLICK the JESTER
   _movingTargetPrefab: {fileID: 1004055619882273414, guid: 9c5e6797b5d405d4cad7f1cf59ea4a94, type: 3}
-  _obstacleSpeed: 10
+  _obstacleSpeed: 7

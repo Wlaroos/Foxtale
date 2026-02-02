@@ -6,13 +6,22 @@ public class BloodWalls : MonoBehaviour
     {
         // Get the ParticleSystem from the colliding object
         ParticleSystem particleSystem = other.GetComponent<ParticleSystem>();
+        ParticleSystemRenderer renderer = other.GetComponent<ParticleSystemRenderer>();
 
         if (particleSystem != null)
         {
-            // Access the ParticleSystem's main module to modify gravity
             var mainModule = particleSystem.main;
-            mainModule.gravityModifier = 0f; // Turn off gravity
+
+            if(particleSystem.name.Contains("Blood"))
+            {
+                mainModule.gravityModifier = 0f; // Turn off gravity for blood
+            }
             mainModule.startSpeed = 0f;   // Stop movement
+
+            if (renderer != null)
+            {
+                renderer.sortingOrder = -4;
+            }
         }
     }
 }

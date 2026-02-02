@@ -11,8 +11,8 @@ public class MinigameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _minigameText;
     [SerializeField] private TextMeshProUGUI _moneyText;
     [SerializeField] private BaseMinigame[] _minigamePrefabs;
-    private BoxCollider2D _bounds;
-    private Vector2 _boundsPadding = new Vector2(0.5f, 0.5f);
+    [SerializeField] private Vector2 _boundsCenter = Vector2.zero;
+    [SerializeField] private Vector2 _boundsSize = new Vector2(7.5f, 7.5f);
     private BaseMinigame _currentMinigame; // Reference to the currently active minigame
     private int _wins = 0;
     private int _fails = 0;
@@ -21,14 +21,6 @@ public class MinigameManager : MonoBehaviour
 
     void Start()
     {
-        _bounds = GetComponent<BoxCollider2D>();
-
-        // Apply padding to the bounds
-        if (_bounds != null)
-        {
-            _bounds.size -= _boundsPadding;
-        }
-
         _moneyText.text = _money.ToString();
         StartRandomMinigame();
     }
@@ -70,7 +62,7 @@ public class MinigameManager : MonoBehaviour
         _currentMinigame = Instantiate(_minigamePrefabs[randomIndex], transform);
 
         // Initialize the new minigame
-        _currentMinigame.Initialize(_bounds, _gameTimer);
+        _currentMinigame.Initialize(_boundsCenter, _boundsSize, _gameTimer);
         _currentMinigame.OnWin = HandleWin;
         _currentMinigame.OnFail = HandleFail;
 
@@ -96,5 +88,11 @@ public class MinigameManager : MonoBehaviour
         _fails++;
         _minigameText.text = "You failed!";
         StartRandomMinigame();
+    }
+
+        private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red; // Set the color for the bounds
+        Gizmos.DrawWireCube(_boundsCenter, _boundsSize); // Draw the bounds as a wireframe cube
     }
 }
