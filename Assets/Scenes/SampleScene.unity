@@ -381,7 +381,7 @@ GameObject:
   - component: {fileID: 27766500}
   - component: {fileID: 27766499}
   m_Layer: 0
-  m_Name: Textbox03
+  m_Name: TextboxBG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -560,9 +560,9 @@ MonoBehaviour:
   _usesLocalTime: 1
   _canRotate: 0
   _degreesPerSecond: {x: 0, y: 0, z: 15}
-  _canHover: 0
-  _amplitude: 0.5
-  _frequency: 1
+  _canHover: 1
+  _amplitude: 0.05
+  _frequency: 0.5
 --- !u!1 &51214609
 GameObject:
   m_ObjectHideFlags: 0
@@ -575,7 +575,7 @@ GameObject:
   - component: {fileID: 51214611}
   - component: {fileID: 51214612}
   m_Layer: 0
-  m_Name: Arm
+  m_Name: RArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -666,9 +666,9 @@ MonoBehaviour:
   _usesLocalTime: 1
   _canRotate: 0
   _degreesPerSecond: {x: 0, y: 0, z: 15}
-  _canHover: 0
-  _amplitude: 0.5
-  _frequency: 1
+  _canHover: 1
+  _amplitude: 0.1
+  _frequency: 0.5
 --- !u!1 &118268451
 GameObject:
   m_ObjectHideFlags: 0
@@ -834,11 +834,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fairyMessage:
-  - Welcome to the enchanted forest!
-  - Beware of the mischievous sprites lurking around.
-  - Collect magical herbs to brew powerful potions.
-  - Listen closely, the trees have many secrets to share.
-  - May your journey be filled with wonder and magic!
+  - Choose your character
+  - 
+  - 
+  - 
+  - 
 --- !u!1 &181643605
 GameObject:
   m_ObjectHideFlags: 0
@@ -925,7 +925,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.75, y: 0.8125}
+  m_Size: {x: 0.625, y: 0.6875}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -1009,7 +1009,7 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 0.75, y: 0.8125}
-    newSize: {x: 0.75, y: 0.8125}
+    newSize: {x: 0.625, y: 0.6875}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -1128,7 +1128,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.75, y: 0.8125}
+  m_Size: {x: 0.625, y: 0.6875}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -1212,7 +1212,7 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 0.75, y: 0.8125}
-    newSize: {x: 0.75, y: 0.8125}
+    newSize: {x: 0.625, y: 0.6875}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -1255,6 +1255,7 @@ GameObject:
   m_Component:
   - component: {fileID: 406342778}
   - component: {fileID: 406342777}
+  - component: {fileID: 406342779}
   m_Layer: 0
   m_Name: Merlin Podium
   m_TagString: Untagged
@@ -1332,6 +1333,52 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1427533979}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &406342779
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 406342776}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 1.46875}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0}
+    oldSize: {x: 1.6875, y: 2.9375}
+    newSize: {x: 1.6875, y: 2.9375}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 1.6875, y: 2.9375}
+  m_EdgeRadius: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1469,6 +1516,93 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &557648465
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 557648467}
+  - component: {fileID: 557648466}
+  m_Layer: 0
+  m_Name: TextboxCorner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!212 &557648466
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 557648465}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: b0f7eb47bdcf5394a9f36d0f5786f0b8, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 0.4375, y: 0.4375}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!4 &557648467
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 557648465}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: -0, z: 0.7071068, w: -0.7071068}
+  m_LocalPosition: {x: -6.221529, y: -0.10805627, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 270}
 --- !u!1 &557864110
 GameObject:
   m_ObjectHideFlags: 0
@@ -1674,7 +1808,7 @@ GameObject:
   - component: {fileID: 716749122}
   - component: {fileID: 716749121}
   m_Layer: 5
-  m_Name: Fairy Text (1)
+  m_Name: LMB - RMB Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1897,6 +2031,7 @@ GameObject:
   m_Component:
   - component: {fileID: 886215083}
   - component: {fileID: 886215082}
+  - component: {fileID: 886215084}
   m_Layer: 0
   m_Name: MinigameBG_1
   m_TagString: Untagged
@@ -1974,6 +2109,52 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &886215084
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 886215081}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 8.375, y: 8.375}
+    newSize: {x: 8.375, y: 8.375}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 8, y: 8}
+  m_EdgeRadius: 0
 --- !u!1 &888576301
 GameObject:
   m_ObjectHideFlags: 0
@@ -2177,7 +2358,7 @@ GameObject:
   - component: {fileID: 1024734040}
   - component: {fileID: 1024734041}
   m_Layer: 0
-  m_Name: Arm
+  m_Name: LArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2268,9 +2449,9 @@ MonoBehaviour:
   _usesLocalTime: 1
   _canRotate: 0
   _degreesPerSecond: {x: 0, y: 0, z: 15}
-  _canHover: 0
-  _amplitude: 0.5
-  _frequency: 1
+  _canHover: 1
+  _amplitude: 0.1
+  _frequency: 0.5
 --- !u!1 &1075011127
 GameObject:
   m_ObjectHideFlags: 0
@@ -2377,9 +2558,9 @@ MonoBehaviour:
   _usesLocalTime: 1
   _canRotate: 0
   _degreesPerSecond: {x: 0, y: 0, z: 15}
-  _canHover: 0
-  _amplitude: 0.5
-  _frequency: 1
+  _canHover: 1
+  _amplitude: 0.05
+  _frequency: 0.5
 --- !u!1 &1148594964
 GameObject:
   m_ObjectHideFlags: 0
@@ -2390,6 +2571,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1148594966}
   - component: {fileID: 1148594965}
+  - component: {fileID: 1148594967}
   m_Layer: 0
   m_Name: Runic Podium
   m_TagString: Untagged
@@ -2467,6 +2649,52 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1427533979}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &1148594967
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1148594964}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 1.3125}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0}
+    oldSize: {x: 1.6875, y: 2.625}
+    newSize: {x: 1.6875, y: 2.625}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 1.6875, y: 2.625}
+  m_EdgeRadius: 0
 --- !u!1 &1183329839
 GameObject:
   m_ObjectHideFlags: 0
@@ -2685,9 +2913,40 @@ MonoBehaviour:
   _usesLocalTime: 1
   _canRotate: 0
   _degreesPerSecond: {x: 0, y: 0, z: 15}
-  _canHover: 0
-  _amplitude: 0.5
-  _frequency: 1
+  _canHover: 1
+  _amplitude: 0.1
+  _frequency: 0.5
+--- !u!1 &1281012381
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1281012382}
+  m_Layer: 0
+  m_Name: Hand Point 02
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1281012382
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1281012381}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -6.610774, y: -1.9529433, z: 0.025561184}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1427533979}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1291918642
 GameObject:
   m_ObjectHideFlags: 0
@@ -2891,6 +3150,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1394525376}
   - component: {fileID: 1394525375}
+  - component: {fileID: 1394525377}
   m_Layer: 0
   m_Name: Walm Podium
   m_TagString: Untagged
@@ -2968,6 +3228,52 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1427533979}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &1394525377
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1394525374}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 1.3125}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0}
+    oldSize: {x: 1.6875, y: 2.625}
+    newSize: {x: 1.6875, y: 2.625}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 1.6875, y: 2.625}
+  m_EdgeRadius: 0
 --- !u!1 &1427533978
 GameObject:
   m_ObjectHideFlags: 0
@@ -3007,6 +3313,8 @@ Transform:
   - {fileID: 181643606}
   - {fileID: 380584021}
   - {fileID: 2023133220}
+  - {fileID: 1810281765}
+  - {fileID: 1281012382}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1427533980
@@ -3030,6 +3338,8 @@ MonoBehaviour:
   _merlinGrabHand: {fileID: 181643605}
   _walmGrabHand: {fileID: 380584020}
   _runicGrabHand: {fileID: 2023133219}
+  _handPoint01: {fileID: 1810281764}
+  _handPoint02: {fileID: 1281012381}
 --- !u!1 &1452519386
 GameObject:
   m_ObjectHideFlags: 0
@@ -3223,6 +3533,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1427533979}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
+--- !u!1 &1810281764
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1810281765}
+  m_Layer: 0
+  m_Name: Hand Point 01
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1810281765
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1810281764}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -9.485774, y: -1.9529433, z: 0.025561184}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1427533979}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1893432437
 GameObject:
   m_ObjectHideFlags: 0
@@ -3347,6 +3688,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1930016204}
+  - component: {fileID: 1930016205}
   m_Layer: 0
   m_Name: Fairy
   m_TagString: Untagged
@@ -3374,6 +3716,37 @@ Transform:
   - {fileID: 1211756266}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1930016205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1930016203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25bf3e6156362d54fa26a0b33816c27f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _faceSprites:
+    keys:
+    - Grin
+    - Smile
+    - Confused
+    - Angry
+    - Stare
+    values:
+    - {fileID: 6100763260885094525, guid: 88f22e6bcb7fe1441b90d976cd2a3a3f, type: 3}
+    - {fileID: 4618246266268886248, guid: 88f22e6bcb7fe1441b90d976cd2a3a3f, type: 3}
+    - {fileID: -8074496492765872198, guid: 88f22e6bcb7fe1441b90d976cd2a3a3f, type: 3}
+    - {fileID: 5727345122656830665, guid: 88f22e6bcb7fe1441b90d976cd2a3a3f, type: 3}
+    - {fileID: -2990903606454986008, guid: 88f22e6bcb7fe1441b90d976cd2a3a3f, type: 3}
+  _face: {fileID: 1075011127}
+  _leftArm: {fileID: 1024734038}
+  _rightArm: {fileID: 51214609}
+  _body: {fileID: 46076278}
+  _tail: {fileID: 1211756265}
+  _collar: {fileID: 987614397}
 --- !u!1 &2023133219
 GameObject:
   m_ObjectHideFlags: 0
@@ -3460,7 +3833,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.75, y: 0.8125}
+  m_Size: {x: 0.625, y: 0.6875}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -3544,7 +3917,7 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 0.75, y: 0.8125}
-    newSize: {x: 0.75, y: 0.8125}
+    newSize: {x: 0.625, y: 0.6875}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -3754,6 +4127,7 @@ SceneRoots:
   - {fileID: 1380775803}
   - {fileID: 1930016204}
   - {fileID: 27766500}
+  - {fileID: 557648467}
   - {fileID: 2039327786}
   - {fileID: 2117948995}
   - {fileID: 1427533979}

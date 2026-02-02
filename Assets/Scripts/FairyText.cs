@@ -4,7 +4,7 @@ public class FairyText : MonoBehaviour
 {
     [SerializeField] private string[] fairyMessage = 
     { 
-        "Choose your character",
+        "Choose a soul...",
         "",
         "",
         "",

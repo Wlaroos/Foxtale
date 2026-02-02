@@ -70,4 +70,9 @@ public class RotateHoverUtil : MonoBehaviour
             _frequency = Random.Range(_frequency, _frequency+.25f);
         }
     }
+
+    public void NewPosistionOffset()
+    {
+        _posOffset = transform.localPosition;
+    }
 }

@@ -96,6 +96,9 @@ public class CharacterSelection : MonoBehaviour
                 _merlinPointHand.gameObject.SetActive(false);
                 _walmPointHand.gameObject.SetActive(false);
                 _runicPointHand.gameObject.SetActive(false);
+
+                FairyAnimation.Instance.ArmsUp();
+                FairyAnimation.Instance.ChangeFace("Smile");
             }
         }
     }
