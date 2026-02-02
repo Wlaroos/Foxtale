@@ -37,25 +37,6 @@ public class MinigameCollectItems : BaseMinigame
                 }
             }
         }
-
-        if (Input.GetMouseButton(0)) // Detect slicing motion
-        {
-            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Collider2D[] hits = Physics2D.OverlapCircleAll(mousePosition, 0.5f);
-
-            foreach (Collider2D hit in hits)
-            {
-                if (hit.transform.parent == _collectiblesParent.transform)
-                {
-                    Destroy(hit.gameObject);
-                }
-            }
-
-            if (_collectiblesParent.transform.childCount == 0)
-            {
-                WinGame();
-            }
-        }
     }
 
     private Vector2 GetRandomPositionInBounds()

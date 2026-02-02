@@ -47,3 +47,5 @@ MonoBehaviour:
   minigameText: Repeatedly CLICK the BONE!
   _breakablePrefab: {fileID: 8354127773876877656, guid: 8c0d63879975b104d9bbef2d654dc5d3, type: 3}
   _clicksToBreak: 5
+  _breakEffect: {fileID: 271639274441877182, guid: 796a4a55609046a4ca1dd6a34ed9431e, type: 3}
+  _boneEffect: {fileID: 1703984352912723621, guid: f890d9e19652ea741a76e6ad90f54362, type: 3}

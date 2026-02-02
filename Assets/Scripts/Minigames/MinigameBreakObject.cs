@@ -4,6 +4,8 @@ public class MinigameBreakObject : BaseMinigame
 {
     [SerializeField] private GameObject _breakablePrefab;
     [SerializeField] private int _clicksToBreak = 5;
+    [SerializeField] private ParticleSystem _breakEffect;
+    [SerializeField] private ParticleSystem _boneEffect;
     private int _breakClicks = 0;
     private GameObject _breakableObject;
 
@@ -26,10 +28,11 @@ public class MinigameBreakObject : BaseMinigame
             if (hit.collider != null && hit.collider.gameObject == _breakableObject)
             {
                 _breakClicks++;
-                Debug.Log($"Object clicked {_breakClicks} times!");
+                Instantiate(_boneEffect, hit.transform.position, Quaternion.identity);
 
                 if (_breakClicks >= _clicksToBreak)
                 {
+                    Instantiate(_breakEffect, hit.transform.position, Quaternion.identity);
                     Destroy(_breakableObject);
                     WinGame();
                 }
