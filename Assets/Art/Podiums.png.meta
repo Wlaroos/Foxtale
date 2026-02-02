@@ -180,6 +180,72 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Podiums_1
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 0
+        width: 19
+        height: 40
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0.475}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 12453f4658aecba4cb2f98886535cdfb
+      internalID: -4687349219017825602
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Podiums_3
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 0
+        width: 17
+        height: 35
+      alignment: 9
+      pivot: {x: 0.4117647, y: 0.54285717}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a4470a571db598e4ca568546c9c834c6
+      internalID: 5340030567663935427
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Podiums_5
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 0
+        width: 23
+        height: 36
+      alignment: 9
+      pivot: {x: 0.43478262, y: 0.5277778}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4495123e2f5e2a24d9c0bd07c777a161
+      internalID: -535962207650752477
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
