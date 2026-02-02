@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using TMPro;
+using UnityEngine.TextCore.Text;
 
 public class FairyText : MonoBehaviour
 {
@@ -72,6 +73,7 @@ public class FairyText : MonoBehaviour
             _typewriterRef.SetFullText("");
             _fairyFinished = true;
             MinigameManager.Instance.StartRandomMinigame();
+            CharacterSelection.Instance.RandomlySelectCharacter();
             return;
         }
 

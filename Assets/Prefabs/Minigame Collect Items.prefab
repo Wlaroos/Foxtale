@@ -46,6 +46,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minigameText: CLICK the BUTTONS!
   _collectiblePrefab: {fileID: 1004055619882273414, guid: db1ff633874ef8441be44b79d7b06852, type: 3}
-  _totalCollectibles: 5
+  _totalCollectibles: 3
   _pressedSprite: {fileID: -7871266545849764089, guid: b2917cd210059684f93303ce67c8d544, type: 3}
   _clickedEffect: {fileID: 1703984352912723621, guid: ab7afba42e07bc24db60445a4d976d11, type: 3}

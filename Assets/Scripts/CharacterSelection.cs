@@ -261,4 +261,30 @@ public class CharacterSelection : MonoBehaviour
     {
         StartCoroutine(MoveHandToPointDEATH(_hand2, _handPoint03, .2f));
     }
+
+    public void RandomlySelectCharacter()
+    {
+        int randomChoice = Random.Range(0, 3);
+
+        switch (randomChoice)
+        {
+            case 0:
+                SelectMerlin();
+                break;
+            case 1:
+                SelectWalm();
+                break;
+            case 2:
+                SelectRunic();
+                break;
+        }
+
+        _selected = true;
+        _merlinPointHand.gameObject.SetActive(false);
+        _walmPointHand.gameObject.SetActive(false);
+        _runicPointHand.gameObject.SetActive(false);
+
+        FairyAnimation.Instance.ArmsUp();
+        FairyAnimation.Instance.ChangeFace("Smile");
+    }
 }

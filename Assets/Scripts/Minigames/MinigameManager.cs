@@ -21,7 +21,7 @@ public class MinigameManager : MonoBehaviour
     private float _currentTimer;
     private int _money = 0;
     private int _minigamesPlayed = 0; // Counter for the number of minigames played
-    private const float _timerDecreaseAmount = 0.2f; // Amount to decrease the timer
+    private const float _timerDecreaseAmount = 0.5f; // Amount to decrease the timer
     private const float _minTimerLimit = 2f; // Minimum timer limit
 
     private void Awake()
