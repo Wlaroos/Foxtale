@@ -131,8 +131,8 @@ public class CharacterSelection : MonoBehaviour
     public void SelectMerlin()
     {
         _merlinPodium.enabled = true;
-        Destroy(_walmPodium);
-        Destroy(_runicPodium);
+        Destroy(_walmPodium.gameObject);
+        Destroy(_runicPodium.gameObject);
 
         _merlinGrabHand.SetActive(false);
         _walmGrabHand.SetActive(true);
@@ -144,9 +144,9 @@ public class CharacterSelection : MonoBehaviour
 
     public void SelectWalm()
     {
-        Destroy(_merlinPodium);
+        Destroy(_merlinPodium.gameObject);
         _walmPodium.enabled = true;
-        Destroy(_runicPodium);
+        Destroy(_runicPodium.gameObject);
 
         _merlinGrabHand.SetActive(true);
         _walmGrabHand.SetActive(false);
@@ -158,8 +158,8 @@ public class CharacterSelection : MonoBehaviour
 
     public void SelectRunic()
     {
-        Destroy(_merlinPodium);
-        Destroy(_walmPodium);
+        Destroy(_merlinPodium.gameObject);
+        Destroy(_walmPodium.gameObject);
         _runicPodium.enabled = true;
 
         _merlinGrabHand.SetActive(true);
