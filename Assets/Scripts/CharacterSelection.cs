@@ -16,7 +16,7 @@ public class CharacterSelection : MonoBehaviour
     [SerializeField] private GameObject _handPoint02;
 
     private Color _defaultColor = Color.white;
-    private Color _hoverColor = new Color32(200,200,200,255);
+    private Color _hoverColor = new Color32(255,255,255,255);
 
     private SpriteRenderer _currentlyHoveredPodium;
     private SpriteRenderer _currentlyHoveredHand;
