@@ -17,7 +17,7 @@ public class MinigameDragObjectAway : BaseMinigame
         // Ensure the objects spawn far enough apart
         do
         {
-            draggablePosition = GetRandomPositionInBounds();
+            draggablePosition = transform.position;
             obstaclePosition = GetRandomPositionInBounds();
         } while (Vector2.Distance(draggablePosition, obstaclePosition) < _minSpawnDistance);
 

@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using UnityEngine;
 using TMPro;
-using Object = UnityEngine.Object;
 
 [RequireComponent(typeof(TMP_Text))]
 public class TypewriterEffect : MonoBehaviour
@@ -10,7 +9,22 @@ public class TypewriterEffect : MonoBehaviour
     [SerializeField] private float _typingSpeed = 0.05f;
     private TMP_Text _textComponent;
     private string _fullText;
-    [HideInInspector] public bool _isTyping;
+
+    private bool _isTyping;
+    public bool IsTyping
+    {
+        get => _isTyping;
+        private set
+        {
+            if (_isTyping != value)
+            {
+                _isTyping = value;
+                OnTypingStatusChanged?.Invoke(_isTyping); // Trigger the event
+            }
+        }
+    }
+
+    public event Action<bool> OnTypingStatusChanged; // Event for typing status changes
 
     private void Awake()
     {
@@ -19,30 +33,11 @@ public class TypewriterEffect : MonoBehaviour
         _textComponent.text = string.Empty;
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space) && _isTyping)
-        {
-            StopAllCoroutines();
-            _textComponent.text = _fullText;
-            _isTyping = false;
-        }
-
-        if (Input.GetMouseButtonDown(1) && _isTyping)
-        {
-            _typingSpeed = 0.01f;
-        }
-        else if (Input.GetMouseButtonUp(1) && _isTyping)
-        {
-            _typingSpeed = 0.05f;
-        }
-    }
-
     private IEnumerator TypeText()
     {
         _textComponent.text = string.Empty;
+        IsTyping = true;
 
-        _isTyping = true;
         bool insideTag = false;
 
         for (int i = 0; i < _fullText.Length; i++)
@@ -63,7 +58,7 @@ public class TypewriterEffect : MonoBehaviour
             if (letter == '>') insideTag = false;
         }
 
-        _isTyping = false;
+        IsTyping = false;
     }
 
     public void SetTypingSpeed(float newSpeed)

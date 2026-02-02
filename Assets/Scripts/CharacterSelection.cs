@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class CharacterSelection : MonoBehaviour
 {
+    public static CharacterSelection Instance;
     [SerializeField] private SpriteRenderer _merlinPodium;
     [SerializeField] private SpriteRenderer _walmPodium;
     [SerializeField] private SpriteRenderer _runicPodium;
@@ -14,6 +15,9 @@ public class CharacterSelection : MonoBehaviour
     [SerializeField] private GameObject _runicGrabHand;
     [SerializeField] private GameObject _handPoint01;
     [SerializeField] private GameObject _handPoint02;
+    [SerializeField] private GameObject _handPoint03;
+    [SerializeField] private ParticleSystem _bloodEffect;
+    [SerializeField] private ParticleSystem _boneEffect;
 
     private Color _defaultColor = Color.white;
     private Color _hoverColor = new Color32(255,255,255,255);
@@ -21,11 +25,27 @@ public class CharacterSelection : MonoBehaviour
     private SpriteRenderer _currentlyHoveredPodium;
     private SpriteRenderer _currentlyHoveredHand;
 
-    private bool _selected = false;
+    private GameObject _hand1;
+    private GameObject _hand2;
+
+    public bool _selected = false;
+    public bool _ready = false;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     private void Update()
     {
-        if(!_selected)
+        if(!_selected && _ready)
         {
             HandleHover();
             HandleClick();
@@ -145,8 +165,10 @@ public class CharacterSelection : MonoBehaviour
         _walmGrabHand.SetActive(true);
         _runicGrabHand.SetActive(true);
 
-        StartCoroutine(MoveHandToPoint(_walmGrabHand, _handPoint01));
-        StartCoroutine(MoveHandToPoint(_runicGrabHand, _handPoint02));
+        StartCoroutine(MoveHandToPoint(_walmGrabHand, _handPoint01, Random.Range(0.5f, 1.5f)));
+        _hand1 = _walmGrabHand;
+        StartCoroutine(MoveHandToPoint(_runicGrabHand, _handPoint02, Random.Range(0.5f, 1.5f)));
+        _hand2 = _runicGrabHand;
     }
 
     public void SelectWalm()
@@ -159,8 +181,10 @@ public class CharacterSelection : MonoBehaviour
         _walmGrabHand.SetActive(false);
         _runicGrabHand.SetActive(true);
 
-        StartCoroutine(MoveHandToPoint(_merlinGrabHand, _handPoint01));
-        StartCoroutine(MoveHandToPoint(_runicGrabHand, _handPoint02));
+        StartCoroutine(MoveHandToPoint(_merlinGrabHand, _handPoint01, Random.Range(0.5f, 1.5f)));
+        _hand1 = _merlinGrabHand;
+        StartCoroutine(MoveHandToPoint(_runicGrabHand, _handPoint02, Random.Range(0.5f, 1.5f)));
+        _hand2 = _runicGrabHand;
     }
 
     public void SelectRunic()
@@ -173,13 +197,14 @@ public class CharacterSelection : MonoBehaviour
         _walmGrabHand.SetActive(true);
         _runicGrabHand.SetActive(false);
 
-        StartCoroutine(MoveHandToPoint(_merlinGrabHand, _handPoint01));
-        StartCoroutine(MoveHandToPoint(_walmGrabHand, _handPoint02));
+        StartCoroutine(MoveHandToPoint(_merlinGrabHand, _handPoint01, Random.Range(0.5f, 1.5f)));
+        _hand1 = _merlinGrabHand;
+        StartCoroutine(MoveHandToPoint(_walmGrabHand, _handPoint02, Random.Range(0.5f, 1.5f)));
+        _hand2 = _walmGrabHand;
     }
 
-    private IEnumerator MoveHandToPoint(GameObject hand, GameObject point)
+    private IEnumerator MoveHandToPoint(GameObject hand, GameObject point, float duration)
     {
-        float duration = Random.Range(0.5f, 1.5f); // Duration of the movement
         float elapsed = 0f;
 
         Rigidbody2D rb = hand.GetComponent<Rigidbody2D>();
@@ -195,5 +220,45 @@ public class CharacterSelection : MonoBehaviour
         }
 
         hand.transform.position = targetPos;
+    }
+
+    private IEnumerator MoveHandToPointDEATH(GameObject hand, GameObject point, float duration)
+    {
+        float elapsed = 0f;
+
+        Rigidbody2D rb = hand.GetComponent<Rigidbody2D>();
+
+        Vector3 startingPos = hand.transform.position;
+        Vector3 targetPos = point.transform.position;
+
+        while (elapsed < duration)
+        {
+            rb.MovePosition(Vector3.Lerp(startingPos, targetPos, elapsed / duration));
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        hand.transform.position = targetPos;
+
+        Vector3 direction = (startingPos - targetPos).normalized;
+        Quaternion rotation = Quaternion.LookRotation(Vector3.forward, direction);
+
+        Instantiate(_bloodEffect, hand.transform.position, rotation);
+        Instantiate(_boneEffect, hand.transform.position, rotation);
+        Instantiate(_boneEffect, hand.transform.position, rotation);
+        Instantiate(_boneEffect, hand.transform.position, rotation);
+        Instantiate(_boneEffect, hand.transform.position, rotation);
+        Instantiate(_boneEffect, hand.transform.position, rotation);
+
+        Destroy(hand);
+    }
+
+    public void Death1()
+    {
+        StartCoroutine(MoveHandToPointDEATH(_hand1, _handPoint03, .2f));
+    }
+    public void Death2()
+    {
+        StartCoroutine(MoveHandToPointDEATH(_hand2, _handPoint03, .2f));
     }
 }

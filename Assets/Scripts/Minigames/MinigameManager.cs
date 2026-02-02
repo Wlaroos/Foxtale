@@ -20,6 +20,9 @@ public class MinigameManager : MonoBehaviour
     private int _fails = 0;
     private float _currentTimer;
     private int _money = 0;
+    private int _minigamesPlayed = 0; // Counter for the number of minigames played
+    private const float _timerDecreaseAmount = 0.2f; // Amount to decrease the timer
+    private const float _minTimerLimit = 2f; // Minimum timer limit
 
     private void Awake()
     {
@@ -32,6 +35,7 @@ public class MinigameManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
     void Start()
     {
         _sr = GetComponent<SpriteRenderer>();
@@ -85,14 +89,30 @@ public class MinigameManager : MonoBehaviour
         // Reset the timer and update the UI
         _currentTimer = _gameTimer;
         _timerSlider.value = 1f;
+
+        // Increment the minigames played counter
+        _minigamesPlayed++;
+
+        // Decrease the timer every 5 minigames, but ensure it doesn't go below the minimum limit
+        if (_minigamesPlayed % 5 == 0 && _gameTimer > _minTimerLimit)
+        {
+            _gameTimer = Mathf.Max(_gameTimer - _timerDecreaseAmount, _minTimerLimit);
+        }
     }
 
     void HandleWin()
     {
         _wins++;
+
+        string[] faces = { "Stare", "Angry", "Confused", "Sad", "Squint", "Cat" };
+        FairyAnimation.Instance.ChangeFace(faces[Random.Range(0, faces.Length)]);
+
         _money += 10; // Increment money after each win
+
         _moneyText.text = _money.ToString();
+
         _minigameText.text = "You won!";
+
         StartCoroutine(ColorToFade(Color.green, 0.75f));
         StartRandomMinigame();
     }
@@ -100,9 +120,29 @@ public class MinigameManager : MonoBehaviour
     void HandleFail()
     {
         _fails++;
+
+        FairyAnimation.Instance.ChangeFace("Evil");
+
         _minigameText.text = "You failed!";
+
         StartCoroutine(ColorToFade(Color.red, 0.75f));
+
+        if (_fails == 1)
+        {
+            CharacterSelection.Instance.Death1();
+        }
+        else if (_fails == 2)
+        {
+            CharacterSelection.Instance.Death2();
+            FairyAnimation.Instance.ArmDefault();
+        }
+        else if (_fails >= 3)
+        {
+            _minigameText.text = "Game Over!";
+        }
+
         ScreenShake.ShakeOnce(1, 5);
+
         StartRandomMinigame();
     }
 
@@ -122,7 +162,7 @@ public class MinigameManager : MonoBehaviour
         _sr.color = targetColor;
     }
 
-        private void OnDrawGizmos()
+    private void OnDrawGizmos()
     {
         Gizmos.color = Color.red; // Set the color for the bounds
         Gizmos.DrawWireCube(_boundsCenter, _boundsSize); // Draw the bounds as a wireframe cube

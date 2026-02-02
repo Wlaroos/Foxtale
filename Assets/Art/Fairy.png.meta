@@ -137,7 +137,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 27
-        y: 68
+        y: 86
         width: 7
         height: 14
       alignment: 0
@@ -159,7 +159,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 41
-        y: 68
+        y: 86
         width: 7
         height: 14
       alignment: 0
@@ -181,7 +181,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 29
-        y: 50
+        y: 68
         width: 17
         height: 16
       alignment: 0
@@ -203,7 +203,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1
-        y: 41
+        y: 59
         width: 19
         height: 6
       alignment: 0
@@ -225,7 +225,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 23
-        y: 35
+        y: 53
         width: 4
         height: 12
       alignment: 0
@@ -247,7 +247,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 30
-        y: 26
+        y: 44
         width: 15
         height: 22
       alignment: 0
@@ -269,7 +269,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 48
-        y: 35
+        y: 53
         width: 4
         height: 12
       alignment: 0
@@ -291,7 +291,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1
-        y: 18
+        y: 36
         width: 22
         height: 15
       alignment: 0
@@ -313,7 +313,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
+        y: 18
         width: 17
         height: 16
       alignment: 0
@@ -335,7 +335,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 19
-        y: 0
+        y: 18
         width: 17
         height: 16
       alignment: 0
@@ -357,7 +357,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 38
-        y: 0
+        y: 18
         width: 17
         height: 16
       alignment: 0
@@ -379,7 +379,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 57
-        y: 0
+        y: 18
         width: 17
         height: 16
       alignment: 0
@@ -392,6 +392,94 @@ TextureImporter:
       bones: []
       spriteID: 8ead0d3340d2e76d0800000000000000
       internalID: -2990903606454986008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fairy_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3ab3da56035f28f47bd266b9a04b01c7
+      internalID: -519934074
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fairy_13
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 0
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a1678c0083e414f4aa68e87ee560cf86
+      internalID: 1908842102
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fairy_14
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 0
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7d28604d23dfe0045b433f7b28e3d77b
+      internalID: 174384754
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fairy_15
+      rect:
+        serializedVersion: 2
+        x: 57
+        y: 0
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b036a7d5d85437949941b3907bc7e9b2
+      internalID: 1978850832
       vertices: []
       indices: 
       edges: []
@@ -414,6 +502,10 @@ TextureImporter:
       Fairy_1: 3841437482219250654
       Fairy_10: 5727345122656830665
       Fairy_11: -2990903606454986008
+      Fairy_12: -519934074
+      Fairy_13: 1908842102
+      Fairy_14: 174384754
+      Fairy_15: 1978850832
       Fairy_2: 6100763260885094525
       Fairy_3: 2892839234517097811
       Fairy_4: -4403751290425384394
