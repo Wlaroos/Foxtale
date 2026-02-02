@@ -20,6 +20,7 @@ public class MinigameManager : MonoBehaviour
     private int _fails = 0;
     private float _currentTimer;
     private int _money = 0;
+    public int Money => _money;
     private int _minigamesPlayed = 0; // Counter for the number of minigames played
     private const float _timerDecreaseAmount = 0.5f; // Amount to decrease the timer
     private const float _minTimerLimit = 2f; // Minimum timer limit
@@ -127,23 +128,25 @@ public class MinigameManager : MonoBehaviour
 
         StartCoroutine(ColorToFade(Color.red, 0.75f));
 
-        if (_fails == 1)
+        if (_fails <= 1)
         {
             CharacterSelection.Instance.Death1();
+            StartRandomMinigame();
         }
         else if (_fails == 2)
         {
             CharacterSelection.Instance.Death2();
             FairyAnimation.Instance.ArmDefault();
+            StartRandomMinigame();
         }
         else if (_fails >= 3)
         {
             _minigameText.text = "Game Over!";
+            FairyAnimation.Instance.ChangeFace("Evil");
+            FairyText.Instance.GameOver();
         }
 
         ScreenShake.ShakeOnce(1, 5);
-
-        StartRandomMinigame();
     }
 
     private IEnumerator ColorToFade(Color color, float duration)

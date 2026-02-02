@@ -4,23 +4,15 @@ using UnityEngine;
 public class CharacterSelection : MonoBehaviour
 {
     public static CharacterSelection Instance;
-    [SerializeField] private SpriteRenderer _merlinPodium;
-    [SerializeField] private SpriteRenderer _walmPodium;
-    [SerializeField] private SpriteRenderer _runicPodium;
-    [SerializeField] private SpriteRenderer _merlinPointHand;
-    [SerializeField] private SpriteRenderer _walmPointHand;
-    [SerializeField] private SpriteRenderer _runicPointHand;
-    [SerializeField] private GameObject _merlinGrabHand;
-    [SerializeField] private GameObject _walmGrabHand;
-    [SerializeField] private GameObject _runicGrabHand;
-    [SerializeField] private GameObject _handPoint01;
-    [SerializeField] private GameObject _handPoint02;
-    [SerializeField] private GameObject _handPoint03;
+    [SerializeField] private SpriteRenderer[] _podium;
+    [SerializeField] private SpriteRenderer[] _pointHand;
+    [SerializeField] private GameObject[] _grabHand;
+    [SerializeField] private GameObject[] _handPoint;
     [SerializeField] private ParticleSystem _bloodEffect;
     [SerializeField] private ParticleSystem _boneEffect;
 
     private Color _defaultColor = Color.white;
-    private Color _hoverColor = new Color32(255,255,255,255);
+    private Color _hoverColor = new Color32(255, 255, 255, 255);
 
     private SpriteRenderer _currentlyHoveredPodium;
     private SpriteRenderer _currentlyHoveredHand;
@@ -28,8 +20,10 @@ public class CharacterSelection : MonoBehaviour
     private GameObject _hand1;
     private GameObject _hand2;
 
-    public bool _selected = false;
-    public bool _ready = false;
+    [HideInInspector] public bool _selected = false;
+    [HideInInspector] public bool _ready = false;
+
+    private int _selectedCharacterIndex = -1; // Tracks the selected character (0 = Merlin, 1 = Walm, 2 = Runic)
 
     private void Awake()
     {
@@ -45,7 +39,7 @@ public class CharacterSelection : MonoBehaviour
 
     private void Update()
     {
-        if(!_selected && _ready)
+        if (!_selected && _ready)
         {
             HandleHover();
             HandleClick();
@@ -54,7 +48,6 @@ public class CharacterSelection : MonoBehaviour
 
     private void HandleHover()
     {
-        // Cast a ray from the camera to the mouse position
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
 
@@ -62,30 +55,22 @@ public class CharacterSelection : MonoBehaviour
         {
             GameObject hitObject = hit.collider.gameObject;
 
-            // Check which podium is being hovered over
-            if (hitObject == _merlinPodium.gameObject)
+            for (int i = 0; i < _podium.Length; i++)
             {
-                SetHoverState(_merlinPodium, _merlinPointHand);
-            }
-            else if (hitObject == _walmPodium.gameObject)
-            {
-                SetHoverState(_walmPodium, _walmPointHand);
-            }
-            else if (hitObject == _runicPodium.gameObject)
-            {
-                SetHoverState(_runicPodium, _runicPointHand);
+                if (hitObject == _podium[i].gameObject)
+                {
+                    SetHoverState(_podium[i], _pointHand[i]);
+                    return;
+                }
             }
         }
-        else
-        {
-            // Reset hover state if no object is hit
-            ResetHoverState();
-        }
+
+        ResetHoverState();
     }
 
     private void HandleClick()
     {
-        if (Input.GetMouseButtonDown(0)) // Left mouse button
+        if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
@@ -94,48 +79,22 @@ public class CharacterSelection : MonoBehaviour
             {
                 GameObject hitObject = hit.collider.gameObject;
 
-                if(hitObject != _merlinPodium.gameObject &&
-                   hitObject != _walmPodium.gameObject &&
-                   hitObject != _runicPodium.gameObject)
+                for (int i = 0; i < _podium.Length; i++)
                 {
-                    return; // Clicked on something else
+                    if (hitObject == _podium[i].gameObject)
+                    {
+                        SelectCharacter(i);
+                        return;
+                    }
                 }
-
-                _merlinPodium.color = _defaultColor;
-                _walmPodium.color = _defaultColor;
-                _runicPodium.color = _defaultColor;
-
-                // Check which podium is clicked
-                if (hitObject == _merlinPodium.gameObject)
-                {
-                    SelectMerlin();
-                }
-                else if (hitObject == _walmPodium.gameObject)
-                {
-                    SelectWalm();
-                }
-                else if (hitObject == _runicPodium.gameObject)
-                {
-                    SelectRunic();
-                }
-
-                _selected = true;
-                _merlinPointHand.gameObject.SetActive(false);
-                _walmPointHand.gameObject.SetActive(false);
-                _runicPointHand.gameObject.SetActive(false);
-
-                FairyAnimation.Instance.ArmsUp();
-                FairyAnimation.Instance.ChangeFace("Smile");
             }
         }
     }
 
     private void SetHoverState(SpriteRenderer podium, SpriteRenderer hand)
     {
-        // Reset the previous hover state
         ResetHoverState();
 
-        // Set the new hover state
         _currentlyHoveredPodium = podium;
         _currentlyHoveredHand = hand;
 
@@ -155,52 +114,68 @@ public class CharacterSelection : MonoBehaviour
         }
     }
 
-    public void SelectMerlin()
+    private void SelectCharacter(int characterIndex)
     {
-        _merlinPodium.enabled = true;
-        Destroy(_walmPodium.gameObject);
-        Destroy(_runicPodium.gameObject);
+        _selectedCharacterIndex = characterIndex;
 
-        _merlinGrabHand.SetActive(false);
-        _walmGrabHand.SetActive(true);
-        _runicGrabHand.SetActive(true);
+        for (int i = 0; i < _podium.Length; i++)
+        {
+            if (i == characterIndex)
+            {
+                _podium[i].enabled = true;
+            }
+            else
+            {
+                Destroy(_podium[i].gameObject);
+            }
+        }
 
-        StartCoroutine(MoveHandToPoint(_walmGrabHand, _handPoint01, Random.Range(0.5f, 1.5f)));
-        _hand1 = _walmGrabHand;
-        StartCoroutine(MoveHandToPoint(_runicGrabHand, _handPoint02, Random.Range(0.5f, 1.5f)));
-        _hand2 = _runicGrabHand;
+        for (int i = 0; i < _grabHand.Length; i++)
+        {
+            _grabHand[i].SetActive(i != characterIndex);
+        }
+
+        _hand1 = _grabHand[(characterIndex + 1) % _grabHand.Length];
+        _hand2 = _grabHand[(characterIndex + 2) % _grabHand.Length];
+
+        StartCoroutine(MoveHandToPoint(_hand1, _handPoint[0], Random.Range(0.5f, 1.5f)));
+        StartCoroutine(MoveHandToPoint(_hand2, _handPoint[1], Random.Range(0.5f, 1.5f)));
+
+        _selected = true;
+
+        foreach (var hand in _pointHand)
+        {
+            hand.gameObject.SetActive(false);
+        }
+
+        FairyAnimation.Instance.ArmsUp();
+        FairyAnimation.Instance.ChangeFace("Smile");
     }
 
-    public void SelectWalm()
+    public void RandomlySelectCharacter()
     {
-        Destroy(_merlinPodium.gameObject);
-        _walmPodium.enabled = true;
-        Destroy(_runicPodium.gameObject);
-
-        _merlinGrabHand.SetActive(true);
-        _walmGrabHand.SetActive(false);
-        _runicGrabHand.SetActive(true);
-
-        StartCoroutine(MoveHandToPoint(_merlinGrabHand, _handPoint01, Random.Range(0.5f, 1.5f)));
-        _hand1 = _merlinGrabHand;
-        StartCoroutine(MoveHandToPoint(_runicGrabHand, _handPoint02, Random.Range(0.5f, 1.5f)));
-        _hand2 = _runicGrabHand;
+        SelectCharacter(Random.Range(0, _podium.Length));
     }
 
-    public void SelectRunic()
+    public void Death1()
     {
-        Destroy(_merlinPodium.gameObject);
-        Destroy(_walmPodium.gameObject);
-        _runicPodium.enabled = true;
+        StartCoroutine(MoveHandToPointDEATH(_hand1, _handPoint[2], 0.2f));
+    }
 
-        _merlinGrabHand.SetActive(true);
-        _walmGrabHand.SetActive(true);
-        _runicGrabHand.SetActive(false);
+    public void Death2()
+    {
+        StartCoroutine(MoveHandToPointDEATH(_hand2, _handPoint[2], 0.2f));
+    }
 
-        StartCoroutine(MoveHandToPoint(_merlinGrabHand, _handPoint01, Random.Range(0.5f, 1.5f)));
-        _hand1 = _merlinGrabHand;
-        StartCoroutine(MoveHandToPoint(_walmGrabHand, _handPoint02, Random.Range(0.5f, 1.5f)));
-        _hand2 = _walmGrabHand;
+    public void Death3()
+    {
+        if (_selectedCharacterIndex >= 0 && _selectedCharacterIndex < _grabHand.Length)
+        {
+            _podium[_selectedCharacterIndex].enabled = false;
+            _grabHand[_selectedCharacterIndex].SetActive(true);
+            GameObject selectedHand = _grabHand[_selectedCharacterIndex];
+            StartCoroutine(MoveHandToPointFINAL(selectedHand, _handPoint[3], 2f));
+        }
     }
 
     private IEnumerator MoveHandToPoint(GameObject hand, GameObject point, float duration)
@@ -253,38 +228,60 @@ public class CharacterSelection : MonoBehaviour
         Destroy(hand);
     }
 
-    public void Death1()
+    private IEnumerator MoveHandToPointFINAL(GameObject hand, GameObject point, float duration)
     {
-        StartCoroutine(MoveHandToPointDEATH(_hand1, _handPoint03, .2f));
-    }
-    public void Death2()
-    {
-        StartCoroutine(MoveHandToPointDEATH(_hand2, _handPoint03, .2f));
-    }
+        float elapsed = 0f;
 
-    public void RandomlySelectCharacter()
-    {
-        int randomChoice = Random.Range(0, 3);
+        Rigidbody2D rb = hand.GetComponent<Rigidbody2D>();
 
-        switch (randomChoice)
+        Vector3 startingPos = hand.transform.position;
+        Vector3 targetPos = point.transform.position;
+
+        while (elapsed < duration)
         {
-            case 0:
-                SelectMerlin();
-                break;
-            case 1:
-                SelectWalm();
-                break;
-            case 2:
-                SelectRunic();
-                break;
+            rb.MovePosition(Vector3.Lerp(startingPos, targetPos, elapsed / duration));
+            elapsed += Time.deltaTime;
+            yield return null;
         }
 
-        _selected = true;
-        _merlinPointHand.gameObject.SetActive(false);
-        _walmPointHand.gameObject.SetActive(false);
-        _runicPointHand.gameObject.SetActive(false);
+        hand.transform.position = targetPos;
 
-        FairyAnimation.Instance.ArmsUp();
-        FairyAnimation.Instance.ChangeFace("Smile");
+        FairyAnimation.Instance.ChangeFace("Evil");
+
+        yield return new WaitForSeconds(3f);
+
+        Instantiate(_bloodEffect, hand.transform.position, Quaternion.Euler(0, 0, 0));
+        Instantiate(_bloodEffect, hand.transform.position, Quaternion.Euler(0, 0, 30));
+        Instantiate(_bloodEffect, hand.transform.position, Quaternion.Euler(0, 0, 60));
+        Instantiate(_bloodEffect, hand.transform.position, Quaternion.Euler(0, 0, 90));
+        Instantiate(_bloodEffect, hand.transform.position, Quaternion.Euler(0, 0, 120));
+        Instantiate(_bloodEffect, hand.transform.position, Quaternion.Euler(0, 0, 150));
+        Instantiate(_bloodEffect, hand.transform.position, Quaternion.Euler(0, 0, 180));
+        Instantiate(_bloodEffect, hand.transform.position, Quaternion.Euler(0, 0, 210));
+        Instantiate(_bloodEffect, hand.transform.position, Quaternion.Euler(0, 0, 240));
+        Instantiate(_bloodEffect, hand.transform.position, Quaternion.Euler(0, 0, 270));
+        Instantiate(_bloodEffect, hand.transform.position, Quaternion.Euler(0, 0, 300));
+        Instantiate(_bloodEffect, hand.transform.position, Quaternion.Euler(0, 0, 330));
+        Instantiate(_bloodEffect, hand.transform.position, Quaternion.Euler(0, 0, 360));
+
+        Instantiate(_boneEffect, hand.transform.position, Quaternion.Euler(0, 0, 0));
+        Instantiate(_boneEffect, hand.transform.position, Quaternion.Euler(0, 0, 30));
+        Instantiate(_boneEffect, hand.transform.position, Quaternion.Euler(0, 0, 60));
+        Instantiate(_boneEffect, hand.transform.position, Quaternion.Euler(0, 0, 90));
+        Instantiate(_boneEffect, hand.transform.position, Quaternion.Euler(0, 0, 120));
+        Instantiate(_boneEffect, hand.transform.position, Quaternion.Euler(0, 0, 150));
+        Instantiate(_boneEffect, hand.transform.position, Quaternion.Euler(0, 0, 180));
+        Instantiate(_boneEffect, hand.transform.position, Quaternion.Euler(0, 0, 210));
+        Instantiate(_boneEffect, hand.transform.position, Quaternion.Euler(0, 0, 240));
+        Instantiate(_boneEffect, hand.transform.position, Quaternion.Euler(0, 0, 270));
+        Instantiate(_boneEffect, hand.transform.position, Quaternion.Euler(0, 0, 300));
+        Instantiate(_boneEffect, hand.transform.position, Quaternion.Euler(0, 0, 330));
+        Instantiate(_boneEffect, hand.transform.position, Quaternion.Euler(0, 0, 360));
+
+        Destroy(hand);
+
+        yield return new WaitForSeconds(5f);
+
+        Application.Quit();
     }
 }

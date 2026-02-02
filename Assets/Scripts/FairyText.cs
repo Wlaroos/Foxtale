@@ -2,9 +2,12 @@ using System;
 using UnityEngine;
 using TMPro;
 using UnityEngine.TextCore.Text;
+using System.IO;
+using System.Collections;
 
 public class FairyText : MonoBehaviour
 {
+    public static FairyText Instance;
     [SerializeField] private string[] _fairyMessage = 
     {
         "Welcome, wandering soul, to the trial you must endure to regain your corporeal form",
@@ -27,6 +30,15 @@ public class FairyText : MonoBehaviour
 
     private void Awake()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
         _typewriterRef = GetComponent<TypewriterEffect>();
 
         if (_typewriterRef == null)
@@ -143,5 +155,20 @@ public class FairyText : MonoBehaviour
         {
             _lmbText.color = new Color32(0, 0, 0, 255);
         }
+    }
+
+    public void GameOver()
+    {
+        StartCoroutine(GameOverCoroutine());
+    }
+
+    private IEnumerator GameOverCoroutine()
+    {
+        FairyAnimation.Instance.ChangeFace("Grin");
+        _typewriterRef.SetFullText($"{MinigameManager.Instance.Money} Gold? You really thought you could just buy your way out with this?");
+        yield return new WaitUntil(() => !_typewriterRef.IsTyping);
+        yield return new WaitForSeconds(1f);
+        CharacterSelection.Instance.Death3();
+        yield return new WaitForSeconds(2f);
     }
 }

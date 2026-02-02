@@ -508,7 +508,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -2
   m_Sprite: {fileID: 21300000, guid: 7015a4adabb1c9648b0a2d78d3c02e21, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1263,7 +1263,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 2
+  m_Transition: 0
   m_Colors:
     m_NormalColor: {r: 1, g: 0, b: 0, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -1632,6 +1632,37 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.6875, y: 2.9375}
   m_EdgeRadius: 0
+--- !u!1 &441595130
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 441595131}
+  m_Layer: 0
+  m_Name: Hand Point 04
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &441595131
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 441595130}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1.610774, y: -6.890915, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1427533979}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &472656403
 GameObject:
   m_ObjectHideFlags: 0
@@ -2707,7 +2738,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: -1
   m_TargetDisplay: 0
 --- !u!224 &888576305
 RectTransform:
@@ -3969,6 +4000,7 @@ Transform:
   - {fileID: 1810281765}
   - {fileID: 1281012382}
   - {fileID: 1636030267}
+  - {fileID: 441595131}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1427533980
@@ -3983,18 +4015,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fbb3ad3b8206834ca2913731089f871, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _merlinPodium: {fileID: 406342777}
-  _walmPodium: {fileID: 1394525375}
-  _runicPodium: {fileID: 1148594965}
-  _merlinPointHand: {fileID: 1570957590}
-  _walmPointHand: {fileID: 1291918645}
-  _runicPointHand: {fileID: 557864113}
-  _merlinGrabHand: {fileID: 181643605}
-  _walmGrabHand: {fileID: 380584020}
-  _runicGrabHand: {fileID: 2023133219}
-  _handPoint01: {fileID: 1810281764}
-  _handPoint02: {fileID: 1281012381}
-  _handPoint03: {fileID: 1636030266}
+  _podium:
+  - {fileID: 406342777}
+  - {fileID: 1394525375}
+  - {fileID: 1148594965}
+  _pointHand:
+  - {fileID: 1570957590}
+  - {fileID: 1291918645}
+  - {fileID: 557864113}
+  _grabHand:
+  - {fileID: 181643605}
+  - {fileID: 380584020}
+  - {fileID: 2023133219}
+  _handPoint:
+  - {fileID: 1810281764}
+  - {fileID: 1281012381}
+  - {fileID: 1636030266}
+  - {fileID: 441595130}
   _bloodEffect: {fileID: 7767934770358533092, guid: 3adee23244c9a4f43a84fd19fb96c8c3, type: 3}
   _boneEffect: {fileID: 1703984352912723621, guid: f890d9e19652ea741a76e6ad90f54362, type: 3}
   _selected: 0
@@ -4366,7 +4403,7 @@ Transform:
   m_GameObject: {fileID: 1636030266}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.326726, y: -8.953415, z: 0.025561184}
+  m_LocalPosition: {x: 1.451726, y: -8.953415, z: 0.025561184}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5017,7 +5054,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Yestin
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ba48fc4d91c752e46bf37fef83e8fb26, type: 2}
   m_sharedMaterial: {fileID: 3941889934546051402, guid: ba48fc4d91c752e46bf37fef83e8fb26, type: 2}

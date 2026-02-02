@@ -9,6 +9,8 @@ public class MinigameDragObjectAway : BaseMinigame
     private GameObject _draggableObject;
     private GameObject _movingObstacle;
 
+    private bool _isDragging = false;
+
     protected override void StartMinigame()
     {
         Vector2 draggablePosition;
@@ -39,12 +41,8 @@ public class MinigameDragObjectAway : BaseMinigame
             Time.deltaTime * _obstacleSpeed
         );
 
-        // Drag the object with the mouse
-        if (Input.GetMouseButton(0))
-        {
-            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            _draggableObject.transform.position = mousePosition;
-        }
+        // Handle dragging logic
+        HandleDragging();
 
         // Check if the obstacle collides with the draggable object
         if (Vector2.Distance(_draggableObject.transform.position, _movingObstacle.transform.position) < 0.5f)
@@ -56,6 +54,31 @@ public class MinigameDragObjectAway : BaseMinigame
         if (!new Rect(boundsCenter - boundsSize / 2, boundsSize).Contains(_draggableObject.transform.position))
         {
             WinGame();
+        }
+    }
+
+    private void HandleDragging()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero, Mathf.Infinity, MinigameLayerMask);
+
+            if (hit.collider != null && hit.collider.gameObject == _draggableObject)
+            {
+                _isDragging = true;
+            }
+        }
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            _isDragging = false;
+        }
+
+        if (_isDragging)
+        {
+            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            _draggableObject.transform.position = mousePosition;
         }
     }
 
