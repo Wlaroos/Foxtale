@@ -102,7 +102,7 @@ Need another refresher?
 
 === gameover ===
 #Face:Grin
-Gold? You really thought you could just buy your way out with this?
+Did you really think I'd let you go in exchange for gold?
 -> DONE
 
 === function waitForCharacterSelect() ===

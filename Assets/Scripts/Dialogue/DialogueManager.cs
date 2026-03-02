@@ -104,6 +104,7 @@ private void Update()
         _dialogueText.text = string.Empty;
 
         MinigameManager.Instance.StartRandomMinigame();
+        //Debug.Log("Dialogue ended, starting minigame...");
     }
 
     private void ContinueDialogue()

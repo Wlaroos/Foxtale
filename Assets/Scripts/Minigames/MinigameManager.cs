@@ -50,11 +50,6 @@ public class MinigameManager : MonoBehaviour
         {
             _currentTimer -= Time.deltaTime;
             _timerSlider.value = _currentTimer / _gameTimer;
-
-            if (_currentTimer <= 0)
-            {
-                HandleFail(); // Trigger fail if the timer runs out
-            }
         }
     }
 
@@ -128,7 +123,7 @@ public class MinigameManager : MonoBehaviour
 
         StartCoroutine(ColorToFade(Color.red, 0.75f));
 
-        if (_fails <= 1)
+        if (_fails == 1)
         {
             CharacterSelection.Instance.Death1();
             StartRandomMinigame();
