@@ -143,7 +143,7 @@ public class MinigameManager : MonoBehaviour
         {
             _minigameText.text = "Game Over!";
             FairyAnimation.Instance.ChangeFace("Evil");
-            FairyText.Instance.GameOver();
+            DialogueManager.Instance.GameOver();
         }
 
         ScreenShake.ShakeOnce(1, 5);
