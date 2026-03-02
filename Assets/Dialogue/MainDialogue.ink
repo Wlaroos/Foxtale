@@ -1,25 +1,37 @@
-EXTERNAL waitForCondition()
+EXTERNAL waitForCharacterSelect()
 
 -> main
 
 === main ===
 #Face:Smile
-Welcome, wandering soul, to the trial you must endure to regain your corporeal form.
+Welcome you lucky little bastard!
 
-I've been assigned as the test administrator for these little games.
+You've been randomly chosen to face a trial where you can gain a new body and start a new life!
+
+Wanna play?
+
++[Yes]
+    Great!
++[No]
+    #ExitGame
+    ->END
+
+- I'll be the test administrator for these little games you're about to play
 
 #Face:Grin
-First, you must inhabit a vessel from one of these podiums to proceed.
+First, you must pick a vessel from one of these podiums
 
 Can't really play games with flimsy ghost mitts, now can you?
 
 #Face:Smile
-If you survive, that'll be your new body.
+If you survive, that'll be your new body
+
+So pick one you like
 
 #Face:Stare
 Now,
 
-~ waitForCondition()
+~ waitForCharacterSelect()
 CHOOSE <br> A <br> VESSEL
 
 // + [Walm]
@@ -30,31 +42,71 @@ CHOOSE <br> A <br> VESSEL
 // - Great choice, I like the bones on that one
 
 #Face:Evil
-And just to up the stakes, I've put an innocent soul inside each of these.
+And just to up the stakes, I've put an innocent soul inside each of these
 
-You get three strikes, each resulting in the loss of a vessel and the soul within.
+You get three strikes, each resulting in the loss of a vessel and the soul within
 
 #Face:Smile
-However, each success will reward you with some currency to spend later on.
+However, each success will reward you with some currency to spend later on
 
 #Face:Grin
-If you lose, I might be persuaded to let you keep your soul and body for a price.
+If you lose, I might be persuaded to let you keep your soul and body for a price
 
 #Face:Smile
 Before we begin, do you need a refresher?
 
 +[Yes]
+#Face:Confused
     Really? I just told you this...
-    -> main
+    -> introRepeat
 +[No]
-    Perfect!
+#Face:Grin
+    Perfect, lets start!
     
 -> END
+
+=== introRepeat ===
+#Face:Smile
+Welcome, wandering soul, blah blah blah
+
+I'm the test administrator
+
+#Face:Stare
+You already picked a vessel, don't need to ask that again
+
+#Face:Smile
+If you survive, that'll be your new body
+
+#Face:Evil
+There's an innocent soul inside each vessel because I'm evil
+
+Every time you mess up in the game a vessel gets destroyed
+
+#Face:Smile
+You get money each time you succeed
+
+#Face:Grin
+If you lose, I might let you keep your soul and body for a price
+
+#Face:Smile
+Need another refresher?
+
++[Yes]
+#Face:Stare
+    Yeah, no
++[No]
+#Face:Grin
+    Good
+    
+- -> END
 
 === gameover ===
 #Face:Grin
 Gold? You really thought you could just buy your way out with this?
 -> DONE
 
-=== function waitForCondition() ===
+=== function waitForCharacterSelect() ===
+    ~ return
+    
+=== function endGame() ===
     ~ return

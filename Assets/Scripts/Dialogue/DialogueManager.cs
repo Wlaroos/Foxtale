@@ -4,7 +4,6 @@ using Ink.Runtime;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
-using System;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -26,6 +25,7 @@ public class DialogueManager : MonoBehaviour
     private bool _isDialoguePlaying;
     [SerializeField] private TextMeshProUGUI _lmbText;
     private const string FACE_TAG = "Face";
+    private const string EXIT_GAME_TAG = "ExitGame";
     private bool _isWaitingForExternal = false;
 
     [Header("Typewriter Effect")]
@@ -45,7 +45,6 @@ public class DialogueManager : MonoBehaviour
         else
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
 
         _choicesText = new TextMeshProUGUI[_choices.Length];
@@ -63,7 +62,7 @@ public class DialogueManager : MonoBehaviour
         _dialoguePanel.SetActive(false);
         _currentStory = new Story(_inkJSONAsset.text);
 
-        _currentStory.BindExternalFunction("waitForCondition", () =>
+        _currentStory.BindExternalFunction("waitForCharacterSelect", () =>
         {
             StartCoroutine(WaitForCharacterSelection());
         });
@@ -73,7 +72,7 @@ public class DialogueManager : MonoBehaviour
 
 private void Update()
 {
-    if (!_isDialoguePlaying || _isWaitingForExternal) return;
+    if (_currentStory == null ||!_isDialoguePlaying || _isWaitingForExternal) return;
 
     if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
     {
@@ -119,6 +118,7 @@ private void Update()
         }
 
         _fullText = _currentStory.Continue();
+
         HandleTags(_currentStory.currentTags);
 
         if (_enableTypewriterEffect)
@@ -209,13 +209,20 @@ public void MakeChoice(int choiceIndex)
     {
         foreach (string tag in tags)
         {
-            string[] splitTag = tag.Split(':');
-            string tagKey = splitTag[0].Trim();
-            string tagValue = splitTag[1].Trim();
-
-            if (tagKey.Equals(FACE_TAG))
+            if (tag.Contains(":"))
             {
-                FairyAnimation.Instance.ChangeFace(tagValue);
+                string[] splitTag = tag.Split(':');
+                string tagKey = splitTag[0].Trim();
+                string tagValue = splitTag[1].Trim();
+
+                if (tagKey.Equals(FACE_TAG))
+                {
+                    FairyAnimation.Instance.ChangeFace(tagValue);
+                }
+            }
+            else if (tag.Equals(EXIT_GAME_TAG))
+            {
+                ExitGame();
             }
         }
     }
@@ -236,46 +243,80 @@ public void MakeChoice(int choiceIndex)
         yield return new WaitForSeconds(2f);
     }
 
-private void FinishTypingEarly()
-{
-    if (_typingCoroutine != null)
+    private void FinishTypingEarly()
     {
-        StopCoroutine(_typingCoroutine);
-    }
-    _dialogueText.text = _fullText;
-    _isTyping = false;
-    _lmbText.color = new Color32(0, 0, 0, 255);
-    _typingCoroutine = null;
-}
-
-private IEnumerator TypeText()
-{
-    _dialogueText.text = string.Empty;
-    _isTyping = true;
-    _lmbText.color = new Color32(0, 0, 0, 130);
-
-    bool insideTag = false;
-
-    // We use a simple loop. The 'Update' method now catches the click 
-    // and calls FinishTypingEarly(), which stops this coroutine.
-    foreach (char letter in _fullText.ToCharArray())
-    {
-        if (letter == '<') insideTag = true;
-        if (letter == '>') insideTag = false;
-
-        if (!insideTag)
+        if (_typingCoroutine != null)
         {
-            _dialogueText.text += letter;
-            yield return new WaitForSeconds(_typingSpeed);
+            StopCoroutine(_typingCoroutine);
         }
-        else
-        {
-            _dialogueText.text += letter;
-        }
+        _dialogueText.text = _fullText;
+        _isTyping = false;
+        _lmbText.color = new Color32(0, 0, 0, 255);
+        _typingCoroutine = null;
     }
 
-    _isTyping = false;
-    _lmbText.color = new Color32(0, 0, 0, 255);
-    _typingCoroutine = null;
-}
+    private IEnumerator TypeText()
+    {
+        _dialogueText.text = string.Empty;
+        _isTyping = true;
+        _lmbText.color = new Color32(0, 0, 0, 130);
+
+        bool insideTag = false;
+
+        // We use a simple loop. The 'Update' method now catches the click 
+        // and calls FinishTypingEarly(), which stops this coroutine.
+        foreach (char letter in _fullText.ToCharArray())
+        {
+            if (letter == '<') insideTag = true;
+            if (letter == '>') insideTag = false;
+
+            if (!insideTag)
+            {
+                _dialogueText.text += letter;
+                yield return new WaitForSeconds(_typingSpeed);
+            }
+            else
+            {
+                _dialogueText.text += letter;
+            }
+        }
+
+        _isTyping = false;
+        _lmbText.color = new Color32(0, 0, 0, 255);
+        _typingCoroutine = null;
+    }
+
+    private void ExitGame()
+    {
+        Debug.Log("Exiting game...");
+        
+        StopAllCoroutines(); 
+        
+        _isDialoguePlaying = false;
+        _isWaitingForExternal = false;
+        _dialoguePanel.SetActive(false);
+
+        #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+        #else
+            Application.Quit();
+            //System.Diagnostics.Process.GetCurrentProcess().Kill();
+        #endif
+    }
+
+    private void OnApplicationQuit()
+    {
+        // Stop all coroutines to prevent freezing
+        StopAllCoroutines();
+
+        // Cleanup Ink
+        if (_currentStory != null)
+        {
+            _currentStory.UnbindExternalFunction("waitForCharacterSelect");
+        }
+
+        // Additional cleanup logic if necessary
+        _isDialoguePlaying = false;
+        _isWaitingForExternal = false;
+    }
 }

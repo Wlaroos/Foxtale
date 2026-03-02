@@ -142,7 +142,6 @@ public class MinigameManager : MonoBehaviour
         else if (_fails >= 3)
         {
             _minigameText.text = "Game Over!";
-            FairyAnimation.Instance.ChangeFace("Evil");
             DialogueManager.Instance.GameOver();
         }
 

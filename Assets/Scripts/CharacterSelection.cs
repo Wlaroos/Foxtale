@@ -138,8 +138,8 @@ public class CharacterSelection : MonoBehaviour
         _hand1 = _grabHand[(characterIndex + 1) % _grabHand.Length];
         _hand2 = _grabHand[(characterIndex + 2) % _grabHand.Length];
 
-        StartCoroutine(MoveHandToPoint(_hand1, _handPoint[0], Random.Range(0.5f, 1.5f)));
-        StartCoroutine(MoveHandToPoint(_hand2, _handPoint[1], Random.Range(0.5f, 1.5f)));
+        StartCoroutine(MoveHandToPoint(_hand1, _handPoint[0], Random.Range(0.5f, 1f)));
+        StartCoroutine(MoveHandToPoint(_hand2, _handPoint[1], Random.Range(0.5f, 1f)));
 
         _selected = true;
 
