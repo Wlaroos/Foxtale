@@ -4,7 +4,7 @@ EXTERNAL waitForCharacterSelect()
 
 === main ===
 #Face:Smile
-Welcome you lucky little bastard!
+Welcome, you lucky little bastard!
 
 You've been randomly chosen to face a trial where you can gain a new body and start a new life!
 
@@ -26,12 +26,12 @@ Can't really play games with flimsy ghost mitts, now can you?
 #Face:Smile
 If you survive, that'll be your new body
 
-So pick one you like
+So, pick one you like
 
-#Face:Stare
 Now,
 
 ~ waitForCharacterSelect()
+#Face:Stare
 CHOOSE <br> A <br> VESSEL
 
 // + [Walm]
