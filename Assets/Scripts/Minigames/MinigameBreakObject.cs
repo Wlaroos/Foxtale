@@ -3,40 +3,41 @@ using UnityEngine;
 public class MinigameBreakObject : BaseMinigame
 {
     [SerializeField] private GameObject _breakablePrefab;
-    [SerializeField] private int _clicksToBreak = 5;
+    [SerializeField] private int _clicksToBreak = 3;
+    [SerializeField] private int _itemsToBreak = 1;
     [SerializeField] private ParticleSystem _breakEffect;
     [SerializeField] private ParticleSystem _boneEffect;
-    private int _breakClicks = 0;
-    private GameObject _breakableObject;
+
+    private BreakableObject[] _breakableObjects;
+    private int _brokenObjects = 0;
 
     protected override void StartMinigame()
     {
-        _breakableObject = Instantiate(_breakablePrefab, GetRandomPositionInBounds(), Quaternion.identity, transform);
-        _breakClicks = 0;
+        _breakableObjects = new BreakableObject[_itemsToBreak];
+        for (int i = 0; i < _itemsToBreak; i++)
+        {
+            GameObject go = Instantiate(_breakablePrefab, GetRandomPositionInBounds(), Quaternion.identity, transform);
+            BreakableObject br = go.GetComponent<BreakableObject>();
 
-        Rigidbody2D rb = _breakableObject.GetComponent<Rigidbody2D>();
-        BoxCollider2D collider = _breakableObject.GetComponent<BoxCollider2D>();
+            br.Initialize(_clicksToBreak, _breakEffect, _boneEffect);
+            br.Broken += OnBreakableBroken;
+
+            _breakableObjects[i] = br;
+        }
     }
 
     protected override void UpdateMinigame()
     {
-        if (Input.GetMouseButtonDown(0))
+        // Click events are handled by the BreakableObject instances
+    }
+
+    private void OnBreakableBroken(BreakableObject broken)
+    {
+        _brokenObjects++;
+
+        if (_brokenObjects >= _itemsToBreak)
         {
-            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero, MinigameLayerMask);
-
-            if (hit.collider != null && hit.collider.gameObject == _breakableObject)
-            {
-                _breakClicks++;
-                Instantiate(_boneEffect, hit.transform.position, Quaternion.identity);
-
-                if (_breakClicks >= _clicksToBreak)
-                {
-                    Instantiate(_breakEffect, hit.transform.position, Quaternion.identity);
-                    Destroy(_breakableObject);
-                    WinGame();
-                }
-            }
+            WinGame();
         }
     }
 

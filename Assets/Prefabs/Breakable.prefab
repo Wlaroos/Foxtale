@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 1607007147116067540}
   - component: {fileID: 169015290800751498}
   - component: {fileID: -2067774719316947832}
+  - component: {fileID: -3918414735183986286}
   m_Layer: 7
   m_Name: Breakable
-  m_TagString: Untagged
+  m_TagString: MinigameObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -162,3 +163,15 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &-3918414735183986286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8354127773876877656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a40deda1617f3c469e6d47ed50c8d28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

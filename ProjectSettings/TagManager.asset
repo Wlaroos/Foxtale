@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Sliceable
   - Podium
+  - MinigameObject
   layers:
   - Default
   - TransparentFX

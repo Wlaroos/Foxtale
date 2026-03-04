@@ -242,6 +242,7 @@ public void MakeChoice(int choiceIndex)
         yield return new WaitForSeconds(1f);
         CharacterSelection.Instance.Death3();
         yield return new WaitForSeconds(2f);
+        ExitGame();
     }
 
     private void FinishTypingEarly()
