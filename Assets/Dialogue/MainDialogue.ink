@@ -62,7 +62,9 @@ Before we begin, do you need a refresher?
 +[No]
 #Face:Grin
     Perfect, lets start!
+-> END
     
+= skipTarget    
 -> END
 
 === introRepeat ===
@@ -105,8 +107,11 @@ Need another refresher?
 Did you really think I'd let you go in exchange for gold?
 -> DONE
 
+=== skipMain ===
+-> main.skipTarget
+
 === function waitForCharacterSelect() ===
     ~ return
-    
+
 === function endGame() ===
     ~ return

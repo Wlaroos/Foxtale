@@ -265,23 +265,22 @@ public class CharacterSelection : MonoBehaviour
         Instantiate(_bloodEffect, hand.transform.position, Quaternion.Euler(0, 0, 360));
 
         Instantiate(_boneEffect, hand.transform.position, Quaternion.Euler(0, 0, 0));
-        Instantiate(_boneEffect, hand.transform.position, Quaternion.Euler(0, 0, 30));
         Instantiate(_boneEffect, hand.transform.position, Quaternion.Euler(0, 0, 60));
-        Instantiate(_boneEffect, hand.transform.position, Quaternion.Euler(0, 0, 90));
         Instantiate(_boneEffect, hand.transform.position, Quaternion.Euler(0, 0, 120));
-        Instantiate(_boneEffect, hand.transform.position, Quaternion.Euler(0, 0, 150));
         Instantiate(_boneEffect, hand.transform.position, Quaternion.Euler(0, 0, 180));
-        Instantiate(_boneEffect, hand.transform.position, Quaternion.Euler(0, 0, 210));
         Instantiate(_boneEffect, hand.transform.position, Quaternion.Euler(0, 0, 240));
-        Instantiate(_boneEffect, hand.transform.position, Quaternion.Euler(0, 0, 270));
         Instantiate(_boneEffect, hand.transform.position, Quaternion.Euler(0, 0, 300));
-        Instantiate(_boneEffect, hand.transform.position, Quaternion.Euler(0, 0, 330));
         Instantiate(_boneEffect, hand.transform.position, Quaternion.Euler(0, 0, 360));
 
         Destroy(hand);
 
         yield return new WaitForSeconds(5f);
 
-        Application.Quit();
+        #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+        #else
+            Application.Quit();
+            //System.Diagnostics.Process.GetCurrentProcess().Kill();
+        #endif
     }
 }

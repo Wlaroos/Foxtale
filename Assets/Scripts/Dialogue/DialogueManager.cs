@@ -85,6 +85,13 @@ private void Update()
             ContinueDialogue();
         }
     }
+    else if(Input.GetMouseButtonDown(1))
+    {
+        if(_currentStory.canContinue)
+        {
+            SkipDialogue();
+        }
+    }
 }
 
     public void StartDialogue(Story story)
@@ -228,24 +235,7 @@ public void MakeChoice(int choiceIndex)
         }
     }
 
-    public void GameOver()
-    {
-        StartCoroutine(GameOverCoroutine());
-    }
-
-    private IEnumerator GameOverCoroutine()
-    {
-        _dialoguePanel.SetActive(true);
-        _currentStory.ChoosePathString("gameover");
-        ContinueDialogue();
-
-        yield return new WaitForSeconds(1f);
-        CharacterSelection.Instance.Death3();
-        yield return new WaitForSeconds(2f);
-        ExitGame();
-    }
-
-    private void FinishTypingEarly()
+        private void FinishTypingEarly()
     {
         if (_typingCoroutine != null)
         {
@@ -288,6 +278,22 @@ public void MakeChoice(int choiceIndex)
         _typingCoroutine = null;
     }
 
+    public void GameOver()
+    {
+        StartCoroutine(GameOverCoroutine());
+    }
+
+    private IEnumerator GameOverCoroutine()
+    {
+        _dialoguePanel.SetActive(true);
+        _currentStory.ChoosePathString("gameover");
+        ContinueDialogue();
+
+        yield return new WaitForSeconds(1f);
+        CharacterSelection.Instance.Death3();
+        yield return new WaitForSeconds(2f);
+    }
+
     private void ExitGame()
     {
         Debug.Log("Exiting game...");
@@ -320,5 +326,21 @@ public void MakeChoice(int choiceIndex)
         // Additional cleanup logic if necessary
         _isDialoguePlaying = false;
         _isWaitingForExternal = false;
+    }
+
+    private void SkipDialogue()
+    {
+        if(!CharacterSelection.Instance._selected)
+        {
+        CharacterSelection.Instance.RandomlySelectCharacter();
+        }
+
+        _currentStory.ChoosePathString("skipMain");
+
+        _dialoguePanel.SetActive(false);
+        _choicesPanel.SetActive(false);
+
+        ContinueDialogue();
+        ContinueDialogue();
     }
 }
