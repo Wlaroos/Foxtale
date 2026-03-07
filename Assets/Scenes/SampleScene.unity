@@ -2792,6 +2792,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 775673861}
   m_CullTransparentMesh: 1
+--- !u!1 &860357941
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 860357942}
+  - component: {fileID: 860357943}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &860357942
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 860357941}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &860357943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 860357941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa7d304605b24e240a967a374abb421c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &875325975
 GameObject:
   m_ObjectHideFlags: 0
@@ -2891,7 +2935,7 @@ GameObject:
   - component: {fileID: 886215082}
   - component: {fileID: 886215086}
   m_Layer: 0
-  m_Name: MinigameBG_1
+  m_Name: Minigame Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2985,10 +3029,10 @@ MonoBehaviour:
   _minigameText: {fileID: 1989865166}
   _moneyText: {fileID: 26760566}
   _minigamePrefabs:
-  - {fileID: 8374079497721034482, guid: ff89a799dede2f840867267cb78b4c48, type: 3}
-  - {fileID: 7191102445620056099, guid: 55ee619a8d4ef0b45b8d0a475190ce1d, type: 3}
-  - {fileID: 433938022202228363, guid: 1d89f79599b4cac478ad11efffef0eec, type: 3}
-  - {fileID: 8630785041037080022, guid: 0e27164e2369cb146a0358acba84f048, type: 3}
+  - {fileID: 8345376898027414497, guid: b1923977e5e162941889580f7ed10ea0, type: 3}
+  - {fileID: 8345376898027414497, guid: b1923977e5e162941889580f7ed10ea0, type: 3}
+  - {fileID: 8345376898027414497, guid: b1923977e5e162941889580f7ed10ea0, type: 3}
+  - {fileID: 8345376898027414497, guid: b1923977e5e162941889580f7ed10ea0, type: 3}
   - {fileID: 8345376898027414497, guid: b1923977e5e162941889580f7ed10ea0, type: 3}
   _boundsCenter: {x: 2, y: -2.312971}
   _boundsSize: {x: 7, y: 7}
@@ -6211,7 +6255,7 @@ GameObject:
   - component: {fileID: 1951446604}
   - component: {fileID: 1951446603}
   m_Layer: 0
-  m_Name: DialogueManager
+  m_Name: Dialogue Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6852,3 +6896,4 @@ SceneRoots:
   - {fileID: 1427533979}
   - {fileID: 1380775803}
   - {fileID: 1165142423}
+  - {fileID: 860357942}

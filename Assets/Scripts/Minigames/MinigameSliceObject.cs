@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class MinigameSliceObject : BaseMinigame
@@ -5,10 +6,13 @@ public class MinigameSliceObject : BaseMinigame
     [SerializeField] private GameObject _sliceablePrefab;
     [SerializeField] private int _objectsToSlice = 2;
     [SerializeField] private ParticleSystem _bloodEffect;
-    private Vector2 _requiredSliceDirection;
+    [SerializeField] private TrailRenderer _trailEffect;
     private Vector2 _sliceStart;
-    private Vector2 _sliceEnd;
+    private Vector2 _previousSlicePos;
     private bool _isSlicing;
+    private HashSet<int> _slicedThisDrag = new HashSet<int>();
+    private TrailRenderer _activeTrail;
+    private const float DOT_THRESHOLD = 0.9f;
 
     protected override void StartMinigame()
     {
@@ -16,68 +20,140 @@ public class MinigameSliceObject : BaseMinigame
         {
             SpawnSliceableObject();
         }
+
+        // Create a runtime instance of the trail renderer but keep it disabled
+        if (_trailEffect != null)
+        {
+            _activeTrail = Instantiate(_trailEffect);
+            _activeTrail.gameObject.SetActive(false);
+            _activeTrail.emitting = false;
+            _activeTrail.Clear();
+        }
     }
 
     private void SpawnSliceableObject()
     {
         GameObject sliceableObject = Instantiate(_sliceablePrefab, GetRandomPositionInBounds(), Quaternion.identity, transform);
 
-        Rigidbody2D rb = sliceableObject.GetComponent<Rigidbody2D>();
-        
-        BoxCollider2D collider = sliceableObject.GetComponent<BoxCollider2D>();
-        if (collider == null)
-        {
-            collider = sliceableObject.GetComponentInChildren<BoxCollider2D>();
-        }
-
-        // Set the required slice direction and rotate the object accordingly
-        _requiredSliceDirection = GetRandomDirection();
-        float angle = Mathf.Atan2(_requiredSliceDirection.y, _requiredSliceDirection.x) * Mathf.Rad2Deg;
+        // Choose a random required slice direction and rotate the object accordingly
+        Vector2 requiredDirection = GetRandomDirection();
+        float angle = Mathf.Atan2(requiredDirection.y, requiredDirection.x) * Mathf.Rad2Deg;
         sliceableObject.transform.rotation = Quaternion.Euler(0, 0, angle);
+
+        // Get the sliceable component so the required direction is preserved and accessible at runtime
+        var so = sliceableObject.GetComponent<SliceableObject>();
+
+        // Store the direction according to the object's rotated local X so it matches transform.right
+        so.requiredDirection = sliceableObject.transform.right;
     }
 
     protected override void UpdateMinigame()
     {
+        // Start slicing on mouse down
         if (Input.GetMouseButtonDown(0))
         {
-            _sliceStart = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector3 mousePos = Input.mousePosition;
+            mousePos.z = Mathf.Abs(Camera.main.transform.position.z);
+            Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
+            worldPos.z = 0f;
+            _sliceStart = worldPos;
+            _previousSlicePos = _sliceStart;
+            _slicedThisDrag.Clear();
             _isSlicing = true;
+
+            if (_activeTrail != null)
+            {
+                _activeTrail.emitting = false;
+                _activeTrail.transform.position = new Vector3(worldPos.x, worldPos.y, 0f);
+                _activeTrail.Clear();
+                _activeTrail.gameObject.SetActive(true);
+                _activeTrail.emitting = true;
+            }
         }
 
-        if (Input.GetMouseButtonUp(0) && _isSlicing)
+        // Linecasts between last and current mouse positions
+        if (Input.GetMouseButton(0) && _isSlicing)
         {
-            _sliceEnd = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            _isSlicing = false;
+            Vector3 mousePos = Input.mousePosition;
+            mousePos.z = Mathf.Abs(Camera.main.transform.position.z);
+            Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
+            worldPos.z = 0f;
+            Vector2 currentPos = worldPos;
 
-            Vector2 sliceDirection = (_sliceEnd - _sliceStart).normalized;
-
-            // Check for slicing interactions
-            Collider2D[] hits = Physics2D.OverlapAreaAll(_sliceStart, _sliceEnd);
-            foreach (Collider2D hit in hits)
+            if (_activeTrail != null)
             {
-                // Ensure the hit object is a sliceable object
-                if (hit != null && hit.CompareTag("Sliceable") && Vector2.Dot(sliceDirection, _requiredSliceDirection) > 0.8f)
+                _activeTrail.transform.position = new Vector3(currentPos.x, currentPos.y, 0f);
+                _activeTrail.emitting = true;
+            }
+
+            // Only process if there's actual movement
+            if (Vector2.Distance(_previousSlicePos, currentPos) > 0.01f)
+            {
+                RaycastHit2D[] hits = Physics2D.LinecastAll(_previousSlicePos, currentPos);
+                Vector2 segmentDir = (currentPos - _previousSlicePos).normalized;
+
+                foreach (var hit in hits)
                 {
-                    Instantiate(_bloodEffect, hit.transform.position, Quaternion.Euler(0, 0, Mathf.Atan2(sliceDirection.y, sliceDirection.x) * Mathf.Rad2Deg));
+                    Collider2D col = hit.collider;
+                    if (col == null) continue;
 
-                    hit.gameObject.transform.GetChild(2).gameObject.SetActive(true);
-                    hit.gameObject.transform.GetChild(2).parent = null;
-                    hit.gameObject.transform.GetChild(1).gameObject.SetActive(true);
-                    hit.gameObject.transform.GetChild(1).parent = null;
+                    // Find the sliceable component on this collider or a parent (handles child colliders)
+                    var sliceableObject = col.GetComponentInParent<SliceableObject>();
+                    if (sliceableObject == null) continue;
 
-                    Destroy(hit.gameObject);
+                    GameObject sliceableObj = sliceableObject.gameObject;
+                    if (!sliceableObj.CompareTag("Sliceable")) continue;
 
-                    _objectsToSlice--;
+                    int id = sliceableObj.GetInstanceID();
+                    if (_slicedThisDrag.Contains(id)) continue;
 
-                    if (_objectsToSlice <= 0)
+                    Vector2 requiredDir = sliceableObject.requiredDirection;
+
+                    if (Vector2.Dot(segmentDir, requiredDir) >= DOT_THRESHOLD)
                     {
-                        WinGame();
+                        Instantiate(_bloodEffect, sliceableObj.transform.position, Quaternion.Euler(0, 0, Mathf.Atan2(segmentDir.y, segmentDir.x) * Mathf.Rad2Deg));
+
+                        sliceableObj.transform.GetChild(0).GetChild(2).gameObject.SetActive(true);
+                        sliceableObj.transform.GetChild(0).GetChild(2).parent = null;
+                        sliceableObj.transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
+                        sliceableObj.transform.GetChild(0).GetChild(1).parent = null;
+
+                        Destroy(sliceableObj);
+                        if (_activeTrail != null) { _activeTrail.emitting = false; _activeTrail.Clear(); _activeTrail.gameObject.SetActive(false); }
+                        _slicedThisDrag.Add(id);
+
+                        _objectsToSlice--;
+
+                        if (_objectsToSlice <= 0)
+                        {
+                            _isSlicing = false;
+                            if (_activeTrail != null) { _activeTrail.emitting = false; _activeTrail.Clear(); _activeTrail.gameObject.SetActive(false); }
+                            WinGame();
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        FailGame();
+                        _isSlicing = false;
+                        if (_activeTrail != null) { _activeTrail.emitting = false; _activeTrail.Clear(); _activeTrail.gameObject.SetActive(false); }
+                        return;
                     }
                 }
-                else if (hit != null && hit.CompareTag("Sliceable"))
-                {
-                    FailGame();
-                }
+
+                _previousSlicePos = currentPos;
+            }
+        }
+
+        // End slicing on mouse up
+        if (Input.GetMouseButtonUp(0) && _isSlicing)
+        {
+            _isSlicing = false;
+            if (_activeTrail != null)
+            {
+                _activeTrail.emitting = false;
+                _activeTrail.Clear();
+                _activeTrail.gameObject.SetActive(false);
             }
         }
     }
