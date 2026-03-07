@@ -3029,10 +3029,10 @@ MonoBehaviour:
   _minigameText: {fileID: 1989865166}
   _moneyText: {fileID: 26760566}
   _minigamePrefabs:
-  - {fileID: 8345376898027414497, guid: b1923977e5e162941889580f7ed10ea0, type: 3}
-  - {fileID: 8345376898027414497, guid: b1923977e5e162941889580f7ed10ea0, type: 3}
-  - {fileID: 8345376898027414497, guid: b1923977e5e162941889580f7ed10ea0, type: 3}
-  - {fileID: 8345376898027414497, guid: b1923977e5e162941889580f7ed10ea0, type: 3}
+  - {fileID: 8374079497721034482, guid: ff89a799dede2f840867267cb78b4c48, type: 3}
+  - {fileID: 7191102445620056099, guid: 55ee619a8d4ef0b45b8d0a475190ce1d, type: 3}
+  - {fileID: 433938022202228363, guid: 1d89f79599b4cac478ad11efffef0eec, type: 3}
+  - {fileID: 8630785041037080022, guid: 0e27164e2369cb146a0358acba84f048, type: 3}
   - {fileID: 8345376898027414497, guid: b1923977e5e162941889580f7ed10ea0, type: 3}
   _boundsCenter: {x: 2, y: -2.312971}
   _boundsSize: {x: 7, y: 7}
@@ -6885,9 +6885,10 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 519420032}
+  - {fileID: 860357942}
   - {fileID: 1951446604}
-  - {fileID: 888576305}
   - {fileID: 886215083}
+  - {fileID: 888576305}
   - {fileID: 1452519388}
   - {fileID: 472656405}
   - {fileID: 1930016204}
@@ -6896,4 +6897,3 @@ SceneRoots:
   - {fileID: 1427533979}
   - {fileID: 1380775803}
   - {fileID: 1165142423}
-  - {fileID: 860357942}
