@@ -40,15 +40,4 @@ public class MinigameBreakObject : BaseMinigame
             WinGame();
         }
     }
-
-    private Vector2 GetRandomPositionInBounds()
-    {
-        Vector2 min = boundsCenter - boundsSize / 2;
-        Vector2 max = boundsCenter + boundsSize / 2;
-
-        return new Vector2(
-            Random.Range(min.x, max.x),
-            Random.Range(min.y, max.y)
-        );
-    }
 }

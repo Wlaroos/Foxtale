@@ -68,4 +68,16 @@ public abstract class BaseMinigame : MonoBehaviour
     protected abstract void StartMinigame();
     protected abstract void UpdateMinigame();
 
+    protected Vector2 GetRandomPositionInBounds()
+    {
+        Vector2 min = boundsCenter - boundsSize / 2;
+        Vector2 max = boundsCenter + boundsSize / 2;
+        return new Vector2(Random.Range(min.x, max.x),Random.Range(min.y, max.y));
+    }
+
+    protected Vector2 GetRandomDirection()
+    {
+        float angle = Random.Range(0f, Mathf.PI * 2);
+        return new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)).normalized;
+    }
 }

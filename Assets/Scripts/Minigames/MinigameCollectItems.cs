@@ -3,7 +3,7 @@ using UnityEngine;
 public class MinigameCollectItems : BaseMinigame
 {
     [SerializeField] private GameObject _collectiblePrefab;
-    [SerializeField] private int _totalCollectibles = 5;
+    [SerializeField] private int _totalCollectibles = 3;
     [SerializeField] private Sprite _pressedSprite;
     [SerializeField] private ParticleSystem _clickedEffect;
     private GameObject _collectiblesParent;
@@ -46,16 +46,5 @@ public class MinigameCollectItems : BaseMinigame
                 }
             }
         }
-    }
-
-    private Vector2 GetRandomPositionInBounds()
-    {
-        Vector2 min = boundsCenter - boundsSize / 2;
-        Vector2 max = boundsCenter + boundsSize / 2;
-
-        return new Vector2(
-            Random.Range(min.x, max.x),
-            Random.Range(min.y, max.y)
-        );
     }
 }

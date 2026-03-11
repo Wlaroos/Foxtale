@@ -3034,6 +3034,7 @@ MonoBehaviour:
   - {fileID: 433938022202228363, guid: 1d89f79599b4cac478ad11efffef0eec, type: 3}
   - {fileID: 8630785041037080022, guid: 0e27164e2369cb146a0358acba84f048, type: 3}
   - {fileID: 8345376898027414497, guid: b1923977e5e162941889580f7ed10ea0, type: 3}
+  - {fileID: 6671990809998388940, guid: feade2378785d394bac81e6a2e925f92, type: 3}
   _boundsCenter: {x: 2, y: -2.312971}
   _boundsSize: {x: 7, y: 7}
 --- !u!1 &888576301

@@ -5,15 +5,11 @@ public class MinigameMovingTarget : BaseMinigame
     [SerializeField] private GameObject _movingTargetPrefab;
     [SerializeField] private float _obstacleSpeed = 5f;
     private GameObject _movingTarget;
-    private Rigidbody2D _targetRigidbody;
     private Vector2 _currentDirection;
 
     protected override void StartMinigame()
     {
         _movingTarget = Instantiate(_movingTargetPrefab, GetRandomPositionInBounds(), Quaternion.identity, transform);
-
-        _targetRigidbody = _movingTarget.GetComponent<Rigidbody2D>();
-        BoxCollider2D collider = _movingTarget.GetComponent<BoxCollider2D>();
 
         // Set an initial random direction
         _currentDirection = GetRandomDirection();
@@ -47,22 +43,5 @@ public class MinigameMovingTarget : BaseMinigame
                 WinGame();
             }
         }
-    }
-
-    private Vector2 GetRandomPositionInBounds()
-    {
-        Vector2 min = boundsCenter - boundsSize / 2;
-        Vector2 max = boundsCenter + boundsSize / 2;
-
-        return new Vector2(
-            Random.Range(min.x, max.x),
-            Random.Range(min.y, max.y)
-        );
-    }
-
-    private Vector2 GetRandomDirection()
-    {
-        float angle = Random.Range(0f, Mathf.PI * 2);
-        return new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)).normalized;
     }
 }
