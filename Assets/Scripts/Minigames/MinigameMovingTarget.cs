@@ -4,6 +4,7 @@ public class MinigameMovingTarget : BaseMinigame
 {
     [SerializeField] private GameObject _movingTargetPrefab;
     [SerializeField] private float _obstacleSpeed = 5f;
+    [SerializeField] private GameObject _soulParticlePrefab;
     private GameObject _movingTarget;
     private Vector2 _currentDirection;
 
@@ -39,6 +40,10 @@ public class MinigameMovingTarget : BaseMinigame
 
             if (hit.collider != null && hit.collider.gameObject == _movingTarget)
             {
+                if (_soulParticlePrefab != null)
+                {
+                    Instantiate(_soulParticlePrefab, _movingTarget.transform.position, Quaternion.identity);
+                }
                 Destroy(_movingTarget); // Destroy the target on click
                 WinGame();
             }

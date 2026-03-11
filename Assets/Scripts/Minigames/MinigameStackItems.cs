@@ -1,4 +1,6 @@
+using Unity.VisualScripting;
 using UnityEngine;
+using System.Collections;
 
 public class MinigameStackItems : BaseMinigame
 {
@@ -13,14 +15,23 @@ public class MinigameStackItems : BaseMinigame
     protected override void StartMinigame()
     {
         _stackables = new GameObject[_items];
+
+        _bottomArea = Instantiate(_bottomAreaPrefab, GetRandomPositionInBounds(), Quaternion.identity, transform);
+
         for (int i = 0; i < _items; i++)
         {
-            _stackables[i] = Instantiate(_stackablePrefab, GetRandomPositionInBounds(), Quaternion.identity, transform);
+            // Ensure stackables don't spawn too close to the bottom area
+            var pos = GetRandomPositionInBounds();
+            while (Vector2.Distance(pos, _bottomArea.transform.position) < 1f)
+            {
+                pos = GetRandomPositionInBounds();
+            }
+
+            _stackables[i] = Instantiate(_stackablePrefab, pos, Quaternion.identity, transform);
         }
 
         _stacked = new bool[_items];
 
-        _bottomArea = Instantiate(_bottomAreaPrefab, GetRandomPositionInBounds(), Quaternion.identity, transform);
     }
 
     protected override void UpdateMinigame()
@@ -46,10 +57,11 @@ public class MinigameStackItems : BaseMinigame
             {
                 if (_stackParticlePrefab != null && _stacked[i] == false)
                 {
-                    Instantiate(_stackParticlePrefab, bottomAreaPosition, Quaternion.identity, transform);
+                    Instantiate(_stackParticlePrefab, bottomAreaPosition, Quaternion.identity);
                 }
 
                 _stacked[i] = true;
+
 
                 var sr = _stackables[i].GetComponent<SpriteRenderer>();
                 var script = _stackables[i].GetComponent<DraggableObject>();
@@ -57,7 +69,8 @@ public class MinigameStackItems : BaseMinigame
                 Destroy(script); // Remove the draggable component to prevent further movement
 
                 if (sr != null) sr.color = new Color(0, 1, 0, 0.5f);
-
+                StartCoroutine(HideStackable(sr, 0.25f));
+                
                 _stackables[i].transform.position = bottomAreaPosition; // Snap to bottom area position
             }
             else
@@ -82,5 +95,14 @@ public class MinigameStackItems : BaseMinigame
             WinGame();
         }
 
+    }
+
+    private IEnumerator HideStackable(SpriteRenderer sr, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        if (sr != null)
+        {
+            sr.enabled = false;
+        }
     }
 }

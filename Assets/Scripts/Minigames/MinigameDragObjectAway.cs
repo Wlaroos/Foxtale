@@ -6,6 +6,7 @@ public class MinigameDragObjectAway : BaseMinigame
     [SerializeField] private GameObject _obstaclePrefab;
     [SerializeField] private float _obstacleSpeed = 3f;
     [SerializeField] private float _minSpawnDistance = 3f; // Minimum distance between the two objects
+    [SerializeField] private GameObject _escapeParticlePrefab;
     private GameObject _draggableObject;
     private GameObject _movingObstacle;
 
@@ -50,6 +51,13 @@ public class MinigameDragObjectAway : BaseMinigame
         // Check if the draggable object is outside the bounds
         if (!new Rect(boundsCenter - boundsSize / 2, boundsSize).Contains(_draggableObject.transform.position))
         {
+            if (_escapeParticlePrefab != null)
+            {
+                var dir = _movingObstacle.transform.position - _draggableObject.transform.position;
+                float rotation = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+                Instantiate(_escapeParticlePrefab, _draggableObject.transform.position, Quaternion.Euler(0, 0, rotation));
+            }
+
             WinGame();
         }
     }
