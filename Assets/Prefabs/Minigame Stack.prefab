@@ -48,3 +48,4 @@ MonoBehaviour:
   _stackablePrefab: {fileID: 1004055619882273414, guid: d8934d6fba880f040beeb88f90a6f90e, type: 3}
   _bottomAreaPrefab: {fileID: 1004055619882273414, guid: e2e0f6aedfe8d7b4a8d6959b16d93454, type: 3}
   _items: 2
+  _stackParticlePrefab: {fileID: 4231554738032588611, guid: 4914eeb7b9f22f04da077925dfa768cd, type: 3}
