@@ -7,7 +7,7 @@ public class Cleanup : MonoBehaviour
 
     private void Awake()
     {
-        Invoke(nameof(Delt),5f);
+        Invoke(nameof(Delt),2f);
     }
 
     private void Delt()

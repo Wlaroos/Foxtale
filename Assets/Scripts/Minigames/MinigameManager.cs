@@ -10,6 +10,7 @@ public class MinigameManager : MonoBehaviour
     [SerializeField] private float _timeBetweenMinigames = 1f;
     [SerializeField] private Slider _timerSlider;
     [SerializeField] private TextMeshProUGUI _minigameText;
+    [SerializeField] CoinManager _coinParticles;
     [SerializeField] private TextMeshProUGUI _moneyText;
     [SerializeField] private BaseMinigame[] _minigamePrefabs;
     [SerializeField] private Vector2 _boundsCenter = Vector2.zero;
@@ -103,9 +104,7 @@ public class MinigameManager : MonoBehaviour
         string[] faces = { "Stare", "Angry", "Confused", "Sad", "Squint", "Cat" };
         FairyAnimation.Instance.ChangeFace(faces[Random.Range(0, faces.Length)]);
 
-        _money += 10; // Increment money after each win
-
-        _moneyText.text = _money.ToString();
+        _coinParticles.CreateCoins(10, 0.05f);
 
         _minigameText.text = "You won!";
 
@@ -157,6 +156,12 @@ public class MinigameManager : MonoBehaviour
         }
 
         _sr.color = targetColor;
+    }
+
+    public void AddMoney(int amount)
+    {
+        _money += amount;
+        _moneyText.text = _money.ToString();
     }
 
     private void OnDrawGizmos()
