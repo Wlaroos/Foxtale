@@ -4681,6 +4681,7 @@ MonoBehaviour:
   - {fileID: 441595130}
   _bloodEffect: {fileID: 7767934770358533092, guid: 3adee23244c9a4f43a84fd19fb96c8c3, type: 3}
   _boneEffect: {fileID: 1703984352912723621, guid: f890d9e19652ea741a76e6ad90f54362, type: 3}
+  _leftHandSprite: {fileID: -1638461463, guid: 833c0dc4ac56c7240b94f734fe054579, type: 3}
   _selected: 0
   _ready: 0
 --- !u!1 &1452519386

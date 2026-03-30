@@ -5,6 +5,7 @@ public class MinigameMovingTarget : BaseMinigame
     [SerializeField] private GameObject _movingTargetPrefab;
     [SerializeField] private float _obstacleSpeed = 5f;
     [SerializeField] private GameObject _soulParticlePrefab;
+    [SerializeField] private AnimationCurve _speedAnimationCurve;
     private GameObject _movingTarget;
     private Vector2 _currentDirection;
 
@@ -19,7 +20,7 @@ public class MinigameMovingTarget : BaseMinigame
     protected override void UpdateMinigame()
     {
         // Move the target in the current direction
-        _movingTarget.transform.position += (Vector3)(_currentDirection * Time.deltaTime * _obstacleSpeed);
+        _movingTarget.transform.position += (Vector3)(_currentDirection * Time.deltaTime * _obstacleSpeed * _speedAnimationCurve.Evaluate(_gameTimer));
 
         // Check if the target hits the bounds and bounce
         Vector2 position = _movingTarget.transform.position;

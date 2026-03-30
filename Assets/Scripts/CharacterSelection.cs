@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CharacterSelection : MonoBehaviour
@@ -10,6 +11,7 @@ public class CharacterSelection : MonoBehaviour
     [SerializeField] private GameObject[] _handPoint;
     [SerializeField] private ParticleSystem _bloodEffect;
     [SerializeField] private ParticleSystem _boneEffect;
+    [SerializeField] private Sprite _leftHandSprite;
 
     private Color _defaultColor = Color.white;
     private Color _hoverColor = new Color32(255, 255, 255, 255);
@@ -137,6 +139,8 @@ public class CharacterSelection : MonoBehaviour
 
         _hand1 = _grabHand[(characterIndex + 1) % _grabHand.Length];
         _hand2 = _grabHand[(characterIndex + 2) % _grabHand.Length];
+
+        _hand1.GetComponent<SpriteRenderer>().sprite = _leftHandSprite;
 
         StartCoroutine(MoveHandToPoint(_hand1, _handPoint[0], Random.Range(0.5f, 1f)));
         StartCoroutine(MoveHandToPoint(_hand2, _handPoint[1], Random.Range(0.5f, 1f)));
