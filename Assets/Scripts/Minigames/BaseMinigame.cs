@@ -2,22 +2,22 @@ using UnityEngine;
 
 public abstract class BaseMinigame : MonoBehaviour
 {
-    protected Vector2 boundsCenter;
-    protected Vector2 boundsSize;
-    protected float gameTimer;
-    protected bool gameActive;
+    protected Vector2 _boundsCenter;
+    protected Vector2 _boundsSize;
+    protected float _gameTimer;
+    protected bool _gameActive;
 
     public System.Action OnWin;
     public System.Action OnFail;
 
-    [SerializeField] private string minigameText; // Serialized field for Unity Inspector
+    [SerializeField] private string _minigameText; // Serialized field for Unity Inspector
 
     private LayerMask _minigameLayerMask;
 
     public string MinigameText
     {
-        get => minigameText;
-        protected set => minigameText = value;
+        get => _minigameText;
+        protected set => _minigameText = value;
     }
 
     public LayerMask MinigameLayerMask
@@ -28,21 +28,21 @@ public abstract class BaseMinigame : MonoBehaviour
 
     public void Initialize(Vector2 center, Vector2 size, float timer)
     {
-        boundsCenter = center;
-        boundsSize = size;
-        gameTimer = timer;
-        gameActive = true;
+        _boundsCenter = center;
+        _boundsSize = size;
+        _gameTimer = timer;
+        _gameActive = true;
         _minigameLayerMask = LayerMask.GetMask("Minigame");
         StartMinigame();
     }
 
     void Update()
     {
-        if (gameActive)
+        if (_gameActive)
         {
-            gameTimer -= Time.deltaTime;
+            _gameTimer -= Time.deltaTime;
 
-            if (gameTimer <= 0)
+            if (_gameTimer <= 0)
             {
                 FailGame();
             }
@@ -53,14 +53,14 @@ public abstract class BaseMinigame : MonoBehaviour
 
     protected void WinGame()
     {
-        gameActive = false;
+        _gameActive = false;
         OnWin?.Invoke();
         Destroy(gameObject);
     }
 
     protected void FailGame()
     {
-        gameActive = false;
+        _gameActive = false;
         OnFail?.Invoke();
         Destroy(gameObject);
     }
@@ -70,8 +70,8 @@ public abstract class BaseMinigame : MonoBehaviour
 
     protected Vector2 GetRandomPositionInBounds()
     {
-        Vector2 min = boundsCenter - boundsSize / 2;
-        Vector2 max = boundsCenter + boundsSize / 2;
+        Vector2 min = _boundsCenter - _boundsSize / 2;
+        Vector2 max = _boundsCenter + _boundsSize / 2;
         return new Vector2(Random.Range(min.x, max.x),Random.Range(min.y, max.y));
     }
 

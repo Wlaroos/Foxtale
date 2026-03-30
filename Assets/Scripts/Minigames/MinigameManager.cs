@@ -7,6 +7,7 @@ public class MinigameManager : MonoBehaviour
 {
     public static MinigameManager Instance;
     [SerializeField] private float _gameTimer = 5f;
+    [SerializeField] private int _lives = 3;
     [SerializeField] private float _timeBetweenMinigames = 1f;
     [SerializeField] private Slider _timerSlider;
     [SerializeField] private TextMeshProUGUI _minigameText;
@@ -15,6 +16,7 @@ public class MinigameManager : MonoBehaviour
     [SerializeField] private BaseMinigame[] _minigamePrefabs;
     [SerializeField] private Vector2 _boundsCenter = Vector2.zero;
     [SerializeField] private Vector2 _boundsSize = new Vector2(7.5f, 7.5f);
+    [SerializeField] private BaseMinigame _forcedMinigame;
     private BaseMinigame _currentMinigame; // Reference to the currently active minigame
     private SpriteRenderer _sr;
     private int _wins = 0;
@@ -72,8 +74,16 @@ public class MinigameManager : MonoBehaviour
         }
 
         // Select a random minigame prefab
-        int randomIndex = Random.Range(0, _minigamePrefabs.Length);
-        _currentMinigame = Instantiate(_minigamePrefabs[randomIndex], transform);
+
+        if (_forcedMinigame != null)
+        {
+            _currentMinigame = Instantiate(_forcedMinigame, transform);
+        }
+        else
+        {
+            int randomIndex = Random.Range(0, _minigamePrefabs.Length);
+            _currentMinigame = Instantiate(_minigamePrefabs[randomIndex], transform);
+        }
 
         // Initialize the new minigame
         _currentMinigame.Initialize(_boundsCenter, _boundsSize, _gameTimer);
@@ -115,6 +125,7 @@ public class MinigameManager : MonoBehaviour
     void HandleFail()
     {
         _fails++;
+        _lives--;
 
         FairyAnimation.Instance.ChangeFace("Evil");
 
@@ -133,7 +144,7 @@ public class MinigameManager : MonoBehaviour
             FairyAnimation.Instance.ArmDefault();
             StartRandomMinigame();
         }
-        else if (_fails >= 3)
+        else if (_lives <= 0)
         {
             _minigameText.text = "Game Over!";
             DialogueManager.Instance.GameOver();

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8317203195874495844
+--- !u!1 &4102456282962298199
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2169464959456223682}
-  - component: {fileID: 8345376898027414497}
+  - component: {fileID: 3596564561193616616}
+  - component: {fileID: 5184959113543297849}
   m_Layer: 0
-  m_Name: Minigame Slice Object
+  m_Name: Minigame Rotate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2169464959456223682
+--- !u!4 &3596564561193616616
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8317203195874495844}
+  m_GameObject: {fileID: 4102456282962298199}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -32,20 +32,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8345376898027414497
+--- !u!114 &5184959113543297849
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8317203195874495844}
+  m_GameObject: {fileID: 4102456282962298199}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91c9cd7e614f68542b062c1257864634, type: 3}
+  m_Script: {fileID: 11500000, guid: ffb38de2765f11848a2d049a2fc180a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _minigameText: ' SLICE the HEART'
-  _sliceablePrefab: {fileID: 6314614879012021924, guid: ae72b3dab192f3c49bb47a5a1e1a0468, type: 3}
-  _objectsToSlice: 1
-  _bloodEffect: {fileID: 7767934770358533092, guid: 3adee23244c9a4f43a84fd19fb96c8c3, type: 3}
-  _trailEffect: {fileID: 2875191003125604631, guid: e10fcf54e2b675141a8248fb5632551d, type: 3}
+  _minigameText: 'CLICK the SPIKE to ROTATE until CORRECT '
+  _rotatablePrefab: {fileID: 8354127773876877656, guid: 33e12de92e64b78408bdf79a6fe99e29, type: 3}
+  _numberOfObjectsToRotate: 2
+  _rotateAmount: 45
+  _snapThresholdAngle: 10
+  _artFacingOffset: -45

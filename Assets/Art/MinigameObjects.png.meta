@@ -138,7 +138,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 2
-        y: 2
+        y: 18
         width: 16
         height: 16
       alignment: 0
@@ -160,7 +160,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 20
-        y: 2
+        y: 18
         width: 16
         height: 16
       alignment: 0
@@ -182,7 +182,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 38
-        y: 2
+        y: 18
         width: 12
         height: 12
       alignment: 0
@@ -204,11 +204,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 63
-        y: 2
+        y: 18
         width: 12
         height: 12
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.29166666, y: 0.7083333}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -225,8 +225,8 @@ TextureImporter:
       name: MinigameObjects_6
       rect:
         serializedVersion: 2
-        x: 77
-        y: 3
+        x: 91
+        y: 18
         width: 11
         height: 13
       alignment: 0
@@ -248,7 +248,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 52
-        y: 7
+        y: 23
         width: 9
         height: 9
       alignment: 0
@@ -269,8 +269,8 @@ TextureImporter:
       name: MinigameObjects_7
       rect:
         serializedVersion: 2
-        x: 90
-        y: 3
+        x: 104
+        y: 18
         width: 13
         height: 11
       alignment: 0
@@ -292,7 +292,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 53
-        y: 2
+        y: 18
         width: 7
         height: 3
       alignment: 0
@@ -305,6 +305,72 @@ TextureImporter:
       bones: []
       spriteID: 9d0d06fdc5072aa20800000000000000
       internalID: 3072141440007065817
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MinigameObjects_8
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 18
+        width: 12
+        height: 12
+      alignment: 9
+      pivot: {x: 0.29166666, y: 0.7083333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7b022a94a87598a46be288f83d9528e9
+      internalID: 1322708332
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MinigameObjects_9
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 2
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bbb8d6166d59ec645b33a8fb5548757e
+      internalID: 1893051637
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MinigameObjects_10
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 2
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b364ade22825d2940ab8d67883ea35a4
+      internalID: 982298653
       vertices: []
       indices: 
       edges: []
@@ -326,12 +392,15 @@ TextureImporter:
       7: 2152396292824156779
       MinigameObjects_0: -1280590621192964166
       MinigameObjects_1: -436668198670779324
+      MinigameObjects_10: 982298653
       MinigameObjects_2: 7195511132850493358
       MinigameObjects_3: -1132439662948112843
       MinigameObjects_4: 3072141440007065817
       MinigameObjects_5: 6219191621938542159
       MinigameObjects_6: -3692354158087713645
       MinigameObjects_7: 2152396292824156779
+      MinigameObjects_8: 1322708332
+      MinigameObjects_9: 1893051637
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

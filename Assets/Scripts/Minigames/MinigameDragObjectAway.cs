@@ -49,7 +49,7 @@ public class MinigameDragObjectAway : BaseMinigame
         }
 
         // Check if the draggable object is outside the bounds
-        if (!new Rect(boundsCenter - boundsSize / 2, boundsSize).Contains(_draggableObject.transform.position))
+        if (!new Rect(_boundsCenter - _boundsSize / 2, _boundsSize).Contains(_draggableObject.transform.position))
         {
             if (_escapeParticlePrefab != null)
             {

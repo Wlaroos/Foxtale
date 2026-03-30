@@ -23,11 +23,11 @@ public class MinigameMovingTarget : BaseMinigame
 
         // Check if the target hits the bounds and bounce
         Vector2 position = _movingTarget.transform.position;
-        if (position.x <= boundsCenter.x - boundsSize.x / 2 || position.x >= boundsCenter.x + boundsSize.x / 2)
+        if (position.x <= _boundsCenter.x - _boundsSize.x / 2 || position.x >= _boundsCenter.x + _boundsSize.x / 2)
         {
             _currentDirection.x = -_currentDirection.x; // Reverse X direction
         }
-        if (position.y <= boundsCenter.y - boundsSize.y / 2 || position.y >= boundsCenter.y + boundsSize.y / 2)
+        if (position.y <= _boundsCenter.y - _boundsSize.y / 2 || position.y >= _boundsCenter.y + _boundsSize.y / 2)
         {
             _currentDirection.y = -_currentDirection.y; // Reverse Y direction
         }

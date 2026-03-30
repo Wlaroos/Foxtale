@@ -7,8 +7,8 @@ public class Coin : MonoBehaviour
     [SerializeField] private float _lifetime = 5f;
     [Header("Homing")]
     [SerializeField] private float _homingSpeed = 30f;
-    [SerializeField] private float _maxHomingStartDelay = 0.5f;
-    private float _homingStartDelay = 0.5f;
+    [SerializeField] private float _maxHomingStartDelay = 0.25f;
+    private float _homingStartDelay = 0f;
     [SerializeField] private float _homingCollectDistance = 0.25f;
     [Header("Particles")]
     [SerializeField] private GameObject _coinParticlePrefab;
