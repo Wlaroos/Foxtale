@@ -140,9 +140,9 @@ Now click on the bone a bunch
 It's not animated, but I'm clapping. Use your imagination
 
 #Face:Smile
-You see that fat 0 next to the timer bar I talked about earlier?
+You see that 0 next to the timer bar?
 
-That's how much currency you have
+That's how much money you have
 
 #Face:Grin
 You're poor

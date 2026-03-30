@@ -30,6 +30,7 @@ public class MinigameManager : MonoBehaviour
     private const float _minTimerLimit = 2f; // Minimum timer limit
     private bool _tutorialFinished = false;
     public bool TutorialFinished => _tutorialFinished;
+    private int _tutorialIndex = 0;
 
     private void Awake()
     {
@@ -82,10 +83,9 @@ public class MinigameManager : MonoBehaviour
         {
             _currentMinigame = Instantiate(_forcedMinigame, transform);
         }
-        else if (!_tutorialFinished)
+        else if (!_tutorialFinished && _tutorialIndex < _tutorialMinigames.Length)
         {
-            int tutorialIndex = Mathf.Min(_wins, _tutorialMinigames.Length - 1);
-            _currentMinigame = Instantiate(_tutorialMinigames[tutorialIndex], transform);
+            _currentMinigame = Instantiate(_tutorialMinigames[_tutorialIndex], transform);
         }
         else
         {
@@ -133,15 +133,16 @@ public class MinigameManager : MonoBehaviour
 
     void HandleWin()
     {
-        _wins++;
-
         if(_tutorialFinished == false)
         {
+            _tutorialIndex++;
             _tutorialFinished = true;
             StartCoroutine(ColorToFade(Color.green, 0.75f));
         }
         else
         {
+            _wins++;
+
             string[] faces = { "Stare", "Angry", "Confused", "Sad", "Squint", "Cat" };
             FairyAnimation.Instance.ChangeFace(faces[Random.Range(0, faces.Length)]);
 
