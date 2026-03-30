@@ -1,4 +1,5 @@
 EXTERNAL waitForCharacterSelect()
+EXTERNAL waitForTutorial01()
 
 -> main
 
@@ -61,8 +62,8 @@ Before we begin, do you need a refresher?
     -> introRepeat
 +[No]
 #Face:Grin
-    Perfect, lets start!
--> END
+    Perfect!
+-> tutorial
     
 = skipTarget    
 -> END
@@ -100,7 +101,7 @@ Need another refresher?
 #Face:Grin
     Good
     
-- -> END
+- -> tutorial
 
 === gameover ===
 #Face:Grin
@@ -110,8 +111,63 @@ Did you really think I'd let you go in exchange for gold?
 === skipMain ===
 -> main.skipTarget
 
+=== tutorial ===
+#Face:Smile
+Alright, lets get you used to your new body
+
+~ waitForTutorial01()
+
+
+Click on the buttons that pop up
+
+#Face:Grin
+Amazing, you're a natural
+
+#Face:Smile
+Also, you see that red bar right under you?
+
+That's how much time you get for these
+
+#Face:Stare
+I'm being real nice, letting you have extra time for these practice ones you know
+
+~ waitForTutorial01()
+
+#Face:Smile
+Now click on the bone a bunch
+
+#Face:Cat
+It's not animated, but I'm clapping. Use your imagination
+
+#Face:Smile
+You see that fat 0 next to the timer bar I talked about earlier?
+
+That's how much currency you have
+
+#Face:Grin
+You're poor
+
+#Face:Stare
+And I'm not giving you any money for these practice tests, cry about it
+
+~ waitForTutorial01()
+
+#Face:Smile
+Lastly, slice the heart in the direction shown
+
+#Face:Evil
+I promise that heart didn't belong to anyone
+
+#Face:Grin
+Now, lets start the games for real
+
+-> DONE
+
 === function waitForCharacterSelect() ===
     ~ return
-
+    
+=== function waitForTutorial01() ===
+    ~ return
+    
 === function endGame() ===
     ~ return

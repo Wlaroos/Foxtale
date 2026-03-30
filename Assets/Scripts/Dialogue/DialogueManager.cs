@@ -67,6 +67,11 @@ public class DialogueManager : MonoBehaviour
             StartCoroutine(WaitForCharacterSelection());
         });
 
+        _currentStory.BindExternalFunction("waitForTutorial01", () =>
+        {
+            StartCoroutine(WaitForTutorial01());
+        });
+
         StartDialogue(_currentStory);
     }
 
@@ -154,6 +159,25 @@ private void Update()
         while (!CharacterSelection.Instance._selected)
         {
             yield return null; // Wait until the character is selected
+        }
+
+        _isWaitingForExternal = false;
+
+        if (_currentStory.canContinue)
+        {
+            ContinueDialogue();
+        }
+    }
+
+    private IEnumerator WaitForTutorial01()
+    {
+        _isWaitingForExternal = true;
+
+        MinigameManager.Instance.StartTutorial();
+        
+        while (!MinigameManager.Instance.TutorialFinished)
+        {
+            yield return null; // Wait until the tutorial is completed
         }
 
         _isWaitingForExternal = false;

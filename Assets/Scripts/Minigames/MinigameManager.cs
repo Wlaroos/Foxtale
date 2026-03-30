@@ -17,6 +17,7 @@ public class MinigameManager : MonoBehaviour
     [SerializeField] private Vector2 _boundsCenter = Vector2.zero;
     [SerializeField] private Vector2 _boundsSize = new Vector2(7.5f, 7.5f);
     [SerializeField] private BaseMinigame _forcedMinigame;
+    [SerializeField] private BaseMinigame[] _tutorialMinigames;
     private BaseMinigame _currentMinigame; // Reference to the currently active minigame
     private SpriteRenderer _sr;
     private int _wins = 0;
@@ -27,6 +28,8 @@ public class MinigameManager : MonoBehaviour
     private int _minigamesPlayed = 0; // Counter for the number of minigames played
     private const float _timerDecreaseAmount = 0.5f; // Amount to decrease the timer
     private const float _minTimerLimit = 2f; // Minimum timer limit
+    private bool _tutorialFinished = false;
+    public bool TutorialFinished => _tutorialFinished;
 
     private void Awake()
     {
@@ -61,7 +64,7 @@ public class MinigameManager : MonoBehaviour
         StartCoroutine(StartMinigameWithDelay());
     }
 
-    IEnumerator StartMinigameWithDelay()
+    IEnumerator StartMinigameWithDelay(float timerOverride = 0f)
     {
         // Wait for the specified time between minigames
         _minigameText.text = "Get ready for the next minigame...";
@@ -79,6 +82,11 @@ public class MinigameManager : MonoBehaviour
         {
             _currentMinigame = Instantiate(_forcedMinigame, transform);
         }
+        else if (!_tutorialFinished)
+        {
+            int tutorialIndex = Mathf.Min(_wins, _tutorialMinigames.Length - 1);
+            _currentMinigame = Instantiate(_tutorialMinigames[tutorialIndex], transform);
+        }
         else
         {
             int randomIndex = Random.Range(0, _minigamePrefabs.Length);
@@ -86,7 +94,15 @@ public class MinigameManager : MonoBehaviour
         }
 
         // Initialize the new minigame
-        _currentMinigame.Initialize(_boundsCenter, _boundsSize, _gameTimer);
+        if(timerOverride > 0f)
+        {
+            _currentMinigame.Initialize(_boundsCenter, _boundsSize, timerOverride);
+        }
+        else
+        {
+            _currentMinigame.Initialize(_boundsCenter, _boundsSize, _gameTimer);
+        }
+
         _currentMinigame.OnWin = HandleWin;
         _currentMinigame.OnFail = HandleFail;
 
@@ -94,7 +110,15 @@ public class MinigameManager : MonoBehaviour
         _minigameText.text = _currentMinigame.MinigameText;
 
         // Reset the timer and update the UI
-        _currentTimer = _gameTimer;
+        if(timerOverride > 0f)
+        {
+            _currentTimer = timerOverride;
+        }
+        else
+        {
+            _currentTimer = _gameTimer;
+        }
+
         _timerSlider.value = 1f;
 
         // Increment the minigames played counter
@@ -111,15 +135,23 @@ public class MinigameManager : MonoBehaviour
     {
         _wins++;
 
-        string[] faces = { "Stare", "Angry", "Confused", "Sad", "Squint", "Cat" };
-        FairyAnimation.Instance.ChangeFace(faces[Random.Range(0, faces.Length)]);
+        if(_tutorialFinished == false)
+        {
+            _tutorialFinished = true;
+            StartCoroutine(ColorToFade(Color.green, 0.75f));
+        }
+        else
+        {
+            string[] faces = { "Stare", "Angry", "Confused", "Sad", "Squint", "Cat" };
+            FairyAnimation.Instance.ChangeFace(faces[Random.Range(0, faces.Length)]);
 
-        _coinParticles.CreateCoins(10, 0.05f);
+            _coinParticles.CreateCoins(10, 0.05f);
 
-        _minigameText.text = "You won!";
+            _minigameText.text = "You won!";
 
-        StartCoroutine(ColorToFade(Color.green, 0.75f));
-        StartRandomMinigame();
+            StartCoroutine(ColorToFade(Color.green, 0.75f));
+            StartRandomMinigame();
+        }
     }
 
     void HandleFail()
@@ -173,6 +205,12 @@ public class MinigameManager : MonoBehaviour
     {
         _money += amount;
         _moneyText.text = _money.ToString();
+    }
+
+    public void StartTutorial()
+    {
+        _tutorialFinished = false;
+        StartCoroutine(StartMinigameWithDelay(500f));
     }
 
     private void OnDrawGizmos()
