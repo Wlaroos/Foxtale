@@ -213,6 +213,11 @@ public class MinigameManager : MonoBehaviour
         StartCoroutine(StartMinigameWithDelay(500f));
     }
 
+    public void SkipTutorial()
+    {
+        _tutorialFinished = true;
+    }
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red; // Set the color for the bounds

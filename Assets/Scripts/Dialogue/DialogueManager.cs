@@ -356,8 +356,10 @@ public void MakeChoice(int choiceIndex)
     {
         if(!CharacterSelection.Instance._selected)
         {
-        CharacterSelection.Instance.RandomlySelectCharacter();
+            CharacterSelection.Instance.RandomlySelectCharacter();
         }
+
+        MinigameManager.Instance.SkipTutorial();
 
         _currentStory.ChoosePathString("skipMain");
 
