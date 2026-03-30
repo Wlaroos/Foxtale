@@ -4,17 +4,14 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
 public class RotatableObject : MonoBehaviour
 {
-    [Header("Settings")]
-    public float _rotateAmount = 45f;
-    public float _snapThresholdAngle = 10f;
-    public bool _isInteractable = true;
-    public float _uprightOffset = 0f; 
+    [HideInInspector] public float _rotateAmount = 45f;
+    [HideInInspector] public float _snapThresholdAngle = 10f;
+    [HideInInspector] public bool _isInteractable = true;
+    [HideInInspector] public float _uprightOffset = 0f; 
 
     private float _targetAngle = 0f; // Logical target (0, 90, 180...)
     private bool _completed = false;
-    public bool IsCompleted => _completed;
-
-    [Header("References")]
+    [HideInInspector] public bool IsCompleted => _completed;
     private Transform _bodyTransform;
     private Transform _rotatorTransform; 
     private Collider2D _clickCollider;
