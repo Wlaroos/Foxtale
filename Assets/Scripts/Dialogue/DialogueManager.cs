@@ -24,6 +24,7 @@ public class DialogueManager : MonoBehaviour
     private Story _currentStory;
     private bool _isDialoguePlaying;
     [SerializeField] private TextMeshProUGUI _lmbText;
+    [SerializeField] private TextMeshProUGUI _rmbText;
     private const string FACE_TAG = "Face";
     private const string EXIT_GAME_TAG = "ExitGame";
     private bool _isWaitingForExternal = false;
@@ -71,8 +72,6 @@ public class DialogueManager : MonoBehaviour
         {
             StartCoroutine(WaitForTutorial01());
         });
-
-        StartDialogue(_currentStory);
     }
 
 private void Update()
@@ -99,9 +98,18 @@ private void Update()
     }
 }
 
-    public void StartDialogue(Story story)
+    public void StartDialogue(Story story = null)
     {
-        _currentStory = story;
+        if(story != null)
+        {
+            _currentStory = story;
+        }
+        else if(_currentStory == null)
+        {
+            Debug.LogError("No story provided and no default story set.");
+            return;
+        }
+
         _isDialoguePlaying = true;
         _dialoguePanel.SetActive(true);
         ContinueDialogue();
@@ -215,6 +223,9 @@ private void DisplayChoices()
             _choices[i].SetActive(false);
         }
     }
+
+    _lmbText.enabled = currentChoices.Count <= 0;
+    _rmbText.enabled = _currentStory.canContinue;
 }
 
 public void MakeChoice(int choiceIndex)
@@ -259,7 +270,7 @@ public void MakeChoice(int choiceIndex)
         }
     }
 
-        private void FinishTypingEarly()
+    private void FinishTypingEarly()
     {
         if (_typingCoroutine != null)
         {
@@ -267,7 +278,9 @@ public void MakeChoice(int choiceIndex)
         }
         _dialogueText.text = _fullText;
         _isTyping = false;
-        _lmbText.color = new Color32(0, 0, 0, 255);
+        _lmbText.color = new Color32(0, 0, 0, 200);
+        
+        ResizePanelToText(); // Update size immediately
         _typingCoroutine = null;
     }
 
@@ -275,30 +288,28 @@ public void MakeChoice(int choiceIndex)
     {
         _dialogueText.text = string.Empty;
         _isTyping = true;
-        _lmbText.color = new Color32(0, 0, 0, 130);
+        _lmbText.color = new Color32(0, 0, 0, 100);
 
         bool insideTag = false;
 
-        // We use a simple loop. The 'Update' method now catches the click 
-        // and calls FinishTypingEarly(), which stops this coroutine.
         foreach (char letter in _fullText.ToCharArray())
         {
             if (letter == '<') insideTag = true;
             if (letter == '>') insideTag = false;
 
+            _dialogueText.text += letter;
+
             if (!insideTag)
             {
-                _dialogueText.text += letter;
+                // Update panel size as characters appear
+                ResizePanelToText(); 
                 yield return new WaitForSeconds(_typingSpeed);
-            }
-            else
-            {
-                _dialogueText.text += letter;
             }
         }
 
         _isTyping = false;
-        _lmbText.color = new Color32(0, 0, 0, 255);
+        _lmbText.color = new Color32(0, 0, 0, 200);
+        ResizePanelToText(); 
         _typingCoroutine = null;
     }
 
@@ -368,5 +379,43 @@ public void MakeChoice(int choiceIndex)
 
         ContinueDialogue();
         ContinueDialogue();
+    }
+
+    private void ResizePanelToText()
+    {
+        // Force calculate to get the correct preferred height
+        _dialogueText.ForceMeshUpdate();
+        float preferredTextHeight = _dialogueText.preferredHeight;
+
+        // Refs
+        RectTransform panelRect = _dialoguePanel.GetComponent<RectTransform>();
+        RectTransform textRect = _dialogueText.GetComponent<RectTransform>();
+
+        // Offsets
+        List<Choice> currentChoices = _currentStory.currentChoices;
+
+        float paddingTop = 40f;
+        float paddingBottom = 80f;
+
+        if(currentChoices.Count > 0)
+        {
+            paddingTop = 40f;
+            paddingBottom = 40f;
+        }
+        else
+        {
+            paddingTop = 40f;
+            paddingBottom = 80f;
+        }
+
+        // Calculate panel height with text and padding
+        float totalPanelHeight = preferredTextHeight + paddingTop + paddingBottom;
+
+        // Set panel height
+        panelRect.sizeDelta = new Vector2(panelRect.sizeDelta.x, totalPanelHeight);
+
+        // Text's position within the panel
+        textRect.offsetMax = new Vector2(textRect.offsetMax.x, -paddingTop);
+        textRect.offsetMin = new Vector2(textRect.offsetMin.x, paddingBottom);
     }
 }
