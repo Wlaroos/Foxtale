@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91c9cd7e614f68542b062c1257864634, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _minigameText: ' SLICE the HEART'
+  _minigameText: ' SLICE HEART!'
   _sliceablePrefab: {fileID: 6314614879012021924, guid: ae72b3dab192f3c49bb47a5a1e1a0468, type: 3}
   _objectsToSlice: 1
   _bloodEffect: {fileID: 7767934770358533092, guid: 3adee23244c9a4f43a84fd19fb96c8c3, type: 3}

@@ -6,17 +6,22 @@ using UnityEngine.UI;
 public class MinigameManager : MonoBehaviour
 {
     public static MinigameManager Instance;
+    [Header("Minigame Settings")]
     [SerializeField] private float _gameTimer = 5f;
     [SerializeField] private int _lives = 3;
     [SerializeField] private float _timeBetweenMinigames = 1f;
+    [Header("UI References")]
     [SerializeField] private Slider _timerSlider;
     [SerializeField] private TextMeshProUGUI _minigameText;
     [SerializeField] CoinManager _coinParticles;
     [SerializeField] private TextMeshProUGUI _moneyText;
+    [Header("Minigames")]
     [SerializeField] private BaseMinigame[] _minigamePrefabs;
     [SerializeField] private Vector2 _boundsCenter = Vector2.zero;
     [SerializeField] private Vector2 _boundsSize = new Vector2(7.5f, 7.5f);
+    [Header("Forced Minigame (Optional)")]
     [SerializeField] private BaseMinigame _forcedMinigame;
+    [Header("Tutorial")]
     [SerializeField] private BaseMinigame[] _tutorialMinigames;
     private BaseMinigame _currentMinigame; // Reference to the currently active minigame
     private SpriteRenderer _sr;
@@ -79,14 +84,17 @@ public class MinigameManager : MonoBehaviour
 
         // Select a random minigame prefab
 
+        // If a forced minigame is set, use it instead of selecting randomly
         if (_forcedMinigame != null)
         {
             _currentMinigame = Instantiate(_forcedMinigame, transform);
         }
+        // If the tutorial is not finished, play through the tutorial minigames in order
         else if (!_tutorialFinished && _tutorialIndex < _tutorialMinigames.Length)
         {
             _currentMinigame = Instantiate(_tutorialMinigames[_tutorialIndex], transform);
         }
+        // Otherwise, select a random minigame from the list
         else
         {
             int randomIndex = Random.Range(0, _minigamePrefabs.Length);
@@ -137,6 +145,9 @@ public class MinigameManager : MonoBehaviour
         {
             _tutorialIndex++;
             _tutorialFinished = true;
+
+            _minigameText.text = "";
+
             StartCoroutine(ColorToFade(Color.green, 0.75f));
         }
         else
@@ -148,7 +159,7 @@ public class MinigameManager : MonoBehaviour
 
             _coinParticles.CreateCoins(10, 0.05f);
 
-            _minigameText.text = "You won!";
+            _minigameText.text = "";
 
             StartCoroutine(ColorToFade(Color.green, 0.75f));
             StartRandomMinigame();
@@ -162,7 +173,7 @@ public class MinigameManager : MonoBehaviour
 
         FairyAnimation.Instance.ChangeFace("Evil");
 
-        _minigameText.text = "You failed!";
+        _minigameText.text = "";
 
         StartCoroutine(ColorToFade(Color.red, 0.75f));
 

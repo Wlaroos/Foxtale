@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83f83c1c186c78c4dba6b2ac1f9883d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _minigameText: Repeatedly CLICK the BONE!
+  _minigameText: CLICK BONE REPEATEDLY!
   _breakablePrefab: {fileID: 8354127773876877656, guid: 8c0d63879975b104d9bbef2d654dc5d3, type: 3}
   _clicksToBreak: 3
   _itemsToBreak: 1

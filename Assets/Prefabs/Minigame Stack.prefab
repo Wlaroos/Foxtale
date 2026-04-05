@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 362c016173171c541a59473ce0cbf8de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _minigameText: DRAG the SOLIDS to the OUTLINE
+  _minigameText: DRAG TO OUTLINE!
   _stackablePrefab: {fileID: 1004055619882273414, guid: d8934d6fba880f040beeb88f90a6f90e, type: 3}
   _bottomAreaPrefab: {fileID: 1004055619882273414, guid: e2e0f6aedfe8d7b4a8d6959b16d93454, type: 3}
   _items: 2

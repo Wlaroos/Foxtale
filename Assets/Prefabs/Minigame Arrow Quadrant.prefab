@@ -748,7 +748,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47d19f9bb0bb17e479e47b885f65960c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _minigameText: 
+  _minigameText: CLICK CORRECT ZONE!
   _arrowPrefab: {fileID: 8354127773876877656, guid: 433785977c99b35409e1e2e3c6cc1c6d, type: 3}
   _arrowFilledSprite: {fileID: 1893051637, guid: d115b9afe97fff745a220fa56853b252, type: 3}
   _numberOfArrows: 4

@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffb38de2765f11848a2d049a2fc180a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _minigameText: 'CLICK the SPIKE to ROTATE until CORRECT '
+  _minigameText: CLICK SPIKE TO ROTATE!
   _rotatablePrefab: {fileID: 8354127773876877656, guid: 33e12de92e64b78408bdf79a6fe99e29, type: 3}
   _numberOfObjectsToRotate: 2
   _rotateAmount: 45
