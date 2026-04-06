@@ -3080,6 +3080,8 @@ MonoBehaviour:
   - {fileID: 6671990809998388940, guid: feade2378785d394bac81e6a2e925f92, type: 3}
   - {fileID: 5184959113543297849, guid: 36a50d3ecd886184eab566f59d846df5, type: 3}
   - {fileID: 1218845043340397208, guid: e9a818d472bfadf4d87004c41508d8c0, type: 3}
+  _bigMinigamePrefabs:
+  - {fileID: 8374079497721034482, guid: ff89a799dede2f840867267cb78b4c48, type: 3}
   _boundsCenter: {x: 2.5, y: -2.312971}
   _boundsSize: {x: 7, y: 7}
   _forcedMinigame: {fileID: 0}

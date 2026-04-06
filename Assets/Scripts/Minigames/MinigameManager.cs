@@ -24,10 +24,11 @@ public class MinigameManager : MonoBehaviour
     [Header("Pip UI Settings")]
     [SerializeField] private MinigamePip _pipPrefab;
     [SerializeField] private Transform _pipHolder;
-    [SerializeField] private bool _markFailsOnPips = true; //If false, the player can just ignore failed attempts and keep playing until they win
-
+    // If false, the player can just ignore failed attempts and keep playing until they win
+    [SerializeField] private bool _markFailsOnPips = true;
     [Header("Minigames")]
     [SerializeField] private BaseMinigame[] _minigamePrefabs;
+    [SerializeField] private BaseMinigame[] _bigMinigamePrefabs;
     [SerializeField] private Vector2 _boundsCenter = Vector2.zero;
     [SerializeField] private Vector2 _boundsSize = new Vector2(7.5f, 7.5f);
 
@@ -93,10 +94,24 @@ public class MinigameManager : MonoBehaviour
         if (_currentMinigame != null) Destroy(_currentMinigame.gameObject);
 
         // Selection Logic
+        // Forced Minigame
         if (_forcedMinigame != null)
+        {
             _currentMinigame = Instantiate(_forcedMinigame, transform);
+        }
+        // Tutorial Minigame
         else if (!_tutorialFinished && _tutorialIndex < _tutorialMinigames.Length)
+        {
             _currentMinigame = Instantiate(_tutorialMinigames[_tutorialIndex], transform);
+        }
+        // Check if the current pip is a "Big" minigame pip
+        else if (_minigamesPlayed < _spawnedPips.Count && _spawnedPips[_minigamesPlayed].CurrentShape == MinigamePip.PipShape.Big)
+        {
+            // Pick a random Big Minigame
+            int randomIndex = Random.Range(0, _bigMinigamePrefabs.Length);
+            _currentMinigame = Instantiate(_bigMinigamePrefabs[randomIndex], transform);
+        }
+        // Normal Minigames
         else
         {
             int randomIndex = Random.Range(0, _minigamePrefabs.Length);
