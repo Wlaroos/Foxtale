@@ -2181,8 +2181,8 @@ MonoBehaviour:
   _catSFX: {fileID: 8300000, guid: 1dbb316219aabea40a263834a546af36, type: 3}
   _cat2SFX: {fileID: 8300000, guid: 2ad9e6128f6677649b1347a077292a05, type: 3}
   _soulPopSFX: {fileID: 8300000, guid: 2ffd2ed9d9f57d04fabc31a709ea7e89, type: 3}
-  _initialPoolSize: 10
-  _maxPoolSize: 25
+  _initialPoolSize: 3
+  _maxPoolSize: 10
 --- !u!4 &640887880
 Transform:
   m_ObjectHideFlags: 0

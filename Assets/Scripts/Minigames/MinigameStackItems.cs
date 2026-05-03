@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using System.Collections;
 
@@ -28,6 +27,13 @@ public class MinigameStackItems : BaseMinigame
             }
 
             _stackables[i] = Instantiate(_stackablePrefab, pos, Quaternion.identity, transform);
+
+            // Get the component and apply the bounds from BaseMinigame
+            DraggableObject dragScript = _stackables[i].GetComponent<DraggableObject>();
+            if (dragScript != null)
+            {
+                dragScript.SetBounds(_boundsCenter, _boundsSize);
+            }
         }
 
         _stacked = new bool[_items];

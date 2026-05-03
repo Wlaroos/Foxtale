@@ -4,7 +4,7 @@ using UnityEngine;
 public class MinigameRotate : BaseMinigame
 {
     [SerializeField] private GameObject _rotatablePrefab;
-    [SerializeField] private int _numberOfObjectsToRotate = 3;
+    [SerializeField] private int _numberOfObjectsToRotate = 2;
     [SerializeField] private float _rotateAmount = 45f;
     [SerializeField] private float _snapThresholdAngle = 10f;
     [SerializeField] private float _artFacingOffset = 0f;
