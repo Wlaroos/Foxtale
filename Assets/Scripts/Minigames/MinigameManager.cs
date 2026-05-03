@@ -131,17 +131,11 @@ public class MinigameManager : MonoBehaviour
 
         // Progress Pips
         UpdatePipStates();
-
-        if (_minigamesPlayed % 5 == 0 && _gameTimer > MIN_TIMER_LIMIT)
-        {
-            _gameTimer = Mathf.Max(_gameTimer - TIMER_DECREASE_AMOUNT, MIN_TIMER_LIMIT);
-        }
+        CheckSpeedIncrease();
     }
 
     void HandleWin()
     {
-        CheckSpeedIncrease();
-
         if (_tutorialFinished == false && _tutorialIndex < _tutorialMinigames.Length)
         {
             _tutorialIndex++;
@@ -187,7 +181,6 @@ public class MinigameManager : MonoBehaviour
                 _spawnedPips[_minigamesPlayed].SetFail();
             
             _minigamesPlayed++;
-            CheckSpeedIncrease();
         }
     
         FairyAnimation.Instance.ChangeFace("Evil");
