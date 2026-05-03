@@ -38,6 +38,7 @@ public class MinigameManager : MonoBehaviour
     [Header("Tutorial")]
     [SerializeField] private BaseMinigame[] _tutorialMinigames;
 
+    // Internal State
     private BaseMinigame _currentMinigame;
     private SpriteRenderer _sr;
     private int _wins = 0;
@@ -46,15 +47,18 @@ public class MinigameManager : MonoBehaviour
     private int _money = 0;
     public int Money => _money;
 
+    // Progress tracking
     private int _minigamesPlayed = 0; 
     private const float TIMER_DECREASE_AMOUNT = 0.5f;
     private const float MIN_TIMER_LIMIT = 2f;
     
+    // Tutorial tracking
     private bool _tutorialFinished = false;
     public bool TutorialFinished => _tutorialFinished;
     private int _tutorialIndex = 0;
 
     private List<MinigamePip> _spawnedPips = new List<MinigamePip>();
+    private int _bigPipsCompletedCount = 0;
 
     private void Awake()
     {
@@ -148,22 +152,24 @@ public class MinigameManager : MonoBehaviour
             _minigamesPlayed++;
             _wins++;
 
-            // Mark current pip as Green
             if (_minigamesPlayed - 1 < _spawnedPips.Count)
             {
                 _spawnedPips[_minigamesPlayed - 1].SetWin();
             }
 
+            // Logic for visuals/rewards
             string[] faces = { "Stare", "Angry", "Confused", "Sad", "Squint", "Cat" };
-
             FairyAnimation.Instance.ChangeFace(faces[Random.Range(0, faces.Length)]);
-
             _coinParticles.CreateCoins(10, 0.05f);
-
             _minigameText.text = "";
-            
             StartCoroutine(ColorToFade(Color.green, 0.75f));
-            StartRandomMinigame();
+
+            bool isDialogueActive = CheckBigMinigameProgression();
+
+            if (!isDialogueActive) 
+            {
+                StartRandomMinigame();
+            }
         }
 
         SFXManager.Instance.PlayMinigameWin();
@@ -174,13 +180,20 @@ public class MinigameManager : MonoBehaviour
         _fails++;
         _lives--;
 
-        if (_markFailsOnPips)
+    if (_markFailsOnPips)
         {
-            // Mark the pip as failed and move progress to the next one
             if (_minigamesPlayed < _spawnedPips.Count)
                 _spawnedPips[_minigamesPlayed].SetFail();
             
             _minigamesPlayed++;
+
+            // Check if the pip we just failed was a Big one
+            bool isDialogueActive = CheckBigMinigameProgression();
+            
+            if (_lives > 0 && !isDialogueActive)
+            {
+                StartRandomMinigame();
+            }
         }
     
         FairyAnimation.Instance.ChangeFace("Evil");
@@ -293,6 +306,41 @@ public class MinigameManager : MonoBehaviour
             // Only the pip matching current game count flashes, will flash yellow if tutorial
             _spawnedPips[i].SetActive(i == _minigamesPlayed, _tutorialIndex < _tutorialMinigames.Length);
         }
+    }
+
+    private bool CheckBigMinigameProgression()
+    {
+        int completedIndex = _minigamesPlayed - 1;
+
+        if (completedIndex >= 0 && completedIndex < _spawnedPips.Count)
+        {
+            if (_spawnedPips[completedIndex].CurrentShape == MinigamePip.PipShape.Big)
+            {
+                // The count increments AFTER the switch or use 0, 1, 2
+                switch (_bigPipsCompletedCount)
+                {
+                    case 0:
+                        DialogueManager.Instance.StartBigPip1Dialogue();
+                        break;
+                    case 1:
+                        DialogueManager.Instance.StartBigPip2Dialogue();
+                        break;
+                    case 2:
+                        DialogueManager.Instance.StartEndingDialogue();
+                        break;
+                }
+
+                _bigPipsCompletedCount++;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void ResumeMinigames()
+    {
+        // Call this from your DialogueManager or an UnityEvent when the text finishes
+        StartRandomMinigame();
     }
 
     private void OnDrawGizmos()

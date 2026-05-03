@@ -20,7 +20,10 @@ public class DialogueManager : MonoBehaviour
     private Button[] _choicesButtons;
 
     [Header("Ink Story")]
-    [SerializeField] private TextAsset _inkJSONAsset;
+    [SerializeField] private TextAsset _introDialogueJSONAsset;
+    [SerializeField] public TextAsset _firstBigPipJSONAsset;
+    [SerializeField] public TextAsset _secondBigPipJSONAsset;
+    [SerializeField] public TextAsset _endingDialogueJSONAsset;
     private Story _currentStory;
     private bool _isDialoguePlaying;
     [SerializeField] private TextMeshProUGUI _lmbText;
@@ -71,7 +74,7 @@ public class DialogueManager : MonoBehaviour
     private void Start()
     {
         _dialoguePanel.SetActive(false);
-        _currentStory = new Story(_inkJSONAsset.text);
+        _currentStory = new Story(_introDialogueJSONAsset.text);
 
         _currentStory.BindExternalFunction("waitForCharacterSelect", () =>
         {
@@ -124,6 +127,7 @@ public class DialogueManager : MonoBehaviour
 
         _isDialoguePlaying = true;
         _dialoguePanel.SetActive(true);
+        _choicesPanel.SetActive(true);
         ContinueDialogue();
         MusicManager.Instance.PlayTalkingMusic();
     }
@@ -383,12 +387,6 @@ public class DialogueManager : MonoBehaviour
         // Stop all coroutines to prevent freezing
         StopAllCoroutines();
 
-        // Cleanup Ink
-        if (_currentStory != null)
-        {
-            _currentStory.UnbindExternalFunction("waitForCharacterSelect");
-        }
-
         // Additional cleanup logic if necessary
         _isDialoguePlaying = false;
         _isWaitingForExternal = false;
@@ -448,5 +446,20 @@ public class DialogueManager : MonoBehaviour
         // Text's position within the panel
         textRect.offsetMax = new Vector2(textRect.offsetMax.x, -paddingTop);
         textRect.offsetMin = new Vector2(textRect.offsetMin.x, paddingBottom);
+    }
+
+    public void StartBigPip1Dialogue()
+    {
+        StartDialogue(new Story(_firstBigPipJSONAsset.text));
+    }
+
+    public void StartBigPip2Dialogue()
+    {
+        StartDialogue(new Story(_secondBigPipJSONAsset.text));
+    }
+
+    public void StartEndingDialogue()
+    {
+        StartDialogue(new Story(_endingDialogueJSONAsset.text));
     }
 }

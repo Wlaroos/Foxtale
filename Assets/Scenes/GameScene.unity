@@ -6776,7 +6776,10 @@ MonoBehaviour:
   - {fileID: 1821188896}
   - {fileID: 1533188306}
   - {fileID: 1549572905}
-  _inkJSONAsset: {fileID: 4900000, guid: 7ec679345d6d83f4c8fb9c09eacfa9a7, type: 3}
+  _introDialogueJSONAsset: {fileID: 4900000, guid: 7ec679345d6d83f4c8fb9c09eacfa9a7, type: 3}
+  _firstBigPipJSONAsset: {fileID: 4900000, guid: 8a9acea3690c3a94f9635a46f9833b52, type: 3}
+  _secondBigPipJSONAsset: {fileID: 4900000, guid: 2ac0136e7b66da74fba0820bc98c48a8, type: 3}
+  _endingDialogueJSONAsset: {fileID: 4900000, guid: 237157bc2b678954f9bb4e7d7b277498, type: 3}
   _lmbText: {fileID: 716749121}
   _rmbText: {fileID: 1775460660}
   _enableTypewriterEffect: 1
