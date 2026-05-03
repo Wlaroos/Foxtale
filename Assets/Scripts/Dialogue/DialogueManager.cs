@@ -33,6 +33,15 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private bool _enableTypewriterEffect = false;
     [SerializeField] private float _typingSpeed = 0.05f;
 
+    [Header("Audio SFX")]
+    [SerializeField] private AudioClip[] _babbleSounds;
+    [Range(1, 5)] 
+    [SerializeField] private int _babbleFrequency = 2; // Play sound every x characters
+    private const float BABBLE_PITCH_VARIANCE = 0.1f;
+    public float _mainPitch = 1f;
+    [SerializeField] private bool _stopAudioOnFinish = true;
+    private AudioSource _audioSource;
+
     private bool _isTyping;
     private string _fullText;
     private Coroutine _typingCoroutine;
@@ -48,6 +57,7 @@ public class DialogueManager : MonoBehaviour
             Instance = this;
         }
 
+        _audioSource = GetComponent<AudioSource>();
         _choicesText = new TextMeshProUGUI[_choices.Length];
         _choicesButtons = new Button[_choices.Length];
 
@@ -72,39 +82,41 @@ public class DialogueManager : MonoBehaviour
         {
             StartCoroutine(WaitForTutorial01());
         });
+
+        MusicManager.Instance.PlayTalkingMusic();
     }
 
-private void Update()
-{
-    if (_currentStory == null ||!_isDialoguePlaying || _isWaitingForExternal) return;
+    private void Update()
+    {
+        if (_currentStory == null || !_isDialoguePlaying || _isWaitingForExternal) return;
 
-    if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
-    {
-        if (_isTyping)
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
         {
-            FinishTypingEarly();
+            if (_isTyping)
+            {
+                FinishTypingEarly();
+            }
+            else if (_currentStory.currentChoices.Count == 0)
+            {
+                ContinueDialogue();
+            }
         }
-        else if (_currentStory.currentChoices.Count == 0)
+        else if (Input.GetMouseButtonDown(1))
         {
-            ContinueDialogue();
+            if (_currentStory.canContinue)
+            {
+                SkipDialogue();
+            }
         }
     }
-    else if(Input.GetMouseButtonDown(1))
-    {
-        if(_currentStory.canContinue)
-        {
-            SkipDialogue();
-        }
-    }
-}
 
     public void StartDialogue(Story story = null)
     {
-        if(story != null)
+        if (story != null)
         {
             _currentStory = story;
         }
-        else if(_currentStory == null)
+        else if (_currentStory == null)
         {
             Debug.LogError("No story provided and no default story set.");
             return;
@@ -113,6 +125,7 @@ private void Update()
         _isDialoguePlaying = true;
         _dialoguePanel.SetActive(true);
         ContinueDialogue();
+        MusicManager.Instance.PlayTalkingMusic();
     }
 
     public IEnumerator EndDialogue()
@@ -124,49 +137,49 @@ private void Update()
         _dialogueText.text = string.Empty;
 
         MinigameManager.Instance.StartRandomMinigame();
-        //Debug.Log("Dialogue ended, starting minigame...");
+        MusicManager.Instance.PlayMinigameMusic();
     }
 
     private void ContinueDialogue()
-{
-    if (_isWaitingForExternal) return;
-
-    if (_currentStory.canContinue)
     {
-        if (_typingCoroutine != null)
+        if (_isWaitingForExternal) return;
+
+        if (_currentStory.canContinue)
         {
-            StopCoroutine(_typingCoroutine);
-        }
+            if (_typingCoroutine != null)
+            {
+                StopCoroutine(_typingCoroutine);
+            }
 
-        _fullText = _currentStory.Continue();
+            _fullText = _currentStory.Continue();
 
-        HandleTags(_currentStory.currentTags);
+            HandleTags(_currentStory.currentTags);
 
-        if (_enableTypewriterEffect)
-        {
-            _typingCoroutine = StartCoroutine(TypeText());
+            if (_enableTypewriterEffect)
+            {
+                _typingCoroutine = StartCoroutine(TypeText());
+            }
+            else
+            {
+                _dialogueText.text = _fullText;
+            }
+
+            DisplayChoices();
         }
         else
         {
-            _dialogueText.text = _fullText;
+            StartCoroutine(EndDialogue());
         }
-
-        DisplayChoices();
     }
-    else
-    {
-        StartCoroutine(EndDialogue());
-    }
-}
 
     private IEnumerator WaitForCharacterSelection()
     {
         _isWaitingForExternal = true;
         CharacterSelection.Instance._ready = true;
-        
+
         while (!CharacterSelection.Instance._selected)
         {
-            yield return null; // Wait until the character is selected
+            yield return null;
         }
 
         _isWaitingForExternal = false;
@@ -182,10 +195,10 @@ private void Update()
         _isWaitingForExternal = true;
 
         MinigameManager.Instance.StartTutorial();
-        
+
         while (!MinigameManager.Instance.TutorialFinished)
         {
-            yield return null; // Wait until the tutorial is completed
+            yield return null;
         }
 
         _isWaitingForExternal = false;
@@ -196,57 +209,53 @@ private void Update()
         }
     }
 
-private void DisplayChoices()
-{
-    List<Choice> currentChoices = _currentStory.currentChoices;
-
-    if (currentChoices.Count > _choices.Length)
+    private void DisplayChoices()
     {
-        Debug.LogError("More choices than UI can support.");
-    }
+        List<Choice> currentChoices = _currentStory.currentChoices;
 
-    for (int i = 0; i < _choices.Length; i++)
-    {
-        if (i < currentChoices.Count)
+        if (currentChoices.Count > _choices.Length)
         {
-            _choices[i].SetActive(true);
-            _choicesText[i].text = currentChoices[i].text.Trim();
-
-            _choicesButtons[i].onClick.RemoveAllListeners(); 
-            
-            // We use the choice's internal index from Ink, not the loop index
-            int inkChoiceIndex = currentChoices[i].index; 
-            _choicesButtons[i].onClick.AddListener(() => MakeChoice(inkChoiceIndex));
+            Debug.LogError("More choices than UI can support.");
         }
-        else
+
+        for (int i = 0; i < _choices.Length; i++)
         {
-            _choices[i].SetActive(false);
+            if (i < currentChoices.Count)
+            {
+                _choices[i].SetActive(true);
+                _choicesText[i].text = currentChoices[i].text.Trim();
+
+                _choicesButtons[i].onClick.RemoveAllListeners();
+
+                int inkChoiceIndex = currentChoices[i].index;
+                _choicesButtons[i].onClick.AddListener(() => MakeChoice(inkChoiceIndex));
+            }
+            else
+            {
+                _choices[i].SetActive(false);
+            }
         }
+
+        _lmbText.enabled = currentChoices.Count <= 0;
+        _rmbText.enabled = _currentStory.canContinue;
     }
 
-    _lmbText.enabled = currentChoices.Count <= 0;
-    _rmbText.enabled = _currentStory.canContinue;
-}
-
-public void MakeChoice(int choiceIndex)
-{
-    // Check if the choice actually exists in the current state
-    if (choiceIndex < 0 || choiceIndex >= _currentStory.currentChoices.Count)
+    public void MakeChoice(int choiceIndex)
     {
-        //Debug.LogWarning("Selected choice index is no longer valid. Ignoring click.");
-        return;
-    }
+        if (choiceIndex < 0 || choiceIndex >= _currentStory.currentChoices.Count)
+        {
+            return;
+        }
 
-    _currentStory.ChooseChoiceIndex(choiceIndex);
-    
-    // Deactivate choices immediately
-    foreach (GameObject choice in _choices)
-    {
-        choice.SetActive(false);
-    }
+        _currentStory.ChooseChoiceIndex(choiceIndex);
 
-    ContinueDialogue();
-}
+        foreach (GameObject choice in _choices)
+        {
+            choice.SetActive(false);
+        }
+
+        ContinueDialogue();
+    }
 
     private void HandleTags(List<string> tags)
     {
@@ -279,8 +288,10 @@ public void MakeChoice(int choiceIndex)
         _dialogueText.text = _fullText;
         _isTyping = false;
         _lmbText.color = new Color32(0, 0, 0, 200);
-        
-        ResizePanelToText(); // Update size immediately
+
+        if (_stopAudioOnFinish && _audioSource != null) _audioSource.Stop(); // Stop sound immediately
+
+        ResizePanelToText();
         _typingCoroutine = null;
     }
 
@@ -291,26 +302,46 @@ public void MakeChoice(int choiceIndex)
         _lmbText.color = new Color32(0, 0, 0, 100);
 
         bool insideTag = false;
+        int visibleCharacterCount = 0; // Track characters for babble frequency
 
         foreach (char letter in _fullText.ToCharArray())
         {
             if (letter == '<') insideTag = true;
-            if (letter == '>') insideTag = false;
-
+            
             _dialogueText.text += letter;
+
+            if (letter == '>') insideTag = false;
 
             if (!insideTag)
             {
-                // Update panel size as characters appear
-                ResizePanelToText(); 
+                // Play sound every X characters, but not on spaces
+                if (visibleCharacterCount % _babbleFrequency == 0 && !char.IsWhiteSpace(letter))
+                {
+                    PlayBabbleSound();
+                }
+                visibleCharacterCount++;
+
+                ResizePanelToText();
                 yield return new WaitForSeconds(_typingSpeed);
             }
         }
 
         _isTyping = false;
         _lmbText.color = new Color32(0, 0, 0, 200);
-        ResizePanelToText(); 
+        ResizePanelToText();
         _typingCoroutine = null;
+    }
+
+    private void PlayBabbleSound()
+    {
+        if (_audioSource == null || _babbleSounds == null || _babbleSounds.Length == 0) return;
+
+        // Randomize pitch for variety
+        _audioSource.pitch = _mainPitch + Random.Range(-BABBLE_PITCH_VARIANCE, BABBLE_PITCH_VARIANCE);
+        
+        // Pick a random clip from the array
+        int index = Random.Range(0, _babbleSounds.Length);
+        _audioSource.PlayOneShot(_babbleSounds[index]);
     }
 
     public void GameOver()

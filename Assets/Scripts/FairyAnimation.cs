@@ -51,6 +51,37 @@ public class FairyAnimation : MonoBehaviour
         {
             Debug.LogWarning($"Expression key '{expressionKey}' not found in face sprites dictionary.");
         }
+
+        if(DialogueManager.Instance != null)
+        {
+            switch (expressionKey)
+            {
+                case "Evil":
+                    DialogueManager.Instance._mainPitch = 0.9f;
+                    break;
+                case "Smile":
+                    DialogueManager.Instance._mainPitch = 1f;
+                    break;
+                case "Confused":
+                    DialogueManager.Instance._mainPitch = 1.05f;
+                    break;
+                case "Angry":
+                    DialogueManager.Instance._mainPitch = 0.9f;
+                    break;
+                case "Stare":
+                    DialogueManager.Instance._mainPitch = 0.85f;
+                    break;
+                case "Grin":
+                    DialogueManager.Instance._mainPitch = 1.05f;
+                    break;
+                case "Cat":
+                    DialogueManager.Instance._mainPitch = 1.1f;
+                    break;
+                case "Sad":
+                    DialogueManager.Instance._mainPitch = 0.95f;
+                    break;
+            }
+        }
     }
 
     public void ArmDefault()

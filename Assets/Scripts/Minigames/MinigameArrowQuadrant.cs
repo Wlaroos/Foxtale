@@ -163,7 +163,7 @@ public class MinigameArrowQuadrant : BaseMinigame
         }
         else
         {
-            Debug.Log("Wrong quadrant clicked. Expected " + _sequence[_nextIndex] + " but got " + clicked);
+            //Debug.Log("Wrong quadrant clicked. Expected " + _sequence[_nextIndex] + " but got " + clicked);
             FailGame();
         }
     }
