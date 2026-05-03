@@ -120,7 +120,7 @@ public class RotatableObject : MonoBehaviour
 
         UpdateVisualState();
 
-        SFXManager.Instance.PlayArrowClick();
+        SFXManager.Instance.PlayRotateClick();
     }
 
     private void UpdateVisualState()

@@ -76,7 +76,7 @@ public class MinigameMovingTarget : BaseMinigame
                             Instantiate(_soulParticlePrefab, _movingTargets[i].transform.position, Quaternion.identity);
                         }
 
-                        SFXManager.Instance.PlayBoneBreak();
+                        SFXManager.Instance.PlaySoulPop();
                         
                         Destroy(_movingTargets[i]);
                         _movingTargets[i] = null;

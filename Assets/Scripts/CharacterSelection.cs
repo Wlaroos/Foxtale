@@ -87,6 +87,7 @@ public class CharacterSelection : MonoBehaviour
                     {
                         SelectCharacter(i);
                         SFXManager.Instance.PlayButtonClick();
+                        SFXManager.Instance.PlayBoneBreak();
                         return;
                     }
                 }

@@ -45,6 +45,8 @@ public class MinigameDragObjectAway : BaseMinigame
         // Check if the obstacle collides with the draggable object
         if (Vector2.Distance(_draggableObject.transform.position, _movingObstacle.transform.position) < 0.5f)
         {
+            SFXManager.Instance.PlayCat2();
+            SFXManager.Instance.PlayAttack();
             FailGame();
         }
 
@@ -56,8 +58,8 @@ public class MinigameDragObjectAway : BaseMinigame
                 var dir = _movingObstacle.transform.position - _draggableObject.transform.position;
                 float rotation = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
                 Instantiate(_escapeParticlePrefab, _draggableObject.transform.position, Quaternion.Euler(0, 0, rotation));
+                SFXManager.Instance.PlayCat();
             }
-
             WinGame();
         }
     }

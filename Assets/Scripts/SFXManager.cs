@@ -11,9 +11,16 @@ public class SFXManager : MonoBehaviour
     [SerializeField] private AudioClip _coinCollectSFX;
     [SerializeField] private AudioClip _minigameWinSFX;
     [SerializeField] private AudioClip _minigameLoseSFX;
+    [SerializeField] private AudioClip _rotateClickSFX;
     [SerializeField] private AudioClip _arrowClickSFX;
     [SerializeField] private AudioClip _hurtSFX;
     [SerializeField] private AudioClip _deathSFX;
+    [SerializeField] private AudioClip _attackSFX;
+    [SerializeField] private AudioClip _heatbeatSFX;
+    [SerializeField] private AudioClip _minigameLose2SFX;
+    [SerializeField] private AudioClip _catSFX;
+    [SerializeField] private AudioClip _cat2SFX;
+    [SerializeField] private AudioClip _soulPopSFX;
 
     [SerializeField] private int _initialPoolSize = 10;
     [SerializeField] private int _maxPoolSize = 25;
@@ -102,8 +109,15 @@ public class SFXManager : MonoBehaviour
     public void PlayBoneClick() => PlaySFX(_boneClickSFX, 1f, 0.3f);
     public void PlayBoneBreak() => PlaySFX(_boneBreakSFX, 1f, 0.2f);
     public void PlayArrowClick() => PlaySFX(_arrowClickSFX, 1f, 0.2f);
+    public void PlayRotateClick() => PlaySFX(_rotateClickSFX, 1f, 0.2f);
     public void PlayHurt() => PlaySFX(_hurtSFX, 1f, 0.2f);
     public void PlayDeath() => PlaySFX(_deathSFX, 1f, 0.2f);
+    public void PlayAttack() => PlaySFX(_attackSFX, 1f, 0.2f);
+    public void PlayHeartbeat() => PlaySFX(_heatbeatSFX, 1f, 0.2f);
+    public void PlayMinigameLose2() => PlaySFX(_minigameLose2SFX, 1f, 0.2f);
+    public void PlayCat() => PlaySFX(_catSFX, 1f, 0.3f);
+    public void PlayCat2() => PlaySFX(_cat2SFX, 1f, 0.3f);
+    public void PlaySoulPop() => PlaySFX(_soulPopSFX, 1f, 0.2f);
     private void PlaySFX(AudioClip clip, float volume = 1f, float pitchVariance = 0.1f)
     {
         if (clip == null) return;
