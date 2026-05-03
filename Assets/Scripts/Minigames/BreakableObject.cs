@@ -28,7 +28,10 @@ public class BreakableObject : MonoBehaviour
         _clicks++;
 
         if (_boneEffect != null)
+        {
             Instantiate(_boneEffect, hitPosition, Quaternion.identity);
+            SFXManager.Instance.PlayBoneClick();
+        }
 
         if (_clicks >= _clicksToBreak)
         {
@@ -36,6 +39,7 @@ public class BreakableObject : MonoBehaviour
                 Instantiate(_breakEffect, hitPosition, Quaternion.identity);
 
             Broken?.Invoke(this);
+            SFXManager.Instance.PlayBoneBreak();
             Destroy(gameObject);
         }
     }

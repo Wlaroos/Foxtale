@@ -2165,10 +2165,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0493fca01f05214089b661fc9ac473f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _buttonClickSFX: {fileID: 0}
-  _coinCollectSFX: {fileID: 0}
-  _minigameWinSFX: {fileID: 0}
-  _minigameLoseSFX: {fileID: 0}
+  _buttonClickSFX: {fileID: 8300000, guid: 51044fd5ca25ca34abee195709e218bc, type: 3}
+  _boneClickSFX: {fileID: 8300000, guid: 7b13369bddcf94f40afca254c3beb25c, type: 3}
+  _boneBreakSFX: {fileID: 8300000, guid: eb3dab31060b2c445a08e17e5d609af0, type: 3}
+  _coinCollectSFX: {fileID: 8300000, guid: 0d1e8eb2e809e4d4d8baa52e3c5e044e, type: 3}
+  _minigameWinSFX: {fileID: 8300000, guid: 9bacaa6d6d7847e49a5360a72579677a, type: 3}
+  _minigameLoseSFX: {fileID: 8300000, guid: 5c557b0374d5cfe41a649e2d279b4cec, type: 3}
+  _arrowClickSFX: {fileID: 8300000, guid: 04dfac91219a50c47abf244031bf895a, type: 3}
+  _hurtSFX: {fileID: 8300000, guid: eb3dab31060b2c445a08e17e5d609af0, type: 3}
+  _deathSFX: {fileID: 8300000, guid: 94f50d9e3db92f24384f00fade8e97b4, type: 3}
   _initialPoolSize: 10
   _maxPoolSize: 25
 --- !u!4 &640887880
@@ -5996,7 +6001,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 281ee08cc65f96c49b0a836e5da4200a, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.5
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -6770,10 +6775,9 @@ MonoBehaviour:
   _enableTypewriterEffect: 1
   _typingSpeed: 0.03
   _babbleSounds:
-  - {fileID: 8300000, guid: 29e0678deb9c2f64699bd1884431ad5f, type: 3}
+  - {fileID: 8300000, guid: 234ef8f0bc805f24b9cf2d5fcf9fedec, type: 3}
   _babbleFrequency: 2
-  _minPitch: 1
-  _maxPitch: 2.5
+  _mainPitch: 1
   _stopAudioOnFinish: 1
 --- !u!4 &1951446604
 Transform:
@@ -6802,7 +6806,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0

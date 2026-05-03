@@ -47,8 +47,8 @@ public class MinigameManager : MonoBehaviour
     public int Money => _money;
 
     private int _minigamesPlayed = 0; 
-    private const float _timerDecreaseAmount = 0.5f;
-    private const float _minTimerLimit = 2f;
+    private const float TIMER_DECREASE_AMOUNT = 0.5f;
+    private const float MIN_TIMER_LIMIT = 2f;
     
     private bool _tutorialFinished = false;
     public bool TutorialFinished => _tutorialFinished;
@@ -132,9 +132,9 @@ public class MinigameManager : MonoBehaviour
         // Progress Pips
         UpdatePipStates();
 
-        if (_minigamesPlayed % 5 == 0 && _gameTimer > _minTimerLimit)
+        if (_minigamesPlayed % 5 == 0 && _gameTimer > MIN_TIMER_LIMIT)
         {
-            _gameTimer = Mathf.Max(_gameTimer - _timerDecreaseAmount, _minTimerLimit);
+            _gameTimer = Mathf.Max(_gameTimer - TIMER_DECREASE_AMOUNT, MIN_TIMER_LIMIT);
         }
     }
 
@@ -171,6 +171,8 @@ public class MinigameManager : MonoBehaviour
             StartCoroutine(ColorToFade(Color.green, 0.75f));
             StartRandomMinigame();
         }
+
+        SFXManager.Instance.PlayMinigameWin();
     }
 
     void HandleFail()
@@ -210,13 +212,15 @@ public class MinigameManager : MonoBehaviour
         }
 
         ScreenShake.ShakeOnce(1, 5);
+
+        SFXManager.Instance.PlayMinigameLose();
     }
 
     private void CheckSpeedIncrease()
     {
-        if (_minigamesPlayed % 5 == 0 && _gameTimer > _minTimerLimit)
+        if (_minigamesPlayed % 5 == 0 && _gameTimer > MIN_TIMER_LIMIT)
         {
-            _gameTimer = Mathf.Max(_gameTimer - _timerDecreaseAmount, _minTimerLimit);
+            _gameTimer = Mathf.Max(_gameTimer - TIMER_DECREASE_AMOUNT, MIN_TIMER_LIMIT);
         }
     }
 
@@ -240,6 +244,8 @@ public class MinigameManager : MonoBehaviour
     {
         _money += amount;
         _moneyText.text = _money.ToString();
+
+        SFXManager.Instance.PlayCoinCollect();
     }
 
     public void StartTutorial()

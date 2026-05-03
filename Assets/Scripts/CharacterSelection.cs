@@ -86,6 +86,7 @@ public class CharacterSelection : MonoBehaviour
                     if (hitObject == _podium[i].gameObject)
                     {
                         SelectCharacter(i);
+                        SFXManager.Instance.PlayButtonClick();
                         return;
                     }
                 }
@@ -164,11 +165,13 @@ public class CharacterSelection : MonoBehaviour
     public void Death1()
     {
         StartCoroutine(MoveHandToPointDEATH(_hand1, _handPoint[2], 0.2f));
+        SFXManager.Instance.PlayHurt();
     }
 
     public void Death2()
     {
         StartCoroutine(MoveHandToPointDEATH(_hand2, _handPoint[2], 0.2f));
+        SFXManager.Instance.PlayHurt();
     }
 
     public void Death3()
@@ -253,6 +256,8 @@ public class CharacterSelection : MonoBehaviour
         FairyAnimation.Instance.ChangeFace("Evil");
 
         yield return new WaitForSeconds(3f);
+
+        SFXManager.Instance.PlayDeath();
 
         Instantiate(_bloodEffect, hand.transform.position, Quaternion.Euler(0, 0, 0));
         Instantiate(_bloodEffect, hand.transform.position, Quaternion.Euler(0, 0, 30));

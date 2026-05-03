@@ -58,6 +58,7 @@ public class MinigameStackItems : BaseMinigame
                 if (_stackParticlePrefab != null && _stacked[i] == false)
                 {
                     Instantiate(_stackParticlePrefab, bottomAreaPosition, Quaternion.identity);
+                    SFXManager.Instance.PlayButtonClick();
                 }
 
                 _stacked[i] = true;
@@ -101,8 +102,9 @@ public class MinigameStackItems : BaseMinigame
     {
         yield return new WaitForSeconds(delay);
         if (sr != null)
-        {
+        {   
             sr.enabled = false;
+            sr.gameObject.SetActive(false);
         }
     }
 }

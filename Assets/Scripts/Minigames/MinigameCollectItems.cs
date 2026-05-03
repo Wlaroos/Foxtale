@@ -44,6 +44,8 @@ public class MinigameCollectItems : BaseMinigame
                 {
                     WinGame();
                 }
+
+                SFXManager.Instance.PlayButtonClick();
             }
         }
     }

@@ -160,6 +160,7 @@ public class MinigameArrowQuadrant : BaseMinigame
             {
                 WinGame();
             }
+            SFXManager.Instance.PlayArrowClick();
         }
         else
         {

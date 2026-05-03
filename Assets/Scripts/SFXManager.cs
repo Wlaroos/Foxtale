@@ -6,9 +6,14 @@ public class SFXManager : MonoBehaviour
     public static SFXManager Instance { get; private set; }
 
     [SerializeField] private AudioClip _buttonClickSFX;
+    [SerializeField] private AudioClip _boneClickSFX;
+    [SerializeField] private AudioClip _boneBreakSFX;
     [SerializeField] private AudioClip _coinCollectSFX;
     [SerializeField] private AudioClip _minigameWinSFX;
     [SerializeField] private AudioClip _minigameLoseSFX;
+    [SerializeField] private AudioClip _arrowClickSFX;
+    [SerializeField] private AudioClip _hurtSFX;
+    [SerializeField] private AudioClip _deathSFX;
 
     [SerializeField] private int _initialPoolSize = 10;
     [SerializeField] private int _maxPoolSize = 25;
@@ -90,31 +95,22 @@ public class SFXManager : MonoBehaviour
         }
     }
 
-    public void PlayButtonClick()
-    {
-        PlaySFX(_buttonClickSFX);
-    }
-
-    public void PlayCoinCollect()
-    {
-        PlaySFX(_coinCollectSFX);
-    }
-
-    public void PlayMinigameWin()
-    {
-        PlaySFX(_minigameWinSFX);
-    }
-
-    public void PlayMinigameLose()
-    {
-        PlaySFX(_minigameLoseSFX);
-    }
-
-    private void PlaySFX(AudioClip clip)
+    public void PlayButtonClick() =>  PlaySFX(_buttonClickSFX,1f, 0.3f);
+    public void PlayCoinCollect() => PlaySFX(_coinCollectSFX, 0.5f, 0.1f);
+    public void PlayMinigameWin() => PlaySFX(_minigameWinSFX, 1f, 0f);
+    public void PlayMinigameLose() => PlaySFX(_minigameLoseSFX, 1f, 0f);
+    public void PlayBoneClick() => PlaySFX(_boneClickSFX, 1f, 0.3f);
+    public void PlayBoneBreak() => PlaySFX(_boneBreakSFX, 1f, 0.2f);
+    public void PlayArrowClick() => PlaySFX(_arrowClickSFX, 1f, 0.2f);
+    public void PlayHurt() => PlaySFX(_hurtSFX, 1f, 0.2f);
+    public void PlayDeath() => PlaySFX(_deathSFX, 1f, 0.2f);
+    private void PlaySFX(AudioClip clip, float volume = 1f, float pitchVariance = 0.1f)
     {
         if (clip == null) return;
         var source = GetPooledAudioSource();
+        source.pitch = 1f + Random.Range(-pitchVariance, pitchVariance);
         source.clip = clip;
+        source.volume = volume;
         source.Play();
     }
 }

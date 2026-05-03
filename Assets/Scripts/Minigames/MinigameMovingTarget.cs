@@ -6,69 +6,98 @@ public class MinigameMovingTarget : BaseMinigame
     [SerializeField] private float _obstacleSpeed = 8f;
     [SerializeField] private GameObject _soulParticlePrefab;
     [SerializeField] private AnimationCurve _speedAnimationCurve;
-    private GameObject _movingTarget;
-    private Vector2 _currentDirection;
+    [SerializeField] private int _numberOfObjects = 1;
+    private GameObject[] _movingTargets;
+    private Vector2[] _currentDirections;
     private float _totalDuration; // Store the initial time to calculate progress
     private Camera _cachedCam;
 
     protected override void StartMinigame()
     {
         _cachedCam = Camera.main;
-
-        // Capture starting time
         _totalDuration = _gameTimer;
 
-        _movingTarget = Instantiate(_movingTargetPrefab, GetRandomPositionInBounds(), Quaternion.identity, transform);
+        _movingTargets = new GameObject[_numberOfObjects];
+        _currentDirections = new Vector2[_numberOfObjects];
 
-        // Set an initial random direction
-        _currentDirection = GetRandomDirection();
+        for (int i = 0; i < _numberOfObjects; i++)
+        {
+            _movingTargets[i] = Instantiate(_movingTargetPrefab, GetRandomPositionInBounds(), Quaternion.identity, transform);
+            _currentDirections[i] = GetRandomDirection();
+        }
     }
 
     protected override void UpdateMinigame()
     {
-        if (_movingTarget == null) return;
+        if (_movingTargets == null) return;
 
-        // Calculate progress (0.0 at start, 1.0 at finish)
         float progress = Mathf.Clamp01((_totalDuration - _gameTimer) / _totalDuration);
-
-        // Move the target in the current direction
         float speedMultiplier = _speedAnimationCurve.Evaluate(progress);
-        _movingTarget.transform.position += (Vector3)(_currentDirection * Time.deltaTime * _obstacleSpeed * speedMultiplier);
-
-        // Check if the target hits the bounds and bounce
-        Vector2 position = _movingTarget.transform.position;
         Vector2 halfSize = _boundsSize / 2f;
 
-        if (position.x <= _boundsCenter.x - halfSize.x || position.x >= _boundsCenter.x + halfSize.x)
+        for (int i = 0; i < _movingTargets.Length; i++)
         {
-            // Reverse X direction
-            _currentDirection.x = -_currentDirection.x;
-            position.x = Mathf.Clamp(position.x, _boundsCenter.x - halfSize.x, _boundsCenter.x + halfSize.x);
-        }
-        if (position.y <= _boundsCenter.y - halfSize.y || position.y >= _boundsCenter.y + halfSize.y)
-        {
-            // Reverse Y direction
-            _currentDirection.y = -_currentDirection.y;
-            position.y = Mathf.Clamp(position.y, _boundsCenter.y - halfSize.y, _boundsCenter.y + halfSize.y);
+            if (_movingTargets[i] == null) continue;
+
+            // Move the target in the current direction
+            _movingTargets[i].transform.position += (Vector3)(_currentDirections[i] * Time.deltaTime * _obstacleSpeed * speedMultiplier);
+
+            // Check if the target hits the bounds and bounce
+            Vector2 position = _movingTargets[i].transform.position;
+
+            if (position.x <= _boundsCenter.x - halfSize.x || position.x >= _boundsCenter.x + halfSize.x)
+            {
+                _currentDirections[i].x = -_currentDirections[i].x;
+                position.x = Mathf.Clamp(position.x, _boundsCenter.x - halfSize.x, _boundsCenter.x + halfSize.x);
+            }
+            if (position.y <= _boundsCenter.y - halfSize.y || position.y >= _boundsCenter.y + halfSize.y)
+            {
+                _currentDirections[i].y = -_currentDirections[i].y;
+                position.y = Mathf.Clamp(position.y, _boundsCenter.y - halfSize.y, _boundsCenter.y + halfSize.y);
+            }
+
+            _movingTargets[i].transform.position = position;
         }
 
-        _movingTarget.transform.position = position;
-
-        // Check for mouse click on the target
+        // Check for mouse click on any target
         if (Input.GetMouseButtonDown(0))
         {
             Vector2 mousePosition = _cachedCam.ScreenToWorldPoint(Input.mousePosition);
             RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero, MinigameLayerMask);
 
-            if (hit.collider != null && hit.collider.gameObject == _movingTarget)
+            if (hit.collider != null)
             {
-                if (_soulParticlePrefab != null)
+                for (int i = 0; i < _movingTargets.Length; i++)
                 {
-                    Instantiate(_soulParticlePrefab, _movingTarget.transform.position, Quaternion.identity);
+                    if (_movingTargets[i] != null && hit.collider.gameObject == _movingTargets[i])
+                    {
+                        if (_soulParticlePrefab != null)
+                        {
+                            Instantiate(_soulParticlePrefab, _movingTargets[i].transform.position, Quaternion.identity);
+                        }
+
+                        SFXManager.Instance.PlayBoneBreak();
+                        
+                        Destroy(_movingTargets[i]);
+                        _movingTargets[i] = null;
+
+                        // Win if all targets are destroyed
+                        bool allDestroyed = true;
+                        for (int j = 0; j < _movingTargets.Length; j++)
+                        {
+                            if (_movingTargets[j] != null)
+                            {
+                                allDestroyed = false;
+                                break;
+                            }
+                        }
+                        if (allDestroyed)
+                        {
+                            WinGame();
+                        }
+                        break;
+                    }
                 }
-                // Destroy the target on click
-                Destroy(_movingTarget);
-                WinGame();
             }
         }
     }

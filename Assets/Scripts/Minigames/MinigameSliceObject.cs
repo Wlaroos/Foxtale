@@ -119,10 +119,16 @@ public class MinigameSliceObject : BaseMinigame
                         sliceableObj.transform.GetChild(0).GetChild(1).parent = null;
 
                         Destroy(sliceableObj);
-                        if (_activeTrail != null) { _activeTrail.emitting = false; _activeTrail.Clear(); _activeTrail.gameObject.SetActive(false); }
+
+                        if (_activeTrail != null) 
+                        { 
+                            _activeTrail.emitting = false; _activeTrail.Clear(); _activeTrail.gameObject.SetActive(false);
+                        }
                         _slicedThisDrag.Add(id);
 
                         _objectsToSlice--;
+
+                        SFXManager.Instance.PlayBoneBreak();
 
                         if (_objectsToSlice <= 0)
                         {
@@ -140,9 +146,9 @@ public class MinigameSliceObject : BaseMinigame
                         return;
                     }
                 }
-
                 _previousSlicePos = currentPos;
             }
+
         }
 
         // End slicing on mouse up

@@ -33,45 +33,45 @@ public class RotatableObject : MonoBehaviour
         if (_clickCollider == null) _clickCollider = GetComponent<Collider2D>();
     }
 
- public void SetTargetAngle(float angleDegrees)
-{
-    AssignReferences();
-    
-    float snappedLogical = RoundToMultiple(angleDegrees, _rotateAmount);
-    _targetAngle = NormalizeAngle(snappedLogical);
-
-    if (_bodyTransform != null)
+    public void SetTargetAngle(float angleDegrees)
     {
-        float visualGoalZ = NormalizeAngle(_targetAngle - _uprightOffset);
-        _bodyTransform.localEulerAngles = new Vector3(0f, 0f, visualGoalZ);
-    }
-    
-    UpdateVisualState();
-}
+        AssignReferences();
+        
+        float snappedLogical = RoundToMultiple(angleDegrees, _rotateAmount);
+        _targetAngle = NormalizeAngle(snappedLogical);
 
-public void RandomizeInitialRotation()
-{
-    AssignReferences();
-    if (_rotatorTransform == null) return;
-
-    int totalSteps = Mathf.RoundToInt(360f / _rotateAmount);
-    if (totalSteps <= 1) totalSteps = 4;
-
-    int targetStepIndex = Mathf.RoundToInt(NormalizeAngle(_targetAngle) / _rotateAmount) % totalSteps;
-
-    int startStepIndex = UnityEngine.Random.Range(0, totalSteps);
-    
-    if (startStepIndex == targetStepIndex)
-    {
-        startStepIndex = (startStepIndex + UnityEngine.Random.Range(1, totalSteps)) % totalSteps;
+        if (_bodyTransform != null)
+        {
+            float visualGoalZ = NormalizeAngle(_targetAngle - _uprightOffset);
+            _bodyTransform.localEulerAngles = new Vector3(0f, 0f, visualGoalZ);
+        }
+        
+        UpdateVisualState();
     }
 
-    float physicalStartAngle = NormalizeAngle((startStepIndex * _rotateAmount) - _uprightOffset);
-    _rotatorTransform.localEulerAngles = new Vector3(0f, 0f, physicalStartAngle);
-    
-    _completed = false;
-    UpdateVisualState();
-}
+    public void RandomizeInitialRotation()
+    {
+        AssignReferences();
+        if (_rotatorTransform == null) return;
+
+        int totalSteps = Mathf.RoundToInt(360f / _rotateAmount);
+        if (totalSteps <= 1) totalSteps = 4;
+
+        int targetStepIndex = Mathf.RoundToInt(NormalizeAngle(_targetAngle) / _rotateAmount) % totalSteps;
+
+        int startStepIndex = UnityEngine.Random.Range(0, totalSteps);
+        
+        if (startStepIndex == targetStepIndex)
+        {
+            startStepIndex = (startStepIndex + UnityEngine.Random.Range(1, totalSteps)) % totalSteps;
+        }
+
+        float physicalStartAngle = NormalizeAngle((startStepIndex * _rotateAmount) - _uprightOffset);
+        _rotatorTransform.localEulerAngles = new Vector3(0f, 0f, physicalStartAngle);
+        
+        _completed = false;
+        UpdateVisualState();
+    }
 
     void Update()
     {
@@ -82,12 +82,12 @@ public void RandomizeInitialRotation()
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             if (_clickCollider != null && _clickCollider.OverlapPoint(mousePos))
             {
-                RotatePlayerObject(Input.GetMouseButtonDown(0));
+                RotateObject(Input.GetMouseButtonDown(0));
             }
         }
     }
 
-    private void RotatePlayerObject(bool clockwise)
+    private void RotateObject(bool clockwise)
     {
         if (_rotatorTransform == null) return;
 
@@ -119,6 +119,8 @@ public void RandomizeInitialRotation()
         }
 
         UpdateVisualState();
+
+        SFXManager.Instance.PlayArrowClick();
     }
 
     private void UpdateVisualState()
