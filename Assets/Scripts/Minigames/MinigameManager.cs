@@ -211,7 +211,7 @@ public class MinigameManager : MonoBehaviour
 
     private void CheckSpeedIncrease()
     {
-        if (_minigamesPlayed % 5 == 0 && _gameTimer > MIN_TIMER_LIMIT)
+        if (_minigamesPlayed % 5 == 0 && _minigamesPlayed > 0 && _gameTimer > MIN_TIMER_LIMIT)
         {
             _gameTimer = Mathf.Max(_gameTimer - TIMER_DECREASE_AMOUNT, MIN_TIMER_LIMIT);
         }
