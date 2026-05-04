@@ -1,43 +1,34 @@
 -> main
 
 === main ===
-#Face:Grin
-Guess you aren't as useless as I thought!
+Guess you aren't as useless as I thought! #Face:Grin
 
-#Face:Wink
-So, how was it? Having fun yet?
+So, how was it? Having fun yet? #Face:Wink
 
 +[Yes]
-    #Face:Smile
-    Glad to hear you're a little messed up in the head!
+    Glad to hear you're a little messed up in the head! #Face:Smile
 +[No]
-    #Face:Deadpan
-    Yeah, I don't actually care. I'm just required to ask.
-    #Face:Stare
-    Anyway
+    Yeah, I don't actually care. I'm just required to ask. #Face:Deadpan
     
-    #Face:Happy
-    - You know, I'm really happy that you didn't die immediately
+    Anyway #Face:Stare
+    
+    
+    - You know, I'm really happy that you didn't die immediately #Face:Happy
 
-#Face:Squint
-Not because I like you,
+Not because I like you, #Face:Squint
 
-#Face:Grin
-But because I like to profit off you!
+But because I like to profit off you! #Face:Grin
 
 +[Huh?]
-    #Face:Shock
-    Oh
-    #Face:Fresh
-    Uh
-    #Face:Wink
-    Nothing
+    Oh #Face:Shock
+    
+    Uh #Face:Fresh
+    
+    Nothing #Face:Wink
 
 +[...]
-    #Face:Fresh
-    ...
-    #Face:Grin
-     
+    ... #Face:Fresh
+     #Face:Grin
     
     - -> DONE
     

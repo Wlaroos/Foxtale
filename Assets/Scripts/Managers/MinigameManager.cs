@@ -410,6 +410,9 @@ public class MinigameManager : MonoBehaviour
 
     private void SkipToAndWinBigPip()
     {
+
+        SkipTutorial();
+
         // Clean up current minigame
         if (_currentMinigame != null) 
         {
@@ -455,15 +458,11 @@ public class MinigameManager : MonoBehaviour
             _coinParticles.CreateCoins(totalSkipReward, 0.005f);
 
             SFXManager.Instance.PlayMinigameWin();
-            
+
             StartCoroutine(ColorToFade(Color.green, 0.75f));
 
             // Trigger the Dialogue and increment the Big Pip counter
             CheckBigMinigameProgression();
-        }
-        else
-        {
-            Debug.Log("No more Big Pips found in the sequence.");
         }
     }
 

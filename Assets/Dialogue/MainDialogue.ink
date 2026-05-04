@@ -4,17 +4,14 @@ EXTERNAL waitForTutorial01()
 -> main
 
 === main ===
-#Face:Grin
-Welcome, you lucky little bastard!
+Welcome, you lucky little bastard! #Face:Grin
 
-#Face:Smile
-You've been randomly chosen to face a trial where you can gain a new body and start a new life!
+You've been randomly chosen to face a trial where you can gain a new body and start a new life! #Face:Smile
 
 Wanna play?
 
 +[Yes]
-    #Face:Grin
-    Great!
+    Great! #Face:Grin
 +[No]
     #ExitGame
     ->END
@@ -22,145 +19,94 @@ Wanna play?
 
 - I'll be the test administrator for these little games you're about to play
 
-#Face:Smile
-First, you must pick a vessel from one of these podiums
-
-#Face:Wink
-Can't really play games with flimsy ghost mitts, now can you?
-
-#Face:Smile
-If you survive, that'll be your new body
-
+First, you must pick a vessel from one of these podiums #Face:Smile
+Can't really play games with flimsy ghost mitts, now can you? #Face:Wink
+If you survive, that'll be your new body #Face:Smile
 So, pick one you like
-
 Now,
 
 ~ waitForCharacterSelect()
-#Face:SuperStare
-CHOOSE <br> A <br> VESSEL
+CHOOSE <br> A <br> VESSEL #Face:SuperStare
 
-// + [Walm]
-// + [Runic]
-// + [Frank]
-
-// #Face:Grin
-// - Great choice, I like the bones on that one
-
-#Face:Evil
-And just to up the stakes, I've put an innocent soul inside each of these
-
+And just to up the stakes, I've put an innocent soul inside each of these #Face:Evil
 You get three strikes, each resulting in the loss of a vessel and the soul within
 
-#Face:Smile
-However, each success will reward you with some currency to spend later on
-
-#Face:Wink
-And if you lose, I might be persuaded to let you keep your soul and body for a price
-
-#Face:Smile
-Before we begin, do you need a refresher?
+However, each success will reward you with some currency to spend later on #Face:Smile
+And if you lose, I might be persuaded to let you keep your soul and body for a price #Face:Wink
+Before we begin, do you need a refresher? #Face:Smile
 
 +[Yes]
-    #Face:Confused
-    Really? I just told you this...
+    Really? I just told you this... #Face:Confused
     -> introRepeat
 +[No]
-    #Face:Grin
-    Perfect!
+    Perfect! #Face:Grin
 -> tutorial
     
 = skipTarget    
 -> END
 
 === introRepeat ===
-#Face:Deadpan
-Welcome, wandering soul, blah blah blah
-
+Welcome, wandering soul, blah blah blah #Face:Deadpan
 I'm the test administrator
 
-#Face:Stare
-You already picked a vessel, don't need to ask that again
+You already picked a vessel, don't need to ask that again#Face:Stare
 
-#Face:Deadpan
-If you survive, that'll be your new body
-
+If you survive, that'll be your new body #Face:Deadpan
 There's an innocent soul inside each vessel because I'm evil
-
 Every time you mess up in the game a vessel gets destroyed
-
 You get money each time you succeed
-
 If you lose, I might let you keep your soul and body for a price
 
-#Face:Squint
-Need another refresher?
+Need another refresher? #Face:Squint
 
 +[Yes]
-    #Face:Stare
-    Yeah, no
+    Yeah, no #Face:Stare
 +[No]
-    #Face:Grin
-    Good
+    Good #Face:Grin
     
 - -> tutorial
 
 === gameover ===
-#Face:Grin
-Did you really think I'd let you go in exchange for gold?
+Did you really think I'd let you go in exchange for gold? #Face:Grin
 -> DONE
 
 === skipMain ===
 -> main.skipTarget
 
 === tutorial ===
-#Face:Smile
-Alright, lets get you used to your new body
+Alright, lets get you used to your new body #Face:Smile
 
 ~ waitForTutorial01()
-
 
 Click on the buttons that pop up
 
-#Face:Grin
-Amazing, you're a natural
+Amazing, you're a natural #Face:Grin
 
-#Face:Smile
-Also, you see that red bar right under you?
-
+Also, you see that red bar right under you? #Face:Smile
 That's how much time you get for these
 
-#Face:Fresh
-I'm being real nice, letting you have extra time for these practice ones you know
+I'm being real nice, letting you have extra time for these practice ones you know #Face:Fresh
 
 ~ waitForTutorial01()
 
-#Face:Smile
-Now click on the bone a bunch
+Now click on the bone a bunch #Face:Smile
 
-#Face:Cat
-It's not animated, but I'm clapping. Use your imagination
+It's not animated, but I'm clapping. Use your imagination #Face:Cat
 
-#Face:Smile
-You see that 0 next to the timer bar?
-
+You see that 0 next to the timer bar? #Face:Smile
 That's how much money you have
 
-#Face:Grin
-You're poor
+You're poor #Face:Grin
 
-#Face:Fresh
-And I'm not giving you any money for these practice tests, cry about it
+And I'm not giving you any money for these practice tests, cry about it #Face:Fresh
 
 ~ waitForTutorial01()
 
-#Face:Smile
-Lastly, slice the heart in the direction shown
+Lastly, slice the heart in the direction shown #Face:Smile
 
-#Face:Evil
-I promise that heart didn't belong to anyone
+I promise that heart didn't belong to anyone #Face:Evil
 
-#Face:Grin
-Now, lets start the games for real
+Now, lets start the games for real #Face:Grin
 
 -> DONE
 

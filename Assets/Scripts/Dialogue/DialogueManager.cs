@@ -31,6 +31,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _rmbText;
     private const string FACE_TAG = "Face";
     private const string EXIT_GAME_TAG = "ExitGame";
+    private const string KILL_PLAYER_TAG = "KillPlayer";
     private bool _isWaitingForExternal = false;
 
     [Header("Typewriter Effect")]
@@ -289,6 +290,10 @@ public class DialogueManager : MonoBehaviour
             else if (tag.Equals(EXIT_GAME_TAG))
             {
                 ExitGame();
+            }
+            else if (tag.Equals(KILL_PLAYER_TAG))
+            {
+                GameOver();
             }
         }
     }

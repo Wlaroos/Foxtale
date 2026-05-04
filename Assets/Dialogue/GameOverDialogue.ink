@@ -1,9 +1,7 @@
 === gameover ===
-#Face:Grin
-Did you really think I'd let you go in exchange for gold?
+Did you really think I'd let you go in exchange for gold? #Face:Grin
 -> DONE
 
 === tutorial ===
-#Face:Stare
-Seriously? You're not even worth keeping around.
+Seriously? You're not even worth keeping around. #Face:Stare
 -> DONE
