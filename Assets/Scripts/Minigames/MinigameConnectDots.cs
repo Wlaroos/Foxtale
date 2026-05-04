@@ -46,31 +46,34 @@ public class ConnectDotsMinigame : BaseMinigame
     private void SpawnDotsSequentially()
     {
         ClearBoard();
-        List<Vector2> usedPositions = new List<Vector2>();
 
-        for (int i = 0; i < _dotCount; i++)
+        float minRequiredDistance = (_dotRadius * 2f) + 0.5f;
+        List<Vector2> positions = GetRandomPositionsInBounds(_dotCount, minRequiredDistance);
+
+        // Iterate through the generated positions to spawn dots
+        for (int i = 0; i < positions.Count; i++)
         {
-            Vector2 spawnPos = GetValidRandomPosition(usedPositions);
+            Vector2 spawnPos = positions[i];
             GameObject dot = Instantiate(_dotPrefab, spawnPos, Quaternion.identity, transform);
 
             var dotItem = dot.GetComponent<DotItem>();
-            if(dotItem != null) dotItem.Index = i;
-            
+            if (dotItem != null) dotItem.Index = i;
+
             TMP_Text text = dot.GetComponentInChildren<TMP_Text>();
             if (text != null) text.text = (i + 1).ToString();
 
             SpriteRenderer sr = dot.GetComponent<SpriteRenderer>();
-            if (sr != null) 
+            if (sr != null)
             {
                 sr.color = _defaultColor;
                 _dotRenderers.Add(sr);
             }
 
             _spawnedDots.Add(dot);
-            usedPositions.Add(spawnPos);
-
-            UpdateDotVisuals(); // Highlight the first dot
         }
+
+        // Update the visual state (highlights the first dot)
+        UpdateDotVisuals();
     }
 
     protected override void UpdateMinigame()
@@ -209,22 +212,6 @@ public class ConnectDotsMinigame : BaseMinigame
         _activeVisuals.Clear();
     }
 
-    private Vector2 GetValidRandomPosition(List<Vector2> existing)
-    {
-        Vector2 pos = Vector2.zero;
-        int attempts = 0;
-        float minDistance = (_dotRadius * 2f) + 0.5f;
-        while (attempts < 100)
-        {
-            pos = GetRandomPositionInBounds();
-            bool tooClose = false;
-            foreach (Vector2 p in existing) if (Vector2.Distance(pos, p) < minDistance) { tooClose = true; break; }
-            if (!tooClose) return pos;
-            attempts++;
-        }
-        return pos;
-    }
-
     private void UpdateDotVisuals()
     {
         for (int i = 0; i < _dotRenderers.Count; i++)
@@ -241,6 +228,25 @@ public class ConnectDotsMinigame : BaseMinigame
             {
                 _dotRenderers[i].color = _defaultColor;
             }
+        }
+    }
+
+    protected override void ApplyDifficultySettings()
+    {
+        switch (CurrentDifficulty)
+        {
+            case Difficulty.Easy:
+            _dotCount = 2;
+                break;
+            case Difficulty.Normal:
+            _dotCount = 4;
+                break;
+            case Difficulty.Hard:
+            _dotCount = 7;
+                break;
+            case Difficulty.Boss:
+            _dotCount = 10;
+                break;
         }
     }
 }

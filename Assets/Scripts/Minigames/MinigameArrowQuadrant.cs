@@ -180,4 +180,27 @@ public class MinigameArrowQuadrant : BaseMinigame
             return (v.y > 0) ? Direction.Up : Direction.Down;
         }
     }
+
+    protected override void ApplyDifficultySettings()
+    {
+        switch (CurrentDifficulty)
+        {
+            case Difficulty.Easy:
+            _numberOfArrows = 2;
+            _arrowSpacing = 1f;
+                break;
+            case Difficulty.Normal:
+            _numberOfArrows = 4;
+            _arrowSpacing = 1f;
+                break;
+            case Difficulty.Hard:
+            _numberOfArrows = 6;
+            _arrowSpacing = 1f;
+                break;
+            case Difficulty.Boss:
+            _numberOfArrows = 10;
+            _arrowSpacing = 0.75f;
+                break;
+        }
+    }
 }

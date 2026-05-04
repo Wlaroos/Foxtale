@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class MinigameBreakObject : BaseMinigame
 {
@@ -7,23 +8,27 @@ public class MinigameBreakObject : BaseMinigame
     [SerializeField] private int _itemsToBreak = 1;
     [SerializeField] private ParticleSystem _breakEffect;
     [SerializeField] private ParticleSystem _boneEffect;
-
-    private BreakableObject[] _breakableObjects;
     private int _brokenObjects = 0;
 
     protected override void StartMinigame()
     {
-        _breakableObjects = new BreakableObject[_itemsToBreak];
-        for (int i = 0; i < _itemsToBreak; i++)
+        // Get all valid non-touching positions first
+        List<Vector2> spawnPositions = GetRandomPositionsInBounds(_itemsToBreak, 1f);
+
+        // Spawn objects at those specific positions
+        foreach (Vector2 pos in spawnPositions)
         {
-            GameObject go = Instantiate(_breakablePrefab, GetRandomPositionInBounds(), Quaternion.identity, transform);
-            BreakableObject br = go.GetComponent<BreakableObject>();
-
-            br.Initialize(_clicksToBreak, _breakEffect, _boneEffect);
-            br.Broken += OnBreakableBroken;
-
-            _breakableObjects[i] = br;
+            SpawnBreakableObjectAt(pos);
         }
+    }
+
+    private void SpawnBreakableObjectAt(Vector2 pos)
+    {
+        GameObject go = Instantiate(_breakablePrefab, pos, Quaternion.identity, transform);
+        BreakableObject br = go.GetComponent<BreakableObject>();
+
+        br.Initialize(_clicksToBreak, _breakEffect, _boneEffect);
+        br.Broken += OnBreakableBroken;
     }
 
     protected override void UpdateMinigame()
@@ -38,6 +43,29 @@ public class MinigameBreakObject : BaseMinigame
         if (_brokenObjects >= _itemsToBreak)
         {
             WinGame();
+        }
+    }
+
+    protected override void ApplyDifficultySettings()
+    {
+        switch (CurrentDifficulty)
+        {
+            case Difficulty.Easy:
+            _itemsToBreak = 1;
+            _clicksToBreak = 3;
+                break;
+            case Difficulty.Normal:
+            _itemsToBreak = 2;
+            _clicksToBreak = 3;
+                break;
+            case Difficulty.Hard:
+            _itemsToBreak = 3;
+            _clicksToBreak = 4;
+                break;
+            case Difficulty.Boss:
+            _itemsToBreak = 4;
+            _clicksToBreak = 5;
+                break;
         }
     }
 }

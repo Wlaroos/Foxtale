@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +11,7 @@ public class MinigameManager : MonoBehaviour
 
     [Header("Minigame Settings")]
     [SerializeField] private float _gameTimer = 5f;
+    [SerializeField] private float _bigMinigameTimer = 10f;
     [SerializeField] private int _lives = 3;
     [SerializeField] private float _timeBetweenMinigames = 1f;
     [Space(10)]
@@ -60,6 +62,8 @@ public class MinigameManager : MonoBehaviour
     private List<MinigamePip> _spawnedPips = new List<MinigamePip>();
     private int _bigPipsCompletedCount = 0;
 
+    private float _selectedTimerDuration;
+
     private void Awake()
     {
         if (Instance == null) Instance = this;
@@ -80,7 +84,7 @@ public class MinigameManager : MonoBehaviour
         if (_currentMinigame != null && _currentTimer > 0)
         {
             _currentTimer -= Time.deltaTime;
-            _timerSlider.value = _currentTimer / _gameTimer;
+            _timerSlider.value = _currentTimer / _selectedTimerDuration;
         }
     }
     
@@ -97,16 +101,29 @@ public class MinigameManager : MonoBehaviour
 
         if (_currentMinigame != null) Destroy(_currentMinigame.gameObject);
 
+        _selectedTimerDuration = _gameTimer; // Default to normal timer
+        
+        bool isBigMinigame = false;
+
+        if(_minigamesPlayed >= _spawnedPips.Count)
+        {
+            yield break;
+        }
+
+        if(_spawnedPips[_minigamesPlayed].CurrentShape == MinigamePip.PipShape.Big) isBigMinigame = true;
+
         // Selection Logic
         // Forced Minigame
         if (_forcedMinigame != null)
         {
             _currentMinigame = Instantiate(_forcedMinigame, transform);
+            MusicManager.Instance.PlayMinigameMusic();
         }
         // Tutorial Minigame
         else if (!_tutorialFinished && _tutorialIndex < _tutorialMinigames.Length)
         {
             _currentMinigame = Instantiate(_tutorialMinigames[_tutorialIndex], transform);
+            MusicManager.Instance.PlayMinigameMusic();
         }
         // Check if the current pip is a "Big" minigame pip
         else if (_minigamesPlayed < _spawnedPips.Count && _spawnedPips[_minigamesPlayed].CurrentShape == MinigamePip.PipShape.Big)
@@ -114,28 +131,47 @@ public class MinigameManager : MonoBehaviour
             // Pick a random Big Minigame
             int randomIndex = Random.Range(0, _bigMinigamePrefabs.Length);
             _currentMinigame = Instantiate(_bigMinigamePrefabs[randomIndex], transform);
+            MusicManager.Instance.PlayBossMusic();
         }
         // Normal Minigames
         else
         {
             int randomIndex = Random.Range(0, _minigamePrefabs.Length);
             _currentMinigame = Instantiate(_minigamePrefabs[randomIndex], transform);
+            MusicManager.Instance.PlayMinigameMusic();
         }
 
+        // Logic for deciding the duration
+        if (timerOverride > 0f) 
+            _selectedTimerDuration = timerOverride; // Use manual override
+        else if (isBigMinigame) 
+            _selectedTimerDuration = _bigMinigameTimer; // Use the Big Minigame override
+        else 
+            _selectedTimerDuration = _gameTimer; // Use standard game timer
+
         // Initialization
-        float duration = timerOverride > 0f ? timerOverride : _gameTimer;
-        _currentMinigame.Initialize(_boundsCenter, _boundsSize, duration);
+        BaseMinigame.Difficulty targetDifficulty;
+
+        if (isBigMinigame)
+        {
+            targetDifficulty = BaseMinigame.Difficulty.Boss;
+        }
+        else
+        {
+            targetDifficulty = GetDifficultyLevel();
+        }
+
+        _currentMinigame.Initialize(_boundsCenter, _boundsSize, _selectedTimerDuration, targetDifficulty);
 
         _currentMinigame.OnWin = HandleWin;
         _currentMinigame.OnFail = HandleFail;
 
         _minigameText.text = _currentMinigame.MinigameText;
-        _currentTimer = duration;
+        _currentTimer = _selectedTimerDuration;
         _timerSlider.value = 1f;
 
         // Progress Pips
         UpdatePipStates();
-        CheckSpeedIncrease();
     }
 
     void HandleWin()
@@ -230,14 +266,6 @@ public class MinigameManager : MonoBehaviour
         }
     }
 
-    private void CheckSpeedIncrease()
-    {
-        if (_minigamesPlayed % 5 == 0 && _minigamesPlayed > 0 && _gameTimer > MIN_TIMER_LIMIT)
-        {
-            _gameTimer = Mathf.Max(_gameTimer - TIMER_DECREASE_AMOUNT, MIN_TIMER_LIMIT);
-        }
-    }
-
     private IEnumerator ColorToFade(Color color, float duration)
     {
         Color originalColor = color;
@@ -324,7 +352,6 @@ public class MinigameManager : MonoBehaviour
         {
             if (_spawnedPips[completedIndex].CurrentShape == MinigamePip.PipShape.Big)
             {
-                // The count increments AFTER the switch or use 0, 1, 2
                 switch (_bigPipsCompletedCount)
                 {
                     case 0:
@@ -347,9 +374,21 @@ public class MinigameManager : MonoBehaviour
 
     public void ResumeMinigames()
     {
-        // Call this from your DialogueManager or an UnityEvent when the text finishes
         StartRandomMinigame();
     }
+
+    private BaseMinigame.Difficulty GetDifficultyLevel()
+{
+    // If we have completed 0 Big Pips, we are in the first segment (Easy)
+    // If 1, we are in the second segment (Medium)
+    // If 2+, we are in the final segment (Hard)
+    switch (_bigPipsCompletedCount)
+    {
+        case 0: return BaseMinigame.Difficulty.Easy;
+        case 1: return BaseMinigame.Difficulty.Normal;
+        default: return BaseMinigame.Difficulty.Hard;
+    }
+}
 
     private void OnDrawGizmos()
     {

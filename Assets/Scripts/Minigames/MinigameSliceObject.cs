@@ -4,7 +4,7 @@ using UnityEngine;
 public class MinigameSliceObject : BaseMinigame
 {
     [SerializeField] private GameObject _sliceablePrefab;
-    [SerializeField] private int _objectsToSlice = 2;
+    [SerializeField] private int _objectsToSlice = 1;
     [SerializeField] private ParticleSystem _bloodEffect;
     [SerializeField] private TrailRenderer _trailEffect;
     private Vector2 _sliceStart;
@@ -16,12 +16,15 @@ public class MinigameSliceObject : BaseMinigame
 
     protected override void StartMinigame()
     {
-        for (int i = 0; i < _objectsToSlice; i++)
+        // Get all valid non-touching positions first
+        List<Vector2> spawnPositions = GetRandomPositionsInBounds(_objectsToSlice, 1.5f);
+
+        // Spawn objects at those specific positions
+        foreach (Vector2 pos in spawnPositions)
         {
-            SpawnSliceableObject();
+            SpawnSliceableObjectAt(pos);
         }
 
-        // Create a runtime instance of the trail renderer but keep it disabled
         if (_trailEffect != null)
         {
             _activeTrail = Instantiate(_trailEffect);
@@ -31,19 +34,15 @@ public class MinigameSliceObject : BaseMinigame
         }
     }
 
-    private void SpawnSliceableObject()
+    private void SpawnSliceableObjectAt(Vector2 pos)
     {
-        GameObject sliceableObject = Instantiate(_sliceablePrefab, GetRandomPositionInBounds(), Quaternion.identity, transform);
+        GameObject sliceableObject = Instantiate(_sliceablePrefab, pos, Quaternion.identity, transform);
 
-        // Choose a random required slice direction and rotate the object accordingly
         Vector2 requiredDirection = GetRandomDirection();
         float angle = Mathf.Atan2(requiredDirection.y, requiredDirection.x) * Mathf.Rad2Deg;
         sliceableObject.transform.rotation = Quaternion.Euler(0, 0, angle);
 
-        // Get the sliceable component so the required direction is preserved and accessible at runtime
         var so = sliceableObject.GetComponent<SliceableObject>();
-
-        // Store the direction according to the object's rotated local X so it matches transform.right
         so.requiredDirection = sliceableObject.transform.right;
     }
 
@@ -161,6 +160,25 @@ public class MinigameSliceObject : BaseMinigame
                 _activeTrail.Clear();
                 _activeTrail.gameObject.SetActive(false);
             }
+        }
+    }
+
+    protected override void ApplyDifficultySettings()
+    {
+        switch (CurrentDifficulty)
+        {
+            case Difficulty.Easy:
+            _objectsToSlice = 1;
+                break;
+            case Difficulty.Normal:
+            _objectsToSlice = 3;
+                break;
+            case Difficulty.Hard:
+            _objectsToSlice = 5;
+                break;
+            case Difficulty.Boss:
+            _objectsToSlice = 8;
+                break;
         }
     }
 }

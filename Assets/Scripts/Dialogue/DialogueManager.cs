@@ -152,7 +152,6 @@ public class DialogueManager : MonoBehaviour
         _dialogueText.text = string.Empty;
 
         MinigameManager.Instance.StartRandomMinigame();
-        MusicManager.Instance.PlayMinigameMusic();
     }
 
     private void ContinueDialogue()

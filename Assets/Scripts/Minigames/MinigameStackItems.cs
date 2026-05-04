@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class MinigameStackItems : BaseMinigame
 {
@@ -7,6 +8,7 @@ public class MinigameStackItems : BaseMinigame
     [SerializeField] private GameObject _bottomAreaPrefab;
     [SerializeField] private int _items = 2;
     [SerializeField] private GameObject _stackParticlePrefab;
+    
     private GameObject[] _stackables;
     private GameObject _bottomArea;
     private bool[] _stacked;
@@ -14,86 +16,64 @@ public class MinigameStackItems : BaseMinigame
     protected override void StartMinigame()
     {
         _stackables = new GameObject[_items];
+        _stacked = new bool[_items];
 
         _bottomArea = Instantiate(_bottomAreaPrefab, GetRandomPositionInBounds(), Quaternion.identity, transform);
 
-        for (int i = 0; i < _items; i++)
+        // Get all valid non-touching positions first
+        List<Vector2> spawnPositions = GetRandomPositionsInBounds(_items, 1.5f);
+
+        for (int i = 0; i < spawnPositions.Count; i++)
         {
-            // Ensure stackables don't spawn too close to the bottom area
-            var pos = GetRandomPositionInBounds();
-            while (Vector2.Distance(pos, _bottomArea.transform.position) < 1f)
-            {
-                pos = GetRandomPositionInBounds();
-            }
+            SpawnStackable(spawnPositions[i], i);
+        }
+    }
 
-            _stackables[i] = Instantiate(_stackablePrefab, pos, Quaternion.identity, transform);
+    private void SpawnStackable(Vector2 pos, int index)
+    {            
+        // Ensure stackables don't spawn right on top of the bottom area
+        float distanceToBottom = Vector2.Distance(pos, _bottomArea.transform.position);
 
-            // Get the component and apply the bounds from BaseMinigame
-            DraggableObject dragScript = _stackables[i].GetComponent<DraggableObject>();
-            if (dragScript != null)
-            {
-                dragScript.SetBounds(_boundsCenter, _boundsSize);
-            }
+        if (distanceToBottom < 1.5f) 
+        {
+            pos = GetRandomPositionInBounds();
         }
 
-        _stacked = new bool[_items];
+        GameObject obj = Instantiate(_stackablePrefab, pos, Quaternion.identity, transform);
+        _stackables[index] = obj;
 
+        DraggableObject dragScript = obj.GetComponent<DraggableObject>();
+        if (dragScript != null)
+        {
+            dragScript.SetBounds(_boundsCenter, _boundsSize);
+        }
     }
 
     protected override void UpdateMinigame()
     {
-        // Check if all stackables are close to the bottom area position
+        if (_stackables == null || _bottomArea == null) return;
+
         Vector2 bottomAreaPosition = _bottomArea.transform.position;
-
-        if (_stackables == null || _bottomArea == null)
-            return;
-
         bool allStacked = true;
 
         for (int i = 0; i < _items; i++)
         {
+            // If it's already stacked and disabled, we just skip it but keep 'allStacked' true
+            if (_stacked[i]) continue;
+
             if (_stackables[i] == null)
             {
-                _stacked[i] = false;
                 allStacked = false;
                 continue;
             }
 
             if (Vector2.Distance(_stackables[i].transform.position, bottomAreaPosition) < 0.5f)
             {
-                if (_stackParticlePrefab != null && _stacked[i] == false)
-                {
-                    Instantiate(_stackParticlePrefab, bottomAreaPosition, Quaternion.identity);
-                    SFXManager.Instance.PlayButtonClick();
-                }
-
-                _stacked[i] = true;
-
-
-                var sr = _stackables[i].GetComponent<SpriteRenderer>();
-                var script = _stackables[i].GetComponent<DraggableObject>();
-
-                Destroy(script); // Remove the draggable component to prevent further movement
-
-                if (sr != null) sr.color = new Color(0, 1, 0, 0.5f);
-                StartCoroutine(HideStackable(sr, 0.25f));
-                
-                _stackables[i].transform.position = bottomAreaPosition; // Snap to bottom area position
+                StackItem(i, bottomAreaPosition);
             }
             else
             {
-                _stacked[i] = false;
                 allStacked = false;
-            }
-        }
-
-
-        foreach (bool isStacked in _stacked)
-        {
-            if (!isStacked)
-            {
-                allStacked = false;
-                break;
             }
         }
 
@@ -101,16 +81,56 @@ public class MinigameStackItems : BaseMinigame
         {
             WinGame();
         }
-
     }
 
-    private IEnumerator HideStackable(SpriteRenderer sr, float delay)
+    private void StackItem(int index, Vector2 snapPos)
+    {
+        _stacked[index] = true;
+
+        if (_stackParticlePrefab != null)
+        {
+            Instantiate(_stackParticlePrefab, snapPos, Quaternion.identity);
+            SFXManager.Instance.PlayButtonClick();
+        }
+
+        GameObject item = _stackables[index];
+        item.transform.position = snapPos;
+
+        // Visuals and cleanup
+        var sr = item.GetComponent<SpriteRenderer>();
+        var script = item.GetComponent<DraggableObject>();
+
+        if (script != null) Destroy(script); 
+        if (sr != null) sr.color = new Color(0, 1, 0, 0.5f);
+
+        StartCoroutine(HideStackable(item, 0.25f));
+    }
+
+    private IEnumerator HideStackable(GameObject obj, float delay)
     {
         yield return new WaitForSeconds(delay);
-        if (sr != null)
+        if (obj != null)
         {   
-            sr.enabled = false;
-            sr.gameObject.SetActive(false);
+            obj.SetActive(false);
+        }
+    }
+
+    protected override void ApplyDifficultySettings()
+    {
+        switch (CurrentDifficulty)
+        {
+            case Difficulty.Easy:   
+            _items = 1;  
+                break;
+            case Difficulty.Normal: 
+            _items = 3;  
+                break;
+            case Difficulty.Hard:   
+            _items = 5;  
+                break;
+            case Difficulty.Boss:   
+            _items = 10; 
+                break;
         }
     }
 }

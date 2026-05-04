@@ -1,5 +1,5 @@
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class MinigameRotate : BaseMinigame
 {
@@ -17,9 +17,18 @@ public class MinigameRotate : BaseMinigame
         _completedCount = 0;
         ClearExistingObjects();
 
-        for (int i = 0; i < _numberOfObjectsToRotate; i++)
+        // Get all valid non-touching positions first
+        List<Vector2> spawnPositions = GetRandomPositionsInBounds(_numberOfObjectsToRotate, 1.5f);
+
+        // Spawn objects at those specific positions
+        foreach (Vector2 pos in spawnPositions)
         {
-            Vector2 pos = GetRandomPositionInBounds();
+            SpawnRotatableObjectAt(pos);
+        }
+    }
+
+    private void SpawnRotatableObjectAt(Vector2 pos)
+    {
             GameObject go = Instantiate(_rotatablePrefab, pos, Quaternion.identity, transform);
             
             int totalSteps = Mathf.RoundToInt(360f / _rotateAmount);
@@ -40,7 +49,6 @@ public class MinigameRotate : BaseMinigame
             rot.RandomizeInitialRotation();
 
             _spawned.Add(rot);
-        }
     }
 
     private void HandleObjectCompleted(RotatableObject obj)
@@ -72,4 +80,27 @@ public class MinigameRotate : BaseMinigame
     }
 
     protected override void UpdateMinigame() { }
+
+    protected override void ApplyDifficultySettings()
+    {
+        switch(CurrentDifficulty)
+        {
+            case Difficulty.Easy:
+            _numberOfObjectsToRotate = 1;
+            _rotateAmount = 90f;
+                break;
+            case Difficulty.Normal:
+            _numberOfObjectsToRotate = 2;
+            _rotateAmount = 45f;
+                break;
+            case Difficulty.Hard:
+            _numberOfObjectsToRotate = 3;
+            _rotateAmount = 30f;
+                break;
+            case Difficulty.Boss:
+            _numberOfObjectsToRotate = 5;
+            _rotateAmount = 30f;
+                break;
+        }
+    }
 }

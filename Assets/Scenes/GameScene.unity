@@ -3122,7 +3122,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a0c4bbbdb03e3f4783aa7c930248345, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameTimer: 3
+  _gameTimer: 5
+  _bigMinigameTimer: 10
   _lives: 3
   _timeBetweenMinigames: 1
   _numberOfMinigamesBeforeBigMinigame: 050000000700000007000000
@@ -3142,11 +3143,20 @@ MonoBehaviour:
   - {fileID: 6671990809998388940, guid: feade2378785d394bac81e6a2e925f92, type: 3}
   - {fileID: 5184959113543297849, guid: 36a50d3ecd886184eab566f59d846df5, type: 3}
   - {fileID: 1218845043340397208, guid: e9a818d472bfadf4d87004c41508d8c0, type: 3}
+  - {fileID: 3604273743970801484, guid: 0fe965177cd0caa46ae9ce4109ed3157, type: 3}
   _bigMinigamePrefabs:
   - {fileID: 8374079497721034482, guid: ff89a799dede2f840867267cb78b4c48, type: 3}
+  - {fileID: 7191102445620056099, guid: 55ee619a8d4ef0b45b8d0a475190ce1d, type: 3}
+  - {fileID: 433938022202228363, guid: 1d89f79599b4cac478ad11efffef0eec, type: 3}
+  - {fileID: 8630785041037080022, guid: 0e27164e2369cb146a0358acba84f048, type: 3}
+  - {fileID: 8345376898027414497, guid: b1923977e5e162941889580f7ed10ea0, type: 3}
+  - {fileID: 6671990809998388940, guid: feade2378785d394bac81e6a2e925f92, type: 3}
+  - {fileID: 5184959113543297849, guid: 36a50d3ecd886184eab566f59d846df5, type: 3}
+  - {fileID: 1218845043340397208, guid: e9a818d472bfadf4d87004c41508d8c0, type: 3}
+  - {fileID: 3604273743970801484, guid: 0fe965177cd0caa46ae9ce4109ed3157, type: 3}
   _boundsCenter: {x: 2.5, y: -2.312971}
   _boundsSize: {x: 6.5, y: 6.5}
-  _forcedMinigame: {fileID: 3604273743970801484, guid: 0fe965177cd0caa46ae9ce4109ed3157, type: 3}
+  _forcedMinigame: {fileID: 8630785041037080022, guid: 0e27164e2369cb146a0358acba84f048, type: 3}
   _tutorialMinigames:
   - {fileID: 7191102445620056099, guid: 55ee619a8d4ef0b45b8d0a475190ce1d, type: 3}
   - {fileID: 8374079497721034482, guid: ff89a799dede2f840867267cb78b4c48, type: 3}
@@ -6107,7 +6117,7 @@ MonoBehaviour:
   _talkingMusic: {fileID: 8300000, guid: 281ee08cc65f96c49b0a836e5da4200a, type: 3}
   _minigameMusic: {fileID: 8300000, guid: 9a30f6116dcee3c479fd00b1b365d49e, type: 3}
   _bossMusic: {fileID: 8300000, guid: 627ed13160504484193c66afa1b5bf38, type: 3}
-  _fadeDuration: 0.33
+  _fadeDuration: 0.2
 --- !u!4 &1704467726
 Transform:
   m_ObjectHideFlags: 0

@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class MinigameCollectItems : BaseMinigame
 {
@@ -14,13 +15,19 @@ public class MinigameCollectItems : BaseMinigame
         _collectiblesParent = new GameObject("CollectiblesParent");
         _collectiblesParent.transform.parent = transform;
 
-        for (int i = 0; i < _totalCollectibles; i++)
-        {
-            GameObject collectible = Instantiate(_collectiblePrefab, GetRandomPositionInBounds(), Quaternion.identity, _collectiblesParent.transform);
+        // Get all valid non-touching positions first
+        List<Vector2> spawnPositions = GetRandomPositionsInBounds(_totalCollectibles, 1f);
 
-            Rigidbody2D rb = collectible.GetComponent<Rigidbody2D>();
-            BoxCollider2D collider = collectible.GetComponent<BoxCollider2D>();
+        // Spawn objects at those specific positions
+        foreach (Vector2 pos in spawnPositions)
+        {
+            SpawnClickableObjectAt(pos);
         }
+    }
+
+    private void SpawnClickableObjectAt(Vector2 pos)
+    {
+        Instantiate(_collectiblePrefab, pos, Quaternion.identity, _collectiblesParent.transform);
     }
 
     protected override void UpdateMinigame()
@@ -47,6 +54,25 @@ public class MinigameCollectItems : BaseMinigame
 
                 SFXManager.Instance.PlayButtonClick();
             }
+        }
+    }
+
+    protected override void ApplyDifficultySettings()
+    {
+        switch (CurrentDifficulty)
+        {
+            case Difficulty.Easy:
+            _totalCollectibles = 1;
+                break;
+            case Difficulty.Normal:
+            _totalCollectibles = 3;
+                break;
+            case Difficulty.Hard:
+            _totalCollectibles = 5;
+                break;
+            case Difficulty.Boss:
+            _totalCollectibles = 8;
+                break;
         }
     }
 }

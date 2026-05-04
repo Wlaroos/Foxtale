@@ -101,4 +101,27 @@ public class MinigameMovingTarget : BaseMinigame
             }
         }
     }
+
+    protected override void ApplyDifficultySettings()
+    {
+        switch (CurrentDifficulty)
+        {
+            case Difficulty.Easy:
+            _numberOfObjects = 1;
+            _obstacleSpeed = 6;
+                break;
+            case Difficulty.Normal:
+            _numberOfObjects = 2;
+            _obstacleSpeed = 7;
+                break;
+            case Difficulty.Hard:
+            _numberOfObjects = 3;
+            _obstacleSpeed = 8;
+                break;
+            case Difficulty.Boss:
+            _numberOfObjects = 3;
+            _obstacleSpeed = 10;
+                break;
+        }
+    }
 }
