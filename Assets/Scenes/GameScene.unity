@@ -2181,8 +2181,8 @@ MonoBehaviour:
   _catSFX: {fileID: 8300000, guid: 1dbb316219aabea40a263834a546af36, type: 3}
   _cat2SFX: {fileID: 8300000, guid: 2ad9e6128f6677649b1347a077292a05, type: 3}
   _soulPopSFX: {fileID: 8300000, guid: 2ffd2ed9d9f57d04fabc31a709ea7e89, type: 3}
-  _initialPoolSize: 3
-  _maxPoolSize: 10
+  _initialPoolSize: 5
+  _maxPoolSize: 15
 --- !u!4 &640887880
 Transform:
   m_ObjectHideFlags: 0
@@ -3145,8 +3145,8 @@ MonoBehaviour:
   _bigMinigamePrefabs:
   - {fileID: 8374079497721034482, guid: ff89a799dede2f840867267cb78b4c48, type: 3}
   _boundsCenter: {x: 2.5, y: -2.312971}
-  _boundsSize: {x: 7, y: 7}
-  _forcedMinigame: {fileID: 0}
+  _boundsSize: {x: 6.5, y: 6.5}
+  _forcedMinigame: {fileID: 3604273743970801484, guid: 0fe965177cd0caa46ae9ce4109ed3157, type: 3}
   _tutorialMinigames:
   - {fileID: 7191102445620056099, guid: 55ee619a8d4ef0b45b8d0a475190ce1d, type: 3}
   - {fileID: 8374079497721034482, guid: ff89a799dede2f840867267cb78b4c48, type: 3}

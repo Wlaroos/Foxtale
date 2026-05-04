@@ -340,7 +340,7 @@ TextureImporter:
         width: 9
         height: 12
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -362,7 +362,7 @@ TextureImporter:
         width: 9
         height: 12
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -371,6 +371,28 @@ TextureImporter:
       bones: []
       spriteID: b364ade22825d2940ab8d67883ea35a4
       internalID: 982298653
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MinigameObjects_11
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 2
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e2f4603c5fb159746948598c7254c71d
+      internalID: -1608600646
       vertices: []
       indices: 
       edges: []
@@ -393,6 +415,7 @@ TextureImporter:
       MinigameObjects_0: -1280590621192964166
       MinigameObjects_1: -436668198670779324
       MinigameObjects_10: 982298653
+      MinigameObjects_11: -1608600646
       MinigameObjects_2: 7195511132850493358
       MinigameObjects_3: -1132439662948112843
       MinigameObjects_4: 3072141440007065817
