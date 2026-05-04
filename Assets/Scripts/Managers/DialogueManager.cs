@@ -168,7 +168,10 @@ public class DialogueManager : MonoBehaviour
 
             _fullText = _currentStory.Continue();
 
-            HandleTags(_currentStory.currentTags);
+            if(HandleTags(_currentStory.currentTags))
+            {
+                return;
+            }
 
             if (_enableTypewriterEffect)
             {
@@ -272,7 +275,7 @@ public class DialogueManager : MonoBehaviour
         ContinueDialogue();
     }
 
-    private void HandleTags(List<string> tags)
+    private bool HandleTags(List<string> tags)
     {
         foreach (string tag in tags)
         {
@@ -293,9 +296,11 @@ public class DialogueManager : MonoBehaviour
             }
             else if (tag.Equals(KILL_PLAYER_TAG))
             {
-                GameOver();
+                StartGameOverDialogue("tutorial");
+                return true;
             }
         }
+        return false;
     }
 
     private void FinishTypingEarly()
@@ -487,6 +492,6 @@ public class DialogueManager : MonoBehaviour
 
         StartDialogue(new Story(_gameOverDialogueJSONAsset.text), customGameOverPath);
 
-        StartCoroutine(GameOverCoroutine());
+        GameOver();
     }
 }
