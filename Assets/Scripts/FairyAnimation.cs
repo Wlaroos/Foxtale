@@ -7,6 +7,7 @@ public class FairyAnimation : MonoBehaviour
 {
     public static FairyAnimation Instance { get; private set; }
 
+    [SerializeField] private bool _randomFaceAtStart;
     [Serializable] public class StringSpriteDictionary : SerializableDictionary<string, Sprite> { }
     [SerializeField] private StringSpriteDictionary _faceSprites = new StringSpriteDictionary();
     [SerializeField] GameObject _face;
@@ -39,6 +40,11 @@ public class FairyAnimation : MonoBehaviour
 
         // Set default values
         ResetToDefault();
+
+        if (_randomFaceAtStart)
+        {
+            SetRandomFace();
+        }
     }
 
     public void ChangeFace(string expressionKey)
@@ -160,5 +166,21 @@ public class FairyAnimation : MonoBehaviour
         // Reset arms to default positions and rotations
         ArmDefault();
     }
+
+    public void SetRandomFace()
+    {
+        if (_faceSprites == null || _faceSprites.Count == 0)
+        {
+            Debug.LogWarning("Cannot set random face: Dictionary is empty.");
+            return;
+        }
+
+        // Convert dictionary keys to a list to pick a random index
+        List<string> keys = new List<string>(_faceSprites.Keys);
+        string randomKey = keys[UnityEngine.Random.Range(0, keys.Count)];
+        
+        ChangeFace(randomKey);
+    }
 }
+
 

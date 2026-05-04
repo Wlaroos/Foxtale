@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
@@ -20,6 +21,19 @@ public class MainMenu : MonoBehaviour
         Application.Quit();
     }
 
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+        
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+    }
+
     private IEnumerator TransitionFade(float fadeDuration, string sceneName)
     {
         float elapsedTime = 0f;
@@ -34,6 +48,6 @@ public class MainMenu : MonoBehaviour
 
         _canvasPanel.color = new Color(_canvasPanel.color.r, _canvasPanel.color.g, _canvasPanel.color.b, 1f);
 
-        UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
+        SceneManager.LoadScene(sceneName);
     }
 }
