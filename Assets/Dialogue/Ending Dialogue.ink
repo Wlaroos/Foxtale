@@ -1,15 +1,17 @@
 -> main
 
 === main ===
-Want to sign a contract with me? #Face:Grin
+Color me impressed! #Face:Surprised
+You actually survived! #Face:Grin
+Not many can boast about that feat #Face:Wink
+So, #Face:Grin
+Want to sign a contract with me? #Face:Evil
 
 + [Yes]
     -> yes_path
 
-+ [No]
-    Your Loss
-    #KillPlayer
-    -> DONE
++ [No] #KillPlayer
+    -> END
 
 
 === yes_path ===
@@ -21,11 +23,22 @@ Just sign here. #Face:Grin
 
 + [Sign]
     I'm starting to like you. #Face:Wink
-    Now get your ass back into those games! #Face:Grin
-    And don't die, that would make this whole thing a waste of time. #Face:Cat
+    See you soon! #Face:Evil #ExitGame
     -> END
 
 + [Fake Sign]
     Really? #Face:Stare
-    #KillPlayer
+    -> fake_sign
+    
+=== fake_sign ===
+Let's try that again #Face:Smile
+Would you like to sign a contract with me? #Face:Evil
++ [Sign]
+    There we go! #Face:Grin
+    That wasn't so hard was it? #Face:Wink
+    See you soon! #Face:Evil #ExitGame
     -> END
+
++ [Fake Sign]
+... #Face:SuperStare #KillPlayer
+-> END

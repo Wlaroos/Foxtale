@@ -279,6 +279,7 @@ public class DialogueManager : MonoBehaviour
     {
         foreach (string tag in tags)
         {
+            Debug.Log(tag);
             if (tag.Contains(":"))
             {
                 string[] splitTag = tag.Split(':');
@@ -290,13 +291,13 @@ public class DialogueManager : MonoBehaviour
                     FairyAnimation.Instance.ChangeFace(tagValue);
                 }
             }
-            else if (tag.Equals(EXIT_GAME_TAG))
+            if (tag.Equals(EXIT_GAME_TAG))
             {
-                ExitGame();
+                StartCoroutine(ExitGameWithDelay(5f));
             }
-            else if (tag.Equals(KILL_PLAYER_TAG))
+            if (tag.Equals(KILL_PLAYER_TAG))
             {
-                StartGameOverDialogue("tutorial");
+                StartGameOverDialogue("shame");
                 return true;
             }
         }
@@ -378,6 +379,13 @@ public class DialogueManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         CharacterSelection.Instance.Death3();
         yield return new WaitForSeconds(2f);
+    }
+
+    private IEnumerator ExitGameWithDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        ExitGame();
     }
 
     private void ExitGame()

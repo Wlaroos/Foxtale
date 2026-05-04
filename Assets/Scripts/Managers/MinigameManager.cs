@@ -316,6 +316,11 @@ public class MinigameManager : MonoBehaviour
 
     public void SkipTutorial()
     {
+        if(!CharacterSelection.Instance._selected)
+        {
+            CharacterSelection.Instance.RandomlySelectCharacter();
+        }
+
         _tutorialFinished = true;
         _tutorialIndex = _tutorialMinigames.Length;
     }
