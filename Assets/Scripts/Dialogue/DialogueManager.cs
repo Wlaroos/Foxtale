@@ -24,6 +24,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] public TextAsset _firstBigPipJSONAsset;
     [SerializeField] public TextAsset _secondBigPipJSONAsset;
     [SerializeField] public TextAsset _endingDialogueJSONAsset;
+    [SerializeField] public TextAsset _gameOverDialogueJSONAsset;
     private Story _currentStory;
     private bool _isDialoguePlaying;
     [SerializeField] private TextMeshProUGUI _lmbText;
@@ -113,7 +114,7 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    public void StartDialogue(Story story = null)
+    public void StartDialogue(Story story = null, string customGameOverPath = null)
     {
         if (story != null)
         {
@@ -128,8 +129,18 @@ public class DialogueManager : MonoBehaviour
         _isDialoguePlaying = true;
         _dialoguePanel.SetActive(true);
         _choicesPanel.SetActive(true);
+
+        if(customGameOverPath != null)
+        {
+            _currentStory.ChoosePathString(customGameOverPath);
+        }
+
         ContinueDialogue();
+
         MusicManager.Instance.PlayTalkingMusic();
+
+        // After starting the game over dialogue, don't allow input
+        if(customGameOverPath != null) _isWaitingForExternal = true; 
     }
 
     public IEnumerator EndDialogue()
@@ -355,10 +366,6 @@ public class DialogueManager : MonoBehaviour
 
     private IEnumerator GameOverCoroutine()
     {
-        _dialoguePanel.SetActive(true);
-        _currentStory.ChoosePathString("gameover");
-        ContinueDialogue();
-
         yield return new WaitForSeconds(1f);
         CharacterSelection.Instance.Death3();
         yield return new WaitForSeconds(2f);
@@ -448,6 +455,11 @@ public class DialogueManager : MonoBehaviour
         textRect.offsetMin = new Vector2(textRect.offsetMin.x, paddingBottom);
     }
 
+    public void StartIntroDialogue()
+    {
+        StartDialogue(new Story(_introDialogueJSONAsset.text));
+    }
+
     public void StartBigPip1Dialogue()
     {
         StartDialogue(new Story(_firstBigPipJSONAsset.text));
@@ -461,5 +473,16 @@ public class DialogueManager : MonoBehaviour
     public void StartEndingDialogue()
     {
         StartDialogue(new Story(_endingDialogueJSONAsset.text));
+    }
+
+    public void StartGameOverDialogue(string customGameOverPath = null)
+    {
+        StopAllCoroutines(); 
+        
+        _isWaitingForExternal = false; 
+
+        StartDialogue(new Story(_gameOverDialogueJSONAsset.text), customGameOverPath);
+
+        StartCoroutine(GameOverCoroutine());
     }
 }

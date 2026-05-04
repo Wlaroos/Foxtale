@@ -3122,7 +3122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a0c4bbbdb03e3f4783aa7c930248345, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameTimer: 8
+  _gameTimer: 3
   _lives: 3
   _timeBetweenMinigames: 1
   _numberOfMinigamesBeforeBigMinigame: 050000000700000007000000
@@ -6780,6 +6780,7 @@ MonoBehaviour:
   _firstBigPipJSONAsset: {fileID: 4900000, guid: 8a9acea3690c3a94f9635a46f9833b52, type: 3}
   _secondBigPipJSONAsset: {fileID: 4900000, guid: 2ac0136e7b66da74fba0820bc98c48a8, type: 3}
   _endingDialogueJSONAsset: {fileID: 4900000, guid: 237157bc2b678954f9bb4e7d7b277498, type: 3}
+  _gameOverDialogueJSONAsset: {fileID: 4900000, guid: 3a33e570693e8bf4dbe0f147bee085a7, type: 3}
   _lmbText: {fileID: 716749121}
   _rmbText: {fileID: 1775460660}
   _enableTypewriterEffect: 1

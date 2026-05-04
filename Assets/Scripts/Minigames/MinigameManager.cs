@@ -180,7 +180,23 @@ public class MinigameManager : MonoBehaviour
         _fails++;
         _lives--;
 
-    if (_markFailsOnPips)
+        FairyAnimation.Instance.ChangeFace("Evil");
+        _minigameText.text = "";
+        StartCoroutine(ColorToFade(Color.red, 0.75f));
+
+        ScreenShake.ShakeOnce(1, 5);
+
+        SFXManager.Instance.PlayMinigameLose();
+
+        if(_tutorialFinished == false && _tutorialIndex < _tutorialMinigames.Length)
+        {
+            _minigameText.text = "Game Over!";
+            _tutorialFinished = true;
+            DialogueManager.Instance.StartGameOverDialogue("tutorial");
+            return;
+        }
+
+        if (_markFailsOnPips)
         {
             if (_minigamesPlayed < _spawnedPips.Count)
                 _spawnedPips[_minigamesPlayed].SetFail();
@@ -195,10 +211,6 @@ public class MinigameManager : MonoBehaviour
                 StartRandomMinigame();
             }
         }
-    
-        FairyAnimation.Instance.ChangeFace("Evil");
-        _minigameText.text = "";
-        StartCoroutine(ColorToFade(Color.red, 0.75f));
 
         if (_fails == 1)
         {
@@ -214,12 +226,8 @@ public class MinigameManager : MonoBehaviour
         else if (_lives <= 0)
         {
             _minigameText.text = "Game Over!";
-            DialogueManager.Instance.GameOver();
+            DialogueManager.Instance.StartGameOverDialogue("gameover");
         }
-
-        ScreenShake.ShakeOnce(1, 5);
-
-        SFXManager.Instance.PlayMinigameLose();
     }
 
     private void CheckSpeedIncrease()

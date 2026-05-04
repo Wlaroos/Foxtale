@@ -116,7 +116,7 @@ public class SFXManager : MonoBehaviour
     public void PlayHeartbeat() => PlaySFX(_heatbeatSFX, 1f, 0.2f);
     public void PlayMinigameLose2() => PlaySFX(_minigameLose2SFX, 1f, 0.2f);
     public void PlayCat() => PlaySFX(_catSFX, 1f, 0.3f);
-    public void PlayCat2() => PlaySFX(_cat2SFX, 1f, 0.3f);
+    public void PlayCat2() => PlaySFX(_cat2SFX, 0.5f, 0.3f);
     public void PlaySoulPop() => PlaySFX(_soulPopSFX, 1f, 0.2f);
     private void PlaySFX(AudioClip clip, float volume = 1f, float pitchVariance = 0.1f)
     {
