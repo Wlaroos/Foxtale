@@ -60,13 +60,13 @@ public class FairyAnimation : MonoBehaviour
                     DialogueManager.Instance._mainPitch = 0.9f;
                     break;
                 case "Smile":
-                    DialogueManager.Instance._mainPitch = 1f;
+                    DialogueManager.Instance._mainPitch = 1.00f;
                     break;
                 case "Confused":
                     DialogueManager.Instance._mainPitch = 1.05f;
                     break;
                 case "Angry":
-                    DialogueManager.Instance._mainPitch = 0.9f;
+                    DialogueManager.Instance._mainPitch = 0.90f;
                     break;
                 case "Stare":
                     DialogueManager.Instance._mainPitch = 0.85f;
@@ -74,12 +74,40 @@ public class FairyAnimation : MonoBehaviour
                 case "Grin":
                     DialogueManager.Instance._mainPitch = 1.05f;
                     break;
+                case "Squint":
+                    DialogueManager.Instance._mainPitch = 1.00f;
+                    break;
                 case "Cat":
-                    DialogueManager.Instance._mainPitch = 1.1f;
+                    DialogueManager.Instance._mainPitch = 1.10f;
                     break;
                 case "Sad":
                     DialogueManager.Instance._mainPitch = 0.95f;
                     break;
+                case "Creeper":
+                    DialogueManager.Instance._mainPitch = 0.90f;
+                    break;
+                case "Deadpan":
+                    DialogueManager.Instance._mainPitch = 0.85f;
+                    break;
+                case "Happy":
+                    DialogueManager.Instance._mainPitch = 1.00f;
+                    break;
+                case "Surprised":
+                    DialogueManager.Instance._mainPitch = 1.05f;
+                    break;
+                case "SuperStare":
+                    DialogueManager.Instance._mainPitch = 0.80f;
+                    break;
+                case "Fresh":
+                    DialogueManager.Instance._mainPitch = 0.95f;
+                    break;
+                case "Wink":
+                    DialogueManager.Instance._mainPitch = 1.10f;
+                    break;
+                case "Shock":
+                    DialogueManager.Instance._mainPitch = 1.10f;
+                    break;
+                    
             }
         }
     }

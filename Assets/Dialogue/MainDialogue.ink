@@ -4,24 +4,28 @@ EXTERNAL waitForTutorial01()
 -> main
 
 === main ===
-#Face:Smile
+#Face:Grin
 Welcome, you lucky little bastard!
 
+#Face:Smile
 You've been randomly chosen to face a trial where you can gain a new body and start a new life!
 
 Wanna play?
 
 +[Yes]
+    #Face:Grin
     Great!
 +[No]
     #ExitGame
     ->END
 
+
 - I'll be the test administrator for these little games you're about to play
 
-#Face:Grin
+#Face:Smile
 First, you must pick a vessel from one of these podiums
 
+#Face:Wink
 Can't really play games with flimsy ghost mitts, now can you?
 
 #Face:Smile
@@ -32,7 +36,7 @@ So, pick one you like
 Now,
 
 ~ waitForCharacterSelect()
-#Face:Stare
+#Face:SuperStare
 CHOOSE <br> A <br> VESSEL
 
 // + [Walm]

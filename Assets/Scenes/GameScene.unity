@@ -1859,7 +1859,7 @@ Camera:
   m_GameObject: {fileID: 519420028}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 4
+  m_ClearFlags: 2
   m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -6657,6 +6657,14 @@ MonoBehaviour:
     - Squint
     - Cat
     - Sad
+    - Creeper
+    - Deadpan
+    - Happy
+    - Surprised
+    - SuperStare
+    - Fresh
+    - Wink
+    - Shock
     values:
     - {fileID: 6100763260885094525, guid: 88f22e6bcb7fe1441b90d976cd2a3a3f, type: 3}
     - {fileID: 4618246266268886248, guid: 88f22e6bcb7fe1441b90d976cd2a3a3f, type: 3}
@@ -6667,6 +6675,14 @@ MonoBehaviour:
     - {fileID: 1908842102, guid: 88f22e6bcb7fe1441b90d976cd2a3a3f, type: 3}
     - {fileID: 174384754, guid: 88f22e6bcb7fe1441b90d976cd2a3a3f, type: 3}
     - {fileID: 1978850832, guid: 88f22e6bcb7fe1441b90d976cd2a3a3f, type: 3}
+    - {fileID: 1060131167, guid: 88f22e6bcb7fe1441b90d976cd2a3a3f, type: 3}
+    - {fileID: -1588726025, guid: 88f22e6bcb7fe1441b90d976cd2a3a3f, type: 3}
+    - {fileID: -930267060, guid: 88f22e6bcb7fe1441b90d976cd2a3a3f, type: 3}
+    - {fileID: -934872295, guid: 88f22e6bcb7fe1441b90d976cd2a3a3f, type: 3}
+    - {fileID: -716478693, guid: 88f22e6bcb7fe1441b90d976cd2a3a3f, type: 3}
+    - {fileID: 1183083385, guid: 88f22e6bcb7fe1441b90d976cd2a3a3f, type: 3}
+    - {fileID: 1956366238, guid: 88f22e6bcb7fe1441b90d976cd2a3a3f, type: 3}
+    - {fileID: -406260793, guid: 88f22e6bcb7fe1441b90d976cd2a3a3f, type: 3}
   _face: {fileID: 1075011127}
   _leftArm: {fileID: 1024734038}
   _rightArm: {fileID: 51214609}
