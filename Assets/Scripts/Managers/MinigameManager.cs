@@ -86,6 +86,11 @@ public class MinigameManager : MonoBehaviour
             _currentTimer -= Time.deltaTime;
             _timerSlider.value = _currentTimer / _selectedTimerDuration;
         }
+
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            SkipToAndWinBigPip();
+        }
     }
     
 
@@ -176,6 +181,7 @@ public class MinigameManager : MonoBehaviour
 
     void HandleWin()
     {
+        // Tutorial Win
         if (_tutorialFinished == false && _tutorialIndex < _tutorialMinigames.Length)
         {
             _tutorialIndex++;
@@ -188,15 +194,27 @@ public class MinigameManager : MonoBehaviour
             _minigamesPlayed++;
             _wins++;
 
+            int completedIndex = _minigamesPlayed - 1;
+            bool isBigWin = false;
+
             if (_minigamesPlayed - 1 < _spawnedPips.Count)
             {
                 _spawnedPips[_minigamesPlayed - 1].SetWin();
+
+                if (_spawnedPips[completedIndex].CurrentShape == MinigamePip.PipShape.Big)
+                {
+                    isBigWin = true;
+                }
             }
 
             // Logic for visuals/rewards
             string[] faces = { "Stare", "Angry", "Confused", "Sad", "Squint", "Cat", "Creeper", "Deadpan", "Surprised", "SuperStare", "Fresh", "Shock" };
             FairyAnimation.Instance.ChangeFace(faces[Random.Range(0, faces.Length)]);
-            _coinParticles.CreateCoins(10, 0.05f);
+            
+            int coinAmount = isBigWin ? 50 : 10;
+            float delay = isBigWin ? 0.01f : 0.05f;
+            _coinParticles.CreateCoins(coinAmount, delay);
+
             _minigameText.text = "";
             StartCoroutine(ColorToFade(Color.green, 0.75f));
 
@@ -378,17 +396,76 @@ public class MinigameManager : MonoBehaviour
     }
 
     private BaseMinigame.Difficulty GetDifficultyLevel()
-{
-    // If we have completed 0 Big Pips, we are in the first segment (Easy)
-    // If 1, we are in the second segment (Medium)
-    // If 2+, we are in the final segment (Hard)
-    switch (_bigPipsCompletedCount)
     {
-        case 0: return BaseMinigame.Difficulty.Easy;
-        case 1: return BaseMinigame.Difficulty.Normal;
-        default: return BaseMinigame.Difficulty.Hard;
+        // If we have completed 0 Big Pips, we are in the first segment (Easy)
+        // If 1, we are in the second segment (Medium)
+        // If 2+, we are in the final segment (Hard)
+        switch (_bigPipsCompletedCount)
+        {
+            case 0: return BaseMinigame.Difficulty.Easy;
+            case 1: return BaseMinigame.Difficulty.Normal;
+            default: return BaseMinigame.Difficulty.Hard;
+        }
     }
-}
+
+    private void SkipToAndWinBigPip()
+    {
+        // Clean up current minigame
+        if (_currentMinigame != null) 
+        {
+            StopAllCoroutines();
+            Destroy(_currentMinigame.gameObject);
+            _currentMinigame = null;
+        }
+
+        // Find the index of the next big pip
+        int targetIndex = -1;
+        for (int i = _minigamesPlayed; i < _spawnedPips.Count; i++)
+        {
+            if (_spawnedPips[i].CurrentShape == MinigamePip.PipShape.Big)
+            {
+                targetIndex = i;
+                break;
+            }
+        }
+
+        if (targetIndex != -1)
+        {
+            int totalSkipReward = 0;
+
+            // Mark all skipped pips as Wins and calculate total coins
+            for (int i = _minigamesPlayed; i <= targetIndex; i++)
+            {
+                _spawnedPips[i].SetWin();
+
+                // Add 50 for the Big Pip, 10 for everything else
+                if (_spawnedPips[i].CurrentShape == MinigamePip.PipShape.Big)
+                {
+                    totalSkipReward += 50;
+                }
+                else
+                {
+                    totalSkipReward += 10;
+                }
+            }
+
+            // Update progress counters
+            _minigamesPlayed = targetIndex + 1;
+
+            _coinParticles.CreateCoins(totalSkipReward, 0.005f);
+
+            SFXManager.Instance.PlayMinigameWin();
+            
+            StartCoroutine(ColorToFade(Color.green, 0.75f));
+
+            // Trigger the Dialogue and increment the Big Pip counter
+            CheckBigMinigameProgression();
+        }
+        else
+        {
+            Debug.Log("No more Big Pips found in the sequence.");
+        }
+    }
 
     private void OnDrawGizmos()
     {

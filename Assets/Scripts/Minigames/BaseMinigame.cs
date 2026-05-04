@@ -59,6 +59,11 @@ public abstract class BaseMinigame : MonoBehaviour
 
             UpdateMinigame();
         }
+
+        if(Input.GetKeyDown(KeyCode.Z))
+        {
+            WinGame();
+        }
     }
 
     protected void WinGame()
@@ -126,7 +131,6 @@ public abstract class BaseMinigame : MonoBehaviour
     {
         foreach (Vector2 pos in existingPositions)
         {
-            // Vector2.Distance is cleaner, but sqrMagnitude is faster for performance
             if (Vector2.SqrMagnitude(candidate - pos) < minDistance * minDistance)
             {
                 return false;

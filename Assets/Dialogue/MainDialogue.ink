@@ -61,11 +61,11 @@ And if you lose, I might be persuaded to let you keep your soul and body for a p
 Before we begin, do you need a refresher?
 
 +[Yes]
-#Face:Confused
+    #Face:Confused
     Really? I just told you this...
     -> introRepeat
 +[No]
-#Face:Grin
+    #Face:Grin
     Perfect!
 -> tutorial
     
@@ -96,10 +96,10 @@ If you lose, I might let you keep your soul and body for a price
 Need another refresher?
 
 +[Yes]
-#Face:Stare
+    #Face:Stare
     Yeah, no
 +[No]
-#Face:Grin
+    #Face:Grin
     Good
     
 - -> tutorial

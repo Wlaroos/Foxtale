@@ -59,11 +59,11 @@ public class MinigameBreakObject : BaseMinigame
             _clicksToBreak = 3;
                 break;
             case Difficulty.Hard:
-            _itemsToBreak = 3;
+            _itemsToBreak = 4;
             _clicksToBreak = 4;
                 break;
             case Difficulty.Boss:
-            _itemsToBreak = 4;
+            _itemsToBreak = 6;
             _clicksToBreak = 5;
                 break;
         }
