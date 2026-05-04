@@ -54,8 +54,8 @@ You get three strikes, each resulting in the loss of a vessel and the soul withi
 #Face:Smile
 However, each success will reward you with some currency to spend later on
 
-#Face:Grin
-If you lose, I might be persuaded to let you keep your soul and body for a price
+#Face:Wink
+And if you lose, I might be persuaded to let you keep your soul and body for a price
 
 #Face:Smile
 Before we begin, do you need a refresher?
@@ -73,7 +73,7 @@ Before we begin, do you need a refresher?
 -> END
 
 === introRepeat ===
-#Face:Smile
+#Face:Deadpan
 Welcome, wandering soul, blah blah blah
 
 I'm the test administrator
@@ -81,21 +81,18 @@ I'm the test administrator
 #Face:Stare
 You already picked a vessel, don't need to ask that again
 
-#Face:Smile
+#Face:Deadpan
 If you survive, that'll be your new body
 
-#Face:Evil
 There's an innocent soul inside each vessel because I'm evil
 
 Every time you mess up in the game a vessel gets destroyed
 
-#Face:Smile
 You get money each time you succeed
 
-#Face:Grin
 If you lose, I might let you keep your soul and body for a price
 
-#Face:Smile
+#Face:Squint
 Need another refresher?
 
 +[Yes]
@@ -132,7 +129,7 @@ Also, you see that red bar right under you?
 
 That's how much time you get for these
 
-#Face:Stare
+#Face:Fresh
 I'm being real nice, letting you have extra time for these practice ones you know
 
 ~ waitForTutorial01()
@@ -151,7 +148,7 @@ That's how much money you have
 #Face:Grin
 You're poor
 
-#Face:Stare
+#Face:Fresh
 And I'm not giving you any money for these practice tests, cry about it
 
 ~ waitForTutorial01()

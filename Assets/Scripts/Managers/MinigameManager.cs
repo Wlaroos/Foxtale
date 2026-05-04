@@ -194,7 +194,7 @@ public class MinigameManager : MonoBehaviour
             }
 
             // Logic for visuals/rewards
-            string[] faces = { "Stare", "Angry", "Confused", "Sad", "Squint", "Cat" };
+            string[] faces = { "Stare", "Angry", "Confused", "Sad", "Squint", "Cat", "Creeper", "Deadpan", "Surprised", "SuperStare", "Fresh", "Shock" };
             FairyAnimation.Instance.ChangeFace(faces[Random.Range(0, faces.Length)]);
             _coinParticles.CreateCoins(10, 0.05f);
             _minigameText.text = "";

@@ -4,14 +4,14 @@
 #Face:Grin
 Guess you aren't as useless as I thought!
 
-#Wink
+#Face:Wink
 So, how was it? Having fun yet?
 
 +[Yes]
-    #Cat
+    #Face:Cat
     Glad to hear you're a little messed up in the head!
 +[No]
-    #Deadpan
+    #Face:Deadpan
     Yeah, I don't actually care. I'm just required to ask.
     
     - Anyway
