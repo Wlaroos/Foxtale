@@ -137,8 +137,8 @@ TextureImporter:
       name: MinigameObjects_0
       rect:
         serializedVersion: 2
-        x: 2
-        y: 18
+        x: 0
+        y: 16
         width: 16
         height: 16
       alignment: 0
@@ -159,8 +159,8 @@ TextureImporter:
       name: MinigameObjects_1
       rect:
         serializedVersion: 2
-        x: 20
-        y: 18
+        x: 18
+        y: 16
         width: 16
         height: 16
       alignment: 0
@@ -181,8 +181,8 @@ TextureImporter:
       name: MinigameObjects_2
       rect:
         serializedVersion: 2
-        x: 38
-        y: 18
+        x: 36
+        y: 16
         width: 12
         height: 12
       alignment: 0
@@ -203,8 +203,8 @@ TextureImporter:
       name: MinigameObjects_5
       rect:
         serializedVersion: 2
-        x: 63
-        y: 18
+        x: 61
+        y: 16
         width: 12
         height: 12
       alignment: 9
@@ -225,8 +225,8 @@ TextureImporter:
       name: MinigameObjects_6
       rect:
         serializedVersion: 2
-        x: 91
-        y: 18
+        x: 89
+        y: 16
         width: 11
         height: 13
       alignment: 0
@@ -247,8 +247,8 @@ TextureImporter:
       name: MinigameObjects_3
       rect:
         serializedVersion: 2
-        x: 52
-        y: 23
+        x: 50
+        y: 21
         width: 9
         height: 9
       alignment: 0
@@ -269,8 +269,8 @@ TextureImporter:
       name: MinigameObjects_7
       rect:
         serializedVersion: 2
-        x: 104
-        y: 18
+        x: 102
+        y: 16
         width: 13
         height: 11
       alignment: 0
@@ -291,8 +291,8 @@ TextureImporter:
       name: MinigameObjects_4
       rect:
         serializedVersion: 2
-        x: 53
-        y: 18
+        x: 51
+        y: 16
         width: 7
         height: 3
       alignment: 0
@@ -313,8 +313,8 @@ TextureImporter:
       name: MinigameObjects_8
       rect:
         serializedVersion: 2
-        x: 77
-        y: 18
+        x: 75
+        y: 16
         width: 12
         height: 12
       alignment: 9
@@ -335,8 +335,8 @@ TextureImporter:
       name: MinigameObjects_9
       rect:
         serializedVersion: 2
-        x: 2
-        y: 2
+        x: 0
+        y: 0
         width: 9
         height: 12
       alignment: 0
@@ -357,8 +357,8 @@ TextureImporter:
       name: MinigameObjects_10
       rect:
         serializedVersion: 2
-        x: 13
-        y: 2
+        x: 11
+        y: 0
         width: 9
         height: 12
       alignment: 0
@@ -379,12 +379,12 @@ TextureImporter:
       name: MinigameObjects_11
       rect:
         serializedVersion: 2
-        x: 24
-        y: 2
+        x: 22
+        y: 0
         width: 12
         height: 12
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
