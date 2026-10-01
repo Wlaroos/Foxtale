@@ -13,7 +13,7 @@ Wanna play?
 +[Yes]
     Great! #Face:Grin
 +[No]
-    #ExitGame
+    #ExitGameImmediate
     ->END
 
 

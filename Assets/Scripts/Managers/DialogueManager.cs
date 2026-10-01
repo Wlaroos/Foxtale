@@ -4,6 +4,7 @@ using Ink.Runtime;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -30,6 +31,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _lmbText;
     [SerializeField] private TextMeshProUGUI _rmbText;
     private const string FACE_TAG = "Face";
+    private const string EXIT_GAME_IMMEDIATE_TAG = "ExitGameImmediate";
     private const string EXIT_GAME_TAG = "ExitGame";
     private const string KILL_PLAYER_TAG = "KillPlayer";
     private bool _isWaitingForExternal = false;
@@ -291,6 +293,10 @@ public class DialogueManager : MonoBehaviour
                     FairyAnimation.Instance.ChangeFace(tagValue);
                 }
             }
+            if (tag.Equals(EXIT_GAME_IMMEDIATE_TAG))
+            {
+                StartCoroutine(ExitGameWithDelay(0f));
+            }
             if (tag.Equals(EXIT_GAME_TAG))
             {
                 StartCoroutine(ExitGameWithDelay(5f));
@@ -400,9 +406,10 @@ public class DialogueManager : MonoBehaviour
 
         #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
+        #elif UNITY_WEBGL
+            SceneManager.LoadScene("MainMenuScene"); // Restart Game for WebGL
         #else
             Application.Quit();
-            //System.Diagnostics.Process.GetCurrentProcess().Kill();
         #endif
     }
 
