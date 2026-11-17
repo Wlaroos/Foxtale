@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public class MinigameImposter : BaseMinigame
 {
     [SerializeField] private GameObject _facePrefab;
-    [SerializeField] private GameObject _imposterPrefab;
+    [SerializeField] private Sprite _imposterSprite;
     [SerializeField] private Sprite _pressedSprite;
     [SerializeField] private ParticleSystem _clickedEffect;
     private int _totalFaces = 3;
@@ -27,19 +27,25 @@ public class MinigameImposter : BaseMinigame
             // Spawn imposters first, then faces
             if (count < _totalImposters)
             {
-                SpawnClickableObjectAt(pos, _imposterPrefab);
+                SpawnClickableObjectAt(pos, true);
                 count++;
             }
             else
             {
-                SpawnClickableObjectAt(pos, _facePrefab);
+                SpawnClickableObjectAt(pos, false);
             }
         }
     }
 
-    private void SpawnClickableObjectAt(Vector2 pos, GameObject prefab)
+    private void SpawnClickableObjectAt(Vector2 pos, bool imposter)
     {
-        Instantiate(prefab, pos, Quaternion.identity, _collectiblesParent.transform);
+        GameObject instantiatedObject = Instantiate(_facePrefab, pos, Quaternion.identity, _collectiblesParent.transform);
+        SpriteRenderer spriteRenderer = instantiatedObject.GetComponent<SpriteRenderer>();
+        if (spriteRenderer != null && imposter)
+        {
+            spriteRenderer.sprite = _imposterSprite;
+            instantiatedObject.name = "Imposter_" + instantiatedObject.GetInstanceID();
+        }
     }
 
     protected override void UpdateMinigame()

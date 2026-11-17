@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6812296414591416663}
   - component: {fileID: 4677368047027995575}
   m_Layer: 7
-  m_Name: NormalFace
+  m_Name: Face
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

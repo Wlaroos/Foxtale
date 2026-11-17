@@ -46,6 +46,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _minigameText: CLICK THE FAKES!
   _facePrefab: {fileID: 1004055619882273414, guid: 11763d15696580940998ec340e4895b5, type: 3}
-  _imposterPrefab: {fileID: 1004055619882273414, guid: c2c20089f0bfa5b499b1b1eaa5d9c528, type: 3}
+  _imposterSprite: {fileID: 308263371, guid: d115b9afe97fff745a220fa56853b252, type: 3}
   _pressedSprite: {fileID: 956284487, guid: d115b9afe97fff745a220fa56853b252, type: 3}
   _clickedEffect: {fileID: 1703984352912723621, guid: eaa11fb9dcfa933498e9a4845fe0e5b7, type: 3}
